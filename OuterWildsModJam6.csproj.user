@@ -1,0 +1,5 @@
+﻿<Project>
+  <PropertyGroup>
+    <OutputPath>$(AppData)/OuterWildsModManager/OWML/Mods/Hawkbar.OuterWildsModJam6</OutputPath>
+  </PropertyGroup>
+</Project>

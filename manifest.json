@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ow-mods/owml/master/schemas/manifest_schema.json",
+  "filename": "OuterWildsModJam6.dll",
+  "author": "Hawkbar",
+  "name": "OuterWildsModJam6",
+  "uniqueName": "Hawkbar.OuterWildsModJam6",
+  "version": "0.1.0",
+  "owmlVersion": "2.15.1",
+  "dependencies": ["xen.NewHorizons"]
+}
