@@ -4,11 +4,11 @@ namespace GhostInTheMachine.Controllers
 {
     public class StatueVisualsController : MonoBehaviour
     {
-        public const float EYE_OPEN_ANGLE = 33f;
-        public const float EYE_CLOSE_ANGLE = 0f;
-        public const float EYE_ANIMATION_DURATION = 1f;
-        public const float EYE_GLOW_FADE_DURATION = 1f;
-        public const float STATUE_TURN_DURATION = 4f;
+        const float EYE_OPEN_ANGLE = 33f;
+        const float EYE_ANIMATION_DURATION = 1f;
+        const float EYE_GLOW_FADE_DURATION = 1f;
+        const float STATUE_TURN_DURATION = 4f;
+        static readonly Color DEFAULT_EYE_GLOW_COLOR = new(0.529f, 0.576f, 1.5f, 1f);
 
         public TransformAnimator[] lowerLidAnimators;
         public TransformAnimator[] upperLidAnimators;
@@ -19,11 +19,13 @@ namespace GhostInTheMachine.Controllers
         bool eyesOpen = true;
         bool eyesGlowing = false;
         float eyeGlowAmount = 1f;
+        Color eyeGlowColor;
         bool isTurning = false;
         Timer turnTimer;
 
         protected void Awake()
         {
+            eyeGlowColor = DEFAULT_EYE_GLOW_COLOR;
             enabled = false;
         }
 
@@ -66,12 +68,19 @@ namespace GhostInTheMachine.Controllers
             {
                 eyesGlowing = true;
                 SetEyeGlow(1f);
+                GhostInTheMachine.Instance.ModHelper.Console.WriteLine($"{eyeRenderer.GetOriginalEmissionColor()}");
             }
             else if (!glowing)
             {
                 eyesGlowing = false;
                 enabled = true;
             }
+        }
+
+        public void SetEyeGlowColor(Color color)
+        {
+            eyeGlowColor = color;
+            SetEyeGlow(eyeGlowAmount);
         }
 
         public void OpenEyes()
@@ -119,7 +128,7 @@ namespace GhostInTheMachine.Controllers
         void SetEyeGlow(float amount)
         {
             eyeGlowAmount = amount;
-            eyeRenderer.SetEmissionColor(Color.Lerp(Color.black, eyeRenderer.GetOriginalEmissionColor(), amount));
+            eyeRenderer.SetEmissionColor(Color.Lerp(Color.black, eyeGlowColor, amount));
         }
     }
 }

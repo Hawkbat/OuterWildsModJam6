@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "Props": {
+    "tornados": [
+      {
+        "rename": "GITM_TORNADO",
+        "position": {
+          "x": -10,
+          "y": -150,
+          "z": -90
+        },
+        "rotation": {
+          "x": 346.163,
+          "y": 314.0263,
+          "z": 17.7542
+        },
+        "height": 300,
+        "type": "downwards",
+        "wanderDegreesX": 0,
+        "wanderDegreesZ": 0,
+        "wanderRate": 0
+      }
+    ],
+    "details": [
+      {
+        "rename": "GITM_TORNADO_LAUNCHER",
+        "path": "BrittleHollow_Body/Sector_BH/Sector_QuantumFragment/Interactables_QuantumFragment/VisibleFrom_BH/Undercrust/Prefab_NOM_TractorBeam_HighSpeed",
+        "position": {
+          "x": -7,
+          "y": 3.5,
+          "z": -27
+        },
+        "rotation": {
+          "x": 330,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ]
+  }
+}

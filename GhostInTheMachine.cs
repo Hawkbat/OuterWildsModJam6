@@ -46,6 +46,7 @@ public class GhostInTheMachine : ModBehaviour
             ShipLogDialogueManager.EnsureInstance();
             StatueManager.EnsureInstance();
             SpawnManager.EnsureInstance();
+            TornadoManager.EnsureInstance();
 
             StatueManager.Instance.PlaceInitialStatues();
             SpawnManager.Instance.DoInitialSpawn();

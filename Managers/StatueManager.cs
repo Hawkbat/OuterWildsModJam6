@@ -83,6 +83,14 @@ public class StatueManager : ManagerBase<StatueManager>
         // Gabbro's statue is batched, but no other important props are in the batch, so we disable the whole thing
         GameObject.Find("StatueIsland_Body/Sector_StatueIsland/Props_StatueIsland/BatchedGroup").SetActive(false);
         CreateGhostStatue(STATUE_GABBRO, "StatueIsland_Body", new(-2.9152f, 10.6522f, 7.9023f), new(56.1298f, 90.7213f, 76.5443f), false, false);
+
+        // Workshop statue is batched with other essential props, will need to edit the mesh later. Placing a second statue for now
+        CreateGhostStatue(STATUE_WORKSHOP, "StatueIsland_Body", new(-17.51022f, 2.977095f, 78.28687f), new(352.0707f, 170.4352f, 359.2902f), true, true);
+
+        GameObject.Find("GiantsDeep_Body/Sector_GD/Sector_GDInterior/Sector_GDCore/Sector_Module_Sunken/Props_Module_Sunken/Structure_NOM_Column_Base_Square").SetActive(false);
+        GameObject.Find("GiantsDeep_Body/Sector_GD/Sector_GDInterior/Sector_GDCore/Sector_Module_Sunken/Props_Module_Sunken/Prefab_NOM_StatueHead").SetActive(false);
+
+        CreateGhostStatue(STATUE_PROBE, "GiantsDeep_Body/Sector_GD/Sector_GDInterior/Sector_GDCore/Sector_Module_Sunken/Props_Module_Sunken", new(10.35f, 8.7401f, 0f), new(0f, 0f, 180f), true, true);
     }
 }
 

@@ -35,10 +35,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
                     new("StatueIsland_Body", new(0.8378989f, 10.73179f, 6.672981f), new(0f, 330f, 0f)) { fuel = 13f, oxygen = 120f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(17.12f,
-                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 234f, 0f)) { fuel = 24f, oxygen = 180f, health = 13f, hasStaff = true },
+                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 64f, 0f)) { fuel = 24f, oxygen = 180f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(15.13f,
-                    new("GabbroIsland_Body", new(-12.3f, 0.72f, 33.8f), new(355f, 185f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },
+                    new("GabbroIsland_Body", new(-12.3f, 0.72f, 33.8f), new(355f, 5f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true, destroyDelay = 10f }),
             ]
         ),
@@ -46,10 +46,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_FORGE, STATUE_ATP],
             [
                 new(13.14f,
-                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 144f, 180f)) { fuel = 33f, oxygen = 230f, health = 44f, hasStaff = true },
+                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 324f, 180f)) { fuel = 33f, oxygen = 230f, health = 44f, hasStaff = true },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
                 new(11.11f,
-                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 180f, 180f)) { fuel = 38f, oxygen = 320f, health = 44f, hasStaff = true },
+                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 0f, 180f)) { fuel = 38f, oxygen = 320f, health = 44f, hasStaff = true },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
             ]
         ) {
@@ -59,10 +59,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_SS_LOWER, STATUE_SS_UPPER],
             [
                 new(8.64f,
-                    new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 275f, 0f)) { fuel = 64f, oxygen = 310f, health = 73f },
+                    new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 95f, 0f)) { fuel = 64f, oxygen = 310f, health = 73f },
                     new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
                 new(6.32f,
-                    new("TowerTwin_Body", new(0.8f, 3.8f, -123f), new(63f, 90f, 270f)) { fuel = 85f, oxygen = 400f, health = 91f },
+                    new("TowerTwin_Body", new(0.8f, 3.8f, -123f), new(63f, 270f, 270f)) { fuel = 85f, oxygen = 400f, health = 91f },
                     new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
             ]
         ),
@@ -70,7 +70,7 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [SOLANUM_MASK_FIX],
             [
                 new (4.05f,
-                    new("Moon_Body", new(-26.4f, 43.5f, -45.5f), new(311f, 344f, 32f)) { fuel = 98f, oxygen = 450f, health = 100f },
+                    new("Moon_Body", new(-26.4f, 43.5f, -45.5f), new(311f, 164f, 32f)) { fuel = 98f, oxygen = 450f, health = 100f },
                     new("Moon_Body", new(-28.6f, 54.5f, -38f), new(305f, 338f, 38f))),
             ]
         ),
@@ -117,7 +117,19 @@ public class SpawnManager : ManagerBase<SpawnManager>
         {
             Locator.GetAstroObject(AstroObject.Name.Comet).gameObject.SetActive(false);
         }
-        // TODO: Handle brittle hollow fragments
+
+        // TODO: Handle brittle hollow fragments properly
+        var fragments = FindObjectsOfType<FragmentIntegrity>();
+        foreach (var fragment in fragments)
+        {
+            if (!fragment.GetIgnoreMeteorDamage() && fragment.CanBreak())
+            {
+                fragment.AddDamage(999f);
+            }
+        }
+
+        GameObject.Find("TimberHearth_Body/Sector_TH/Sector_Village/Volumes_Village/MusicVolume_Village").GetComponent<VillageMusicVolume>().Deactivate();
+
         if (spawnGroup.warpRecieversToRecharge != null)
         {
             foreach (var path in spawnGroup.warpRecieversToRecharge)
@@ -152,11 +164,17 @@ public class SpawnManager : ManagerBase<SpawnManager>
         InvincibilityManager.Instance.PushInvincibility();
         for (int i = 0; i < 20; i++)
         {
-            WarpBody(Locator.GetShipBody(), spawn.ship);
-            WarpBody(Locator.GetPlayerBody(), spawn.player);
+            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
             yield return new WaitForFixedUpdate();
         }
         InvincibilityManager.Instance.PopInvincibility();
+
+        // Mark ship on HUD since the player theoretically entered the ship even though they technically haven't yet
+        PlayerState._hasPlayerEnteredShip = true;
+        var shipHudMarker = FindObjectOfType<ShipHUDMarker>();
+        shipHudMarker.RefreshOwnVisibility();
+        shipHudMarker.gameObject.GetComponent<MapMarker>().enabled = true;
     }
 
     (Spawn, SpawnGroup) CalculateSpawn()
@@ -172,11 +190,11 @@ public class SpawnManager : ManagerBase<SpawnManager>
         return (null, null);
     }
 
-    void WarpBody(OWRigidbody body, SpawnPoint spawn)
+    void WarpBody(OWRigidbody body, SpawnPoint spawn, float offset)
     {
         var targetBody = GameObject.Find(spawn.parentPath).GetAttachedOWRigidbody();
         var worldRot = targetBody.transform.rotation * Quaternion.Euler(spawn.rot);
-        var worldPos = targetBody.transform.TransformPoint(spawn.pos) + worldRot * Vector3.up;
+        var worldPos = targetBody.transform.TransformPoint(spawn.pos) + worldRot * (Vector3.up * offset);
         body.WarpToPositionRotation(worldPos, worldRot);
         body.SetVelocity(targetBody.GetPointVelocity(worldPos));
     }

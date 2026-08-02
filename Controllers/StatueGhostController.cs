@@ -19,6 +19,7 @@ public class StatueGhostController : MonoBehaviour
 
     protected void Start()
     {
+        visuals.SetEyeGlowColor(new Color(1.5f, 0f, 0.25f, 1f));
         if (PlayerData.PersistentConditionExists(persistentCondition) && PlayerData.GetPersistentCondition(persistentCondition))
         {
             Deactivate();

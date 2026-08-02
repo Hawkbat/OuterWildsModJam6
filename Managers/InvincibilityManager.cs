@@ -38,7 +38,7 @@ public class InvincibilityManager : ManagerBase<InvincibilityManager>
     void SetInvincible(bool invincible)
     {
         deathManager._invincible = invincible;
-        playerResources._invincible = invincible;
+        //playerResources._invincible = invincible;
         shipDamageController._invincible = invincible;
     }
 }
