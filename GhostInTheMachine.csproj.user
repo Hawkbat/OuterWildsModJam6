@@ -1,0 +1,5 @@
+﻿<Project>
+  <PropertyGroup>
+    <OutputPath>$(AppData)/OuterWildsModManager/OWML/Mods/Hawkbar.GhostInTheMachine</OutputPath>
+  </PropertyGroup>
+</Project>

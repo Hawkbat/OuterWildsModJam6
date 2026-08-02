@@ -23,7 +23,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OuterWildsModJam6.csproj.user" />
+    <Content Include="GhostInTheMachine.csproj.user" />
   </ItemGroup>
   <ItemGroup>
     <None Include="planets\**\*.*">

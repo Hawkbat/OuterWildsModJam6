@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/ow-mods/owml/master/schemas/manifest_schema.json",
-  "filename": "OuterWildsModJam6.dll",
+  "filename": "GhostInTheMachine.dll",
   "author": "Hawkbar",
-  "name": "OuterWildsModJam6",
-  "uniqueName": "Hawkbar.OuterWildsModJam6",
+  "name": "Ghost in the Machine",
+  "uniqueName": "Hawkbar.GhostInTheMachine",
   "version": "0.1.0",
   "owmlVersion": "2.15.1",
-  "dependencies": ["xen.NewHorizons"]
+  "dependencies": [ "xen.NewHorizons" ]
 }

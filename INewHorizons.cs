@@ -5,7 +5,7 @@ using OWML.Common;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace OuterWildsModJam6
+namespace GhostInTheMachine
 {
     public interface INewHorizons
     {

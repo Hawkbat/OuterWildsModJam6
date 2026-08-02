@@ -1,0 +1,20 @@
+
+What does the time loop actually mean in Outer Wilds?
+
+Lore-wise:
+- The loop is 22 minutes because that's how big of an interval the Ash Twin Project (ATP) can create based on amount of power it can absorb from the supernova
+- The sun explodes into a supernova organically on its own after 22 minutes, activating the ATP
+- The supernova activates the ATP to send the player's memories, the ship log, the Probe Tracking Module's data, and Gabbro's memories into the singularity and back in time to the beginning of the loop, along with the data about the trajectory of the Orbital Probe Cannon and coordinates of the Eye
+- All data sent by the ATP is stored in the Nomai Masks which are linked with a Nomai Statue elsewhere in the system
+- Only data is sent back, not the player physically. Nothing is physically persisted between loops
+- This can be violated by jetpacking into the exposed singularity during the data upload at the end of the loop; normally this triggers an easter egg where the player's memories are still sent to the beginning of the loop, but can find an NPC 'clone' of themselves inside the ATP in the next loop who physically emerged from the singularity at the start of the loop when data was received; failing to continue this loop by entering the singularity again causes a "spacetime break" bad ending
+- The rules of time travel in this universe seem to be that transmitting information back in time to alter the past is valid, but transmitting matter back in time causes the traditional rules of causality paradoxes to apply, with any paradox causing a "spacetime break" rather than being internally consistent
+
+Mechanically:
+- The scene reloads its initial state, overwriting any changes made during the loop except for ship log discoveries, persistent dialogue conditions, and signal frequency discoveries
+- The physics simulation runs for 22 minutes while planets orbit and physics props drift; altering the time loop values do not affect the physics sim
+- We cannot universally 'rewind' the loop since physics will cause objects to drift from their intended trajectories even if we compensate for that
+- Certain things are tied directly to the loop timer, such as the sand level on Ash Twin and Ember Twin, the lava level on Hollow's Lantern, the timing of the supernova and the ATP's activation, etc.
+- Others are not, like the rate at which the fragments of Brittle Hollow fall, the positions of the planets, 
+- We can extend the loop timer or pause it but can't pause or reverse physical objects in the loop, so only useful in custom environments or to postpone or accelerate the supernova
+- We can change things between loops using persistent dialogue conditions, ship log entries, etc., including physical changes gated on those things, but this breaks lore unless we introduce a proper explanation for it

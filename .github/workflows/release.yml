@@ -15,7 +15,7 @@ permissions:
 
 env:
   PROJ_USERNAME: Hawkbar
-  PROJ_NAME: OuterWildsModJam6
+  PROJ_NAME: GhostInTheMachine
 
 jobs:
   pre_job:
