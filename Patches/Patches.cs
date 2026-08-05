@@ -76,7 +76,7 @@ public static class GabbroDialogueSwapperPatches
     public static void Start(GabbroDialogueSwapper __instance)
     {
         // If Gabbro's statue is deactivated, they act as if this is always the first loop
-        if (PlayerData.PersistentConditionExists(Constants.PersistentConditions.STATUE_GABBRO) && PlayerData.GetPersistentCondition(Constants.PersistentConditions.STATUE_GABBRO))
+        if (PlayerData.PersistentConditionExists(STATUE_GABBRO) && PlayerData.GetPersistentCondition(STATUE_GABBRO))
         {
             __instance._activeConditionDialogue = __instance._conditionalDialogues[0];
             __instance._dialogueTree.SetTextXml(__instance._activeConditionDialogue.dialogueTextAsset);

@@ -7,12 +7,23 @@ namespace GhostInTheMachine.Managers;
 
 public class SolanumManager : ManagerBase<SolanumManager>
 {
-    static NomaiWord word;
+    static NomaiWord customWord;
 
     NomaiConversationManager conversationManager;
     GameObject quantumMoon;
 
-    public static NomaiWord Word => word;
+    public static NomaiWord CustomWord
+    {
+        get
+        {
+            // Default value (0)
+            if (customWord == NomaiWord.Identify)
+            {
+                customWord = EnumUtils.Create<NomaiWord>(nameof(NomaiMaskItem));
+            }
+            return customWord;
+        }
+    }
 
     protected override void Awake()
     {
@@ -22,12 +33,16 @@ public class SolanumManager : ManagerBase<SolanumManager>
         // TODO: This is slow (crawls all of the Quantum Moon hierarchy) but the states are inactive so regular Find won't work. May need to depend on NH DLL for SearchUtils
         conversationManager = quantumMoon.GetComponentInChildren<NomaiConversationManager>(true);
 
-        if (word == NomaiWord.Identify)
-        {
-            word = EnumUtils.Create<NomaiWord>(nameof(NomaiMaskItem));
-        }
+        conversationManager._dialogueComplete = true;
+        conversationManager._characterDialogueTree.GetInteractVolume().DisableInteraction();
 
-        AddConversationPair(word, NomaiWord.Identify, "planets/QuantumMoon/Solanum_Identify.xml");
+        AddConversationPair(CustomWord, NomaiWord.Identify, "planets/QuantumMoon/Solanum_Identify.xml");
+        AddConversationPair(CustomWord, NomaiWord.Explain, "planets/QuantumMoon/Solanum_Explain.xml");
+        AddConversationPair(CustomWord, NomaiWord.Eye, "planets/QuantumMoon/Solanum_Eye.xml");
+        AddConversationPair(CustomWord, NomaiWord.QuantumMoon, "planets/QuantumMoon/Solanum_QuantumMoon.xml");
+        AddConversationPair(CustomWord, NomaiWord.You, "planets/QuantumMoon/Solanum_You.xml");
+        AddConversationPair(CustomWord, NomaiWord.Me, "planets/QuantumMoon/Solanum_Me.xml");
+        AddConversationPair(CustomWord, NomaiWord.TheNomai, "planets/QuantumMoon/Solanum_TheNomai.xml");
     }
 
     void AddConversationPair(NomaiWord wordA, NomaiWord wordB, string xmlPath)

@@ -170,15 +170,15 @@ public class SpawnManager : ManagerBase<SpawnManager>
         InvincibilityManager.Instance.PushInvincibility();
         for (int i = 0; i < 20; i++)
         {
-            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
-            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
+            WarpBody(Locator.GetShipBody(), spawn.ship, 6f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 2f);
             yield return new WaitForFixedUpdate();
         }
         while (FastForwardManager.Instance.IsFastForwarding()) yield return null;
         for (int i = 0; i < 20; i++)
         {
-            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
-            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
+            WarpBody(Locator.GetShipBody(), spawn.ship, 6f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 2f);
             yield return new WaitForFixedUpdate();
         }
         InvincibilityManager.Instance.PopInvincibility();

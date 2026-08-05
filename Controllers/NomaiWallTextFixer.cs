@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GhostInTheMachine.Controllers;
 
 public class NomaiWallTextFixer : MonoBehaviour
 {
+    NomaiWallText textWall;
+
     protected void Awake()
     {
-        var textWall = GetComponent<NomaiWallText>();
+        textWall = GetComponent<NomaiWallText>();
+        textWall.HideTextOnStart();
+    }
+
+    protected void Start()
+    {
         textWall.HideImmediate();
         Destroy(this);
     }
