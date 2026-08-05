@@ -1,5 +1,6 @@
 ﻿using GhostInTheMachine.Controllers;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static GhostInTheMachine.Constants.PersistentConditions;
@@ -32,10 +33,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_GABBRO, STATUE_WORKSHOP, STATUE_PROBE],
             [
                 new(20.24f,
-                    new("StatueIsland_Body", new(0.8378989f, 10.73179f, 6.672981f), new(0f, 330f, 0f)) { fuel = 13f, oxygen = 120f, health = 13f, hasStaff = true },
+                    new("StatueIsland_Body", new(0.8378989f, 10.73179f, 6.672981f), new(0f, 330f, 0f)) { fuel = 13f, oxygen = 180f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(17.12f,
-                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 64f, 0f)) { fuel = 24f, oxygen = 180f, health = 13f, hasStaff = true },
+                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 64f, 0f)) { fuel = 24f, oxygen = 240f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(15.13f,
                     new("GabbroIsland_Body", new(-12.3f, 0.72f, 33.8f), new(355f, 5f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },
@@ -46,10 +47,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_FORGE, STATUE_ATP],
             [
                 new(13.14f,
-                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 324f, 180f)) { fuel = 33f, oxygen = 230f, health = 44f, hasStaff = true },
+                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 324f, 180f)) { fuel = 33f, oxygen = 230f, health = 44f },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
                 new(11.11f,
-                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 0f, 180f)) { fuel = 38f, oxygen = 320f, health = 44f, hasStaff = true },
+                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 0f, 180f)) { fuel = 38f, oxygen = 320f, health = 44f },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
             ]
         ) {
@@ -118,13 +119,19 @@ public class SpawnManager : ManagerBase<SpawnManager>
             Locator.GetAstroObject(AstroObject.Name.Comet).gameObject.SetActive(false);
         }
 
-        // TODO: Handle brittle hollow fragments properly
-        var fragments = FindObjectsOfType<FragmentIntegrity>();
-        foreach (var fragment in fragments)
+
+        var fragments = new List<FragmentIntegrity>(FindObjectsOfType<FragmentIntegrity>().Where(f => !f.GetIgnoreMeteorDamage()));
+        var frac = TimeLoop.GetFractionElapsed();
+        var totalDamage = frac * fragments.Sum(frag => frag.GetIntegrity());
+        while (totalDamage > 0f && fragments.Count > 0)
         {
-            if (!fragment.GetIgnoreMeteorDamage() && fragment.CanBreak())
+            var instanceDamage = Mathf.Min(totalDamage, Random.Range(20f, 80f));
+            var frag = fragments[Random.Range(0, fragments.Count)];
+            frag.AddDamage(instanceDamage);
+            totalDamage -= instanceDamage;
+            if (frag.GetIntegrity() <= 0f)
             {
-                fragment.AddDamage(999f);
+                fragments.Remove(frag);
             }
         }
 
@@ -137,12 +144,11 @@ public class SpawnManager : ManagerBase<SpawnManager>
                 var warpReceiver = GameObject.Find(path).GetComponent<NomaiWarpReceiver>();
                 warpReceiver._returnOnEntry = true;
                 warpReceiver._returnGlowFadeController.FadeTo(0.5f, 5f);
+
+                var warpTransmitter = FindObjectsOfType<NomaiWarpTransmitter>().FirstOrDefault(trans => trans._targetReceiver == warpReceiver);
+                warpReceiver._returnPlatform = warpTransmitter;
             }
         }
-
-        playerResources._currentFuel = spawn.player.fuel;
-        playerResources._currentOxygen = spawn.player.oxygen;
-        playerResources._currentHealth = spawn.player.health;
 
         if (spawn.player.hasSuit)
         {
@@ -168,7 +174,18 @@ public class SpawnManager : ManagerBase<SpawnManager>
             WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
             yield return new WaitForFixedUpdate();
         }
+        while (FastForwardManager.Instance.IsFastForwarding()) yield return null;
+        for (int i = 0; i < 20; i++)
+        {
+            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
+            yield return new WaitForFixedUpdate();
+        }
         InvincibilityManager.Instance.PopInvincibility();
+
+        playerResources._currentFuel = spawn.player.fuel;
+        playerResources._currentOxygen = spawn.player.oxygen;
+        playerResources._currentHealth = spawn.player.health;
 
         // Mark ship on HUD since the player theoretically entered the ship even though they technically haven't yet
         PlayerState._hasPlayerEnteredShip = true;

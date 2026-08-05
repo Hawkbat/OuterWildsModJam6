@@ -68,7 +68,6 @@ namespace GhostInTheMachine.Controllers
             {
                 eyesGlowing = true;
                 SetEyeGlow(1f);
-                GhostInTheMachine.Instance.ModHelper.Console.WriteLine($"{eyeRenderer.GetOriginalEmissionColor()}");
             }
             else if (!glowing)
             {

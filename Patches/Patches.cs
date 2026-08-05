@@ -2,6 +2,8 @@
 using HarmonyLib;
 using GhostInTheMachine.Managers;
 
+using static GhostInTheMachine.Constants.PersistentConditions;
+
 namespace GhostInTheMachine.Patches;
 
 [HarmonyPatch(typeof(ShipLogDetectiveMode))]
@@ -15,9 +17,8 @@ public static class ShipLogDetectiveModePatches
             if (!__instance._updateFrameAll && !__instance._updateRevealAnim && __instance._focusedSelectable != null)
             {
                 var card = (ShipLogEntryCard)__instance._focusedSelectable;
-                if (!Locator.GetEntryLocation(card.GetEntry().GetID()))
+                if (card.GetEntry().GetID().StartsWith("GITM_"))
                 {
-                    // Used mark entry key to mark an entry that doesn't have a location, might be one of ours
                     ShipLogDialogueManager.Instance.OnActivateEntry(card.GetEntry().GetID());
                 }
             }
@@ -28,6 +29,28 @@ public static class ShipLogDetectiveModePatches
 [HarmonyPatch(typeof(ShipLogMapMode))]
 public static class ShipLogMapModePatches
 {
+    [HarmonyPrefix, HarmonyPatch(nameof(ShipLogMapMode.SetEntryFocus))]
+    public static bool SetEntryFocus(ShipLogMapMode __instance, int index, ref bool __result)
+    {
+        index = index < 0 ? __instance._maxIndex : index >= __instance._maxIndex ? 0 : index;
+        var listItem = __instance._listItems[index];
+        if (listItem.GetEntry().GetID().StartsWith("GITM_"))
+        {
+            // Only allow viewing these entries in detective mode, not map mode
+            ShipLogController ctrl = Object.FindObjectOfType<ShipLogController>();
+            string focusedEntryID = listItem.GetEntry().GetID();
+            ctrl._currentMode = ctrl._detectiveMode;
+            __instance.ExitMode();
+            ctrl._currentMode.EnterMode(focusedEntryID, null);
+            ctrl._oneShotSource.PlayOneShot(AudioType.ShipLogEnterDetectiveMode);
+
+            __result = false;
+            return false; // Skip original method
+        }
+        __result = false;
+        return true; // Continue with original method
+    }
+
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogMapMode.UpdateMode))]
     public static void UpdateMode(ShipLogMapMode __instance)
     {
@@ -92,6 +115,76 @@ public static class SleepTimerUIPatches
             {
                 ember.image.enabled = false;
             }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(Flashback))]
+public static class FlashbackPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(Flashback.OnTriggerFlashback))]
+    public static void OnTriggerFlashback(Flashback __instance)
+    {
+        var normalColor = new Color(0.2423f, 0.2915f, 2.4401f, 1f);
+        var errorColor = new Color(2.4401f, 0.2423f, 0.2915f, 1f);
+
+        var error0 = !HasAllConditions(STATUE_GABBRO, STATUE_WORKSHOP, STATUE_PROBE);
+        var error1 = !HasAllConditions(STATUE_FORGE, STATUE_ATP);
+        var error2 = !HasAllConditions(STATUE_SS_LOWER, STATUE_SS_UPPER);
+        var error3 = !HasAllConditions(SOLANUM_MASK_FIX);
+
+        __instance._forwardStreamsRenderers[0].material.SetColor("_EmissionColor", error0 ? errorColor : normalColor);
+        __instance._forwardStreamsRenderers[1].material.SetColor("_EmissionColor", error1 ? errorColor : normalColor);
+        __instance._forwardStreamsRenderers[2].material.SetColor("_EmissionColor", error2 ? errorColor : normalColor);
+
+        if (error3)
+        {
+            // TODO: spawn duplicate masks?
+            __instance._maskTransform.localEulerAngles += Vector3.forward * 30f;
+        }
+    }
+
+    static bool HasAllConditions(params string[] conditions)
+    {
+        foreach (var condition in conditions)
+        {
+            if (!PlayerData.PersistentConditionExists(condition) || !PlayerData.GetPersistentCondition(condition))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+[HarmonyPatch(typeof(ToolModeSwapper))]
+public static class ToolModeSwapperPatches
+{
+    [HarmonyPrefix, HarmonyPatch(typeof(ToolModeSwapper), nameof(ToolModeSwapper.EquipToolMode))]
+    public static bool EquipToolMode(ToolModeSwapper __instance, ToolMode mode)
+    {
+        if (__instance._currentToolGroup == ToolGroup.Suit && __instance.IsInToolMode(ToolMode.Item) && __instance._itemCarryTool.GetHeldItemType() == StaffManager.ItemType)
+        {
+            if (mode == ToolMode.Probe && !OWInput.IsPressed(InputLibrary.cancel))
+            {
+                // If the player is holding the staff and tries to switch to probe mode without using the cancel button, don't allow it
+                return false; // Skip original method
+            }
+        }
+        return true; // Continue with original method
+    }
+}
+
+[HarmonyPatch(typeof(ToolModeUI))]
+public static class ToolModeUIPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(ToolModeUI.Update))]
+    public static void Update(ToolModeUI __instance)
+    {
+        if (OWInput.IsInputMode(InputMode.Character) && Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItemType() == StaffManager.ItemType)
+        {
+            // Hide default scout launcher prompt while holding the staff since we block it
+            __instance._probePrompt.SetVisibility(false);
         }
     }
 }

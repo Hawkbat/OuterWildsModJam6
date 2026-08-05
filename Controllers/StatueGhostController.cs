@@ -26,12 +26,12 @@ public class StatueGhostController : MonoBehaviour
         }
         else
         {
-            Activate();
+            Activate(true);
         }
         enabled = false;
     }
 
-    public void Activate()
+    public void Activate(bool initial = false)
     {
         isActivated = true;
         if (PlayerData.PersistentConditionExists(persistentCondition))
@@ -40,11 +40,12 @@ public class StatueGhostController : MonoBehaviour
         }
         visuals.SetEyesOpen(true);
         visuals.SetEyesGlowing(true);
-        if (canTurn)
+        if (canTurn && !initial)
         {
             visuals.StartTurning(Locator.GetPlayerTransform().position);
         }
-        visuals.turnAudioSource.PlayOneShot(AudioType.NomaiComputerRingActivate);
+        // This breaks turning audio, do something else if we need to
+        //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamActivate);
     }
 
     public void Deactivate()
@@ -53,6 +54,6 @@ public class StatueGhostController : MonoBehaviour
         PlayerData.SetPersistentCondition(persistentCondition, true);
         visuals.SetEyesOpen(false);
         visuals.SetEyesGlowing(false);
-        visuals.turnAudioSource.PlayOneShot(AudioType.NomaiComputerRingDeactivate);
+        //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamDeactivate);
     }
 }

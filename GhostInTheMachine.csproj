@@ -35,6 +35,11 @@
     <None Include="translations\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="assetbundles\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Remove="assetbundles\assetbundles" />
+    <None Remove="assetbundles\assetbundles.manifest" />
     <None Include="addon-manifest.json" Condition="Exists('addon-manifest.json')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

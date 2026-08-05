@@ -1,0 +1,19 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "Props": {
+    "details": [
+      {
+        "assetBundle": "assetbundles/ghostinthemachine",
+        "path": "Assets/GhostInTheMachine/CustomAssetsManager.prefab",
+        "isRelativeToParent": true,
+        "keepLoaded": true
+      },
+      {
+        "assetBundle": "assetbundles/ghostinthemachine",
+        "path": "Assets/GhostInTheMachine/Props_StatueIslandInterior/BatchedMeshRenderers_4_Edited.prefab",
+        "parentPath": "Sector_StatueIsland/Sector_StatueIslandInterior/Props_StatueIslandInterior/BatchedGroup",
+        "isRelativeToParent": true
+      }
+    ]
+  }
+}

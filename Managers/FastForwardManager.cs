@@ -68,8 +68,8 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         Locator.GetPlayerCamera().enabled = false;
         OWTime.SetMaxDeltaTime(0.033333335f);
         Locator.GetAudioMixer().MixSleepAtCampfire(0f);
-        OWInput.ChangeInputMode(InputMode.None);
         GlobalMessenger.FireEvent("StartFastForward");
+        OWInput.ChangeInputMode(InputMode.None);
         enabled = true;
     }
 
@@ -85,8 +85,8 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         OWTime.SetMaxDeltaTime(0.06666667f);
         Locator.GetAudioMixer().UnmixSleepAtCampfire(0f);
         Locator.GetPlayerAudioController()._oneShotSource.PlayOneShot(AudioType.PlayerGasp_Medium);
-        OWInput.ChangeInputMode(InputMode.Character);
         GlobalMessenger.FireEvent("EndFastForward");
+        OWInput.ChangeInputMode(InputMode.Character);
         enabled = false;
     }
 }
