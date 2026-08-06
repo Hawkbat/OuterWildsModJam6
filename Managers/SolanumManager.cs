@@ -33,9 +33,6 @@ public class SolanumManager : ManagerBase<SolanumManager>
         // TODO: This is slow (crawls all of the Quantum Moon hierarchy) but the states are inactive so regular Find won't work. May need to depend on NH DLL for SearchUtils
         conversationManager = quantumMoon.GetComponentInChildren<NomaiConversationManager>(true);
 
-        conversationManager._dialogueComplete = true;
-        conversationManager._characterDialogueTree.GetInteractVolume().DisableInteraction();
-
         AddConversationPair(CustomWord, NomaiWord.Identify, "planets/QuantumMoon/Solanum_Identify.xml");
         AddConversationPair(CustomWord, NomaiWord.Explain, "planets/QuantumMoon/Solanum_Explain.xml");
         AddConversationPair(CustomWord, NomaiWord.Eye, "planets/QuantumMoon/Solanum_Eye.xml");

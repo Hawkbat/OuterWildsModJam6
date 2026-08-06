@@ -1,12 +1,19 @@
 {
 	"$schema": "https://raw.githubusercontent.com/outer-wilds-new-horizons/new-horizons/main/NewHorizons/Schemas/translation_schema.json",
+	"ShipLogDictionary": {
+		"GITM_GHOST_CURIOSITY": "Lami",
+		"GITM_GHOST_CURIOSITY_RUMOR_NAME": "Unknown",
+		"GITM_GHOST_CURIOSITY_INITIAL": "Hello? Where am I? Can anyone hear me? It's dark and scary here. I can't see anything. I can't feel anything."
+	},
 	"UIDictionary": {
+		"GITM_GHOST": "Unknown",
 		"NomaiStaffItem": "Nomai Staff",
 		"NomaiStaffItem_PlaceWall": "Create Wall",
 		"NomaiStaffItem_RemoveWall": "Remove Wall",
 		"NomaiMaskItem": "Lami's Mask",
 		"ActivateStatuePrompt": "Activate Statue",
 		"DeactivateStatuePrompt": "Deactivate Statue",
+		"ActivateShipLogEntryPrompt": "Choose Entry",
 		"debugMode": "Debug Mode",
 		"debugModeTooltip": "Enable mod-specific debugging tools"
 	}

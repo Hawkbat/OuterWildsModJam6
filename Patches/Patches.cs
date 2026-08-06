@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using HarmonyLib;
+﻿using GhostInTheMachine.Controllers;
 using GhostInTheMachine.Managers;
+using HarmonyLib;
+using UnityEngine;
 
 using static GhostInTheMachine.Constants.PersistentConditions;
 
@@ -12,16 +13,35 @@ public static class ShipLogDetectiveModePatches
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.UpdateMode))]
     public static void UpdateMode(ShipLogDetectiveMode __instance)
     {
-        if (OWInput.IsNewlyPressed(InputLibrary.markEntryOnHUD))
+        var card = __instance._focusedSelectable as ShipLogEntryCard;
+        if (card != null)
         {
-            if (!__instance._updateFrameAll && !__instance._updateRevealAnim && __instance._focusedSelectable != null)
+            var entryID = card.GetEntry().GetID();
+            if (ShipLogDialogueManager.Instance.CanActivateEntry(entryID))
             {
-                var card = (ShipLogEntryCard)__instance._focusedSelectable;
-                if (card.GetEntry().GetID().StartsWith("GITM_"))
+                // If the focused entry is one of ours and can be activated, change mark prompt to be our activation prompt instead
+                __instance._markOnHUDPrompt.SetText(GhostInTheMachine.NewHorizons.GetTranslationForUI("ActivateShipLogEntryPrompt"));
+                __instance._markOnHUDPrompt.SetVisibility(true);
+
+                if (OWInput.IsNewlyPressed(InputLibrary.markEntryOnHUD) && !__instance._updateFrameAll && !__instance._updateRevealAnim)
                 {
-                    ShipLogDialogueManager.Instance.OnActivateEntry(card.GetEntry().GetID());
+                    ShipLogDialogueManager.Instance.OnActivateEntry(entryID);
                 }
             }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(ShipLogEntryCard))]
+public static class ShipLogEntryCardPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntryCard.Init))]
+    public static void OnEnterComputer(ShipLogEntryCard __instance)
+    {
+        if (__instance.GetEntry().GetID().StartsWith("GITM_GHOST_"))
+        {
+            __instance._background.material = __instance._nameBackground.material = __instance._border.material = CustomAssetsManager.Instance.GhostUIMaterial;
+            __instance._name.color = new Color(0.75f, 0.75f, 1f);
         }
     }
 }
@@ -185,6 +205,38 @@ public static class ToolModeUIPatches
         {
             // Hide default scout launcher prompt while holding the staff since we block it
             __instance._probePrompt.SetVisibility(false);
+        }
+    }
+}
+
+[HarmonyPatch(typeof(NomaiConversationManager))]
+public static class NomaiConversationManagerPatches
+{
+    [HarmonyPrefix, HarmonyPatch(typeof(NomaiConversationManager), nameof(NomaiConversationManager.Update))]
+    public static void Update(NomaiConversationManager __instance)
+    {
+        var heldItem = Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem();
+        if (heldItem != null && heldItem is NomaiMaskItem)
+        {
+            // If we're holding the mask, handle the state machine differently
+
+            // Skip initial dialogue
+            if (!__instance._dialogueComplete)
+            {
+                __instance._dialogueComplete = true;
+                __instance._characterDialogueTree.GetInteractVolume().DisableInteraction();
+            }
+            if (!__instance._solanumAnimController.isPerformingAction)
+            {
+                if (__instance._state == NomaiConversationManager.State.WatchingPlayer)
+                {
+                    // Jump ahead to raising cairns instead of creating stones first
+                    __instance._state = NomaiConversationManager.State.RaisingCairns;
+                    __instance._solanumAnimController.PlayRaiseCairns();
+                    __instance._cairnAnimator.SetTrigger("Raise");
+                    __instance._cairnCollision.SetActivation(true);
+                }
+            }
         }
     }
 }

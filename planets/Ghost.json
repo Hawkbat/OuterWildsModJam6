@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "name": "GITM_GHOST",
+  "canShowOnTitle": false,
+  "trackForSolarSystemRadius": false,
+  "Base": {
+    "soiOverride": 0,
+    "groundSize": 0,
+    "surfaceSize": 0,
+    "hasFluidDetector": false,
+    "hideProxy": true
+  },
+  "Orbit": {
+    "isStatic": true,
+    "staticPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "primaryBody": "Sun",
+    "showOrbitLine": false
+  },
+  "ShipLog": {
+    "xmlFile": "planets/Ghost/ShipLog.xml",
+    "spriteFolder": "planets/Ghost/sprites/",
+    "mapMode": {
+      "invisibleWhenHidden": true,
+      "manualPosition": {
+        "x": 300,
+        "y": 200
+      },
+      "manualNavigationPosition": {
+        "x": 1,
+        "y": 2
+      },
+      "outlineSprite": "planets/Ghost/MapIcon.png",
+      "revealedSprite": "planets/Ghost/MapIcon.png"
+    }
+  }
+}

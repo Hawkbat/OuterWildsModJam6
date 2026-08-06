@@ -1,0 +1,14 @@
+﻿<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
+  <ID>GITM_GHOST</ID>
+  <Entry>
+    <ID>GITM_GHOST_CURIOSITY</ID>
+    <Name>GITM_GHOST_CURIOSITY</Name>
+    <IsCuriosity />
+    <RumorFact>
+      <ID>GITM_GHOST_CURIOSITY_INITIAL</ID>
+      <RumorName>GITM_GHOST_CURIOSITY_RUMOR_NAME</RumorName>
+      <Text>GITM_GHOST_CURIOSITY_INITIAL</Text>
+    </RumorFact>
+  </Entry>
+</AstroObjectEntry>

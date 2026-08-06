@@ -26,7 +26,7 @@
     <Content Include="GhostInTheMachine.csproj.user" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="planets\**\*.*">
+    <None Include="planets\**\*.*" Exclude="planets\**\*.xcf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="systems\**\*.*">
