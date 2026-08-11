@@ -60,10 +60,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_SS_LOWER, STATUE_SS_UPPER],
             [
                 new(8.64f,
-                    new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 95f, 0f)) { fuel = 64f, oxygen = 310f, health = 73f },
+                    new("TowerTwin_Body", new(0.8f, 3.8f, -123f), new(63f, 270f, 270f)) { fuel = 64f, oxygen = 310f, health = 73f },
                     new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
                 new(6.32f,
-                    new("TowerTwin_Body", new(0.8f, 3.8f, -123f), new(63f, 270f, 270f)) { fuel = 85f, oxygen = 400f, health = 91f },
+                    new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 95f, 0f)) { fuel = 85f, oxygen = 400f, health = 91f },
                     new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
             ]
         ),
@@ -170,15 +170,15 @@ public class SpawnManager : ManagerBase<SpawnManager>
         InvincibilityManager.Instance.PushInvincibility();
         for (int i = 0; i < 20; i++)
         {
-            WarpBody(Locator.GetShipBody(), spawn.ship, 6f);
-            WarpBody(Locator.GetPlayerBody(), spawn.player, 2f);
+            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
             yield return new WaitForFixedUpdate();
         }
         while (FastForwardManager.Instance.IsFastForwarding()) yield return null;
         for (int i = 0; i < 20; i++)
         {
-            WarpBody(Locator.GetShipBody(), spawn.ship, 6f);
-            WarpBody(Locator.GetPlayerBody(), spawn.player, 2f);
+            WarpBody(Locator.GetShipBody(), spawn.ship, 4f);
+            WarpBody(Locator.GetPlayerBody(), spawn.player, 1f);
             yield return new WaitForFixedUpdate();
         }
         InvincibilityManager.Instance.PopInvincibility();

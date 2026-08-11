@@ -1,6 +1,8 @@
 ﻿using GhostInTheMachine.Controllers;
 using GhostInTheMachine.Managers;
 using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using static GhostInTheMachine.Constants.PersistentConditions;
@@ -10,6 +12,8 @@ namespace GhostInTheMachine.Patches;
 [HarmonyPatch(typeof(ShipLogDetectiveMode))]
 public static class ShipLogDetectiveModePatches
 {
+    static bool skipFrameAll = false;
+
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.UpdateMode))]
     public static void UpdateMode(ShipLogDetectiveMode __instance)
     {
@@ -30,19 +34,44 @@ public static class ShipLogDetectiveModePatches
             }
         }
     }
+
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.PrepareRevealAnimations))]
+    public static void PrepareRevealAnimations(ShipLogDetectiveMode __instance)
+    {
+        if (Time.unscaledTime > __instance._enterModeTime + 0.5f)
+        {
+            // Skip the zoom-in if this isn't the initial entry reveal animation
+            skipFrameAll = true;
+        }
+    }
+
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.FinishRevealAnimation))]
+    public static void FinishRevealAnimation(ShipLogDetectiveMode __instance)
+    {
+        if (skipFrameAll)
+        {
+            skipFrameAll = false;
+            // Skip the zoom-out after revealing entries
+            __instance._updateFrameAll = false;
+            // Clear the fact reveal queue so currently revealed facts aren't treated as newly revealed again
+            __instance._manager.ClearNewlyRevealedFacts();
+        }
+    }
 }
 
 [HarmonyPatch(typeof(ShipLogEntryCard))]
 public static class ShipLogEntryCardPatches
 {
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntryCard.Init))]
-    public static void OnEnterComputer(ShipLogEntryCard __instance)
+    public static void Init(ShipLogEntryCard __instance)
     {
-        if (__instance.GetEntry().GetID().StartsWith("GITM_GHOST_"))
-        {
-            __instance._background.material = __instance._nameBackground.material = __instance._border.material = CustomAssetsManager.Instance.GhostUIMaterial;
-            __instance._name.color = new Color(0.75f, 0.75f, 1f);
-        }
+        ShipLogDialogueManager.Instance.OnInitCard(__instance);
+    }
+
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntryCard.MarkAsRead))]
+    public static void MarkAsRead(ShipLogEntryCard __instance)
+    {
+        ShipLogDialogueManager.Instance.OnMarkCardAsRead(__instance);
     }
 }
 
@@ -86,6 +115,28 @@ public static class ShipLogMapModePatches
                 }
             }
         }
+    }
+}
+
+[HarmonyPatch(typeof(ShipLogEntry))]
+public static class ShipLogEntryPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntry.GetFactsForDisplay))]
+    public static void GetFactsForDisplay(ShipLogEntry __instance, List<ShipLogFact> __result)
+    {
+        // Filter out facts with empty text (used to add rumor arrows without extra text lines)
+        __result = __result.Where(f => !string.IsNullOrEmpty(f.GetText())).ToList();
+    }
+}
+
+[HarmonyPatch(typeof(ShipLogEntryLink))]
+public static class ShipLogEntryLinkPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntryLink.GetFactsForDisplay))]
+    public static void GetFactsForDisplay(ShipLogEntryLink __instance, List<ShipLogFact> __result)
+    {
+        // Filter out facts with empty text (used to add rumor arrows without extra text lines)
+        __result = __result.Where(f => !string.IsNullOrEmpty(f.GetText())).ToList();
     }
 }
 
@@ -238,5 +289,21 @@ public static class NomaiConversationManagerPatches
                 }
             }
         }
+    }
+}
+
+[HarmonyPatch(typeof(PlayerCameraEffectController))]
+public static class PlayerCameraEffectControllerPatches
+{
+    [HarmonyPrefix, HarmonyPatch(nameof(PlayerCameraEffectController.OnStartOfTimeLoop))]
+    public static bool OnStartOfTimeLoop(PlayerCameraEffectController __instance)
+    {
+        if (!PlayerData.GetPersistentCondition(SOLANUM_MASK_FIX))
+        {
+            // If the player hasn't fixed the mask yet, skip the wake-up prompt logic to wake up immediately
+            __instance.WakeUp();
+            return false; // Skip original method
+        }
+        return true; // Continue with original method
     }
 }

@@ -13,6 +13,8 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
     float displayStartTime = 0f;
     float displayEndTime = 0f;
 
+    OWAudioSource audioSrc;
+
     public bool IsFastForwarding() => isFastForwarding;
     public float GetStartTime() => startTime;
     public float GetEndTime() => endTime;
@@ -24,6 +26,12 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
     {
         base.Awake();
         enabled = false;
+        audioSrc = gameObject.AddComponent<OWAudioSource>();
+        audioSrc.SetTrack(OWAudioMixer.TrackName.Menu);
+        audioSrc.spatialBlend = 0f;
+        audioSrc.SetLocalVolume(0.2f);
+        audioSrc.AssignAudioLibraryClip(AudioType.StationDiscovery);
+        audioSrc.Stop();
     }
 
     protected void Update()
@@ -70,6 +78,8 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         Locator.GetAudioMixer().MixSleepAtCampfire(0f);
         GlobalMessenger.FireEvent("StartFastForward");
         OWInput.ChangeInputMode(InputMode.None);
+        audioSrc.Stop();
+        audioSrc.Play();
         enabled = true;
     }
 
@@ -87,6 +97,7 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         Locator.GetPlayerAudioController()._oneShotSource.PlayOneShot(AudioType.PlayerGasp_Medium);
         GlobalMessenger.FireEvent("EndFastForward");
         OWInput.ChangeInputMode(InputMode.Character);
+        audioSrc.Stop();
         enabled = false;
     }
 }

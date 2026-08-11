@@ -27,6 +27,17 @@ public class DebugManager : ManagerBase<DebugManager>
             }
         }
         GUILayout.Space(20);
+        if (GUILayout.Button("Reset Mod Ship Log"))
+        {
+            var saves = PlayerData._currentGameSave.shipLogFactSaves.Where(s => s.Value.id.StartsWith("GITM_")).Select(s => s.Value).ToList();
+            foreach (var save in saves)
+            {
+                PlayerData._currentGameSave.shipLogFactSaves.Remove(save.id);
+            }
+            PlayerData.SaveCurrentGame();
+            Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
+        }
+        GUILayout.Space(20);
         if (GUILayout.Button("Default Spawn")) WarpToSpawnPoint("Spawn_TH");
         if (GUILayout.Button("Spawn at Statue Island")) WarpToSpawnPoint("Spawn_StatueIsland_Beach");
         if (GUILayout.Button("Spawn inside ATP")) WarpToSpawnPoint("Spawn_TimeLoopDevice");

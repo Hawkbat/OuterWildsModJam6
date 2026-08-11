@@ -20,6 +20,10 @@
     "primaryBody": "Sun",
     "showOrbitLine": false
   },
+  "ReferenceFrame": {
+    "enabled": false,
+    "hideInMap": true
+  },
   "ShipLog": {
     "xmlFile": "planets/Ghost/ShipLog.xml",
     "spriteFolder": "planets/Ghost/sprites/",
