@@ -36,7 +36,7 @@ public class DebugManager : ManagerBase<DebugManager>
             }
         }
         GUILayout.Space(20);
-        if (GUILayout.Button("Reset Mod Ship Log"))
+        if (GUILayout.Button("Reset Mod Ship Logs (Reloads Scene)"))
         {
             var saves = PlayerData._currentGameSave.shipLogFactSaves.Where(s => s.Value.id.StartsWith("GITM_")).Select(s => s.Value).ToList();
             foreach (var save in saves)
@@ -46,6 +46,16 @@ public class DebugManager : ManagerBase<DebugManager>
             PlayerData.SaveCurrentGame();
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
         }
+        foreach (var fact in typeof(Constants.ShipLogFacts).GetFields().Where(f => f.FieldType == typeof(string)))
+        {
+            var factID = (string)fact.GetValue(null);
+            GUI.enabled = !Locator.GetShipLogManager().IsFactRevealed(factID);
+            if (GUILayout.Button($"Reveal {factID}"))
+            {
+                Locator.GetShipLogManager().RevealFact(factID);
+            }
+        }
+        GUI.enabled = true;
         GUILayout.Space(20);
         if (GUILayout.Button("Default Spawn")) WarpToSpawnPoint("Spawn_TH");
         if (GUILayout.Button("Spawn at Statue Island")) WarpToSpawnPoint("Spawn_StatueIsland_Beach");

@@ -49,6 +49,8 @@ public class StatueManager : ManagerBase<StatueManager>
         ConfigureStatueVisuals(playerStatue, playerStatue, playerStatueAudio);
         WireGhostStatue(playerStatue, STATUE_PLAYER, true, 1f);
 
+        GameObject.Find("TimeLoopRing_Body/Interactibles_TimeLoopRing_Hidden/GITM_MASK_COMPUTER").AddComponent<MaskComputerController>();
+
         if (!finaleAudioClip)
         {
             finaleAudioClip = GhostInTheMachine.Instance.ModHelper.Assets.GetAudio("planets/TimeLoopRing/OW_EndTimes_Reversed.mp3");

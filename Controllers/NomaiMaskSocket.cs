@@ -21,6 +21,7 @@ public class NomaiMaskSocket : OWItemSocket
         {
             monolith.SetHasMask(true);
             item.SetVisible(false);
+            EnableInteraction(false);
 
             StatueManager.Instance.OnMaskInstalled();
 

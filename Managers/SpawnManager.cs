@@ -40,7 +40,7 @@ public class SpawnManager : ManagerBase<SpawnManager>
                     new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 64f, 0f)) { fuel = 24f, oxygen = 240f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(15.13f,
-                    new("GabbroIsland_Body", new(-12.3f, 0.72f, 33.8f), new(355f, 5f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },
+                    new("StatueIsland_Body", new(2.34f, 53.6f, -62f), new(0f, 185f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true, destroyDelay = 10f }),
             ]
         ),
@@ -60,19 +60,19 @@ public class SpawnManager : ManagerBase<SpawnManager>
         new(
             [STATUE_SS_LOWER, STATUE_SS_UPPER],
             [
-                new(8.64f,
-                    new("TowerTwin_Body", new(0.8f, 3.8f, -123f), new(63f, 270f, 270f)) { fuel = 64f, oxygen = 310f, health = 73f },
-                    new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
-                new(6.32f,
+                new(6.64f,
+                    new("TowerTwin_Body", new(0.8f, 3.8f, -125f), new(63f, 90f, 90f)) { fuel = 64f, oxygen = 310f, health = 73f },
+                    new("CaveTwin_Body", new(37.856f, -129.298f, -97.273f), new(28.68671f, 27.24732f, 207.8393f))),
+                new(5.32f,
                     new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 95f, 0f)) { fuel = 85f, oxygen = 400f, health = 91f },
-                    new("CaveTwin_Body", new(130.3f, 75.75f, 72.4f), new(343f, 319f, 300f))),
+                    new("CaveTwin_Body", new(37.856f, -129.298f, -97.273f), new(28.68671f, 27.24732f, 207.8393f))),
             ]
         ),
         new(
             [MASK_INSTALLED],
             [
-                new (4.05f,
-                    new("Moon_Body", new(-26.4f, 43.5f, -45.5f), new(311f, 164f, 32f)) { fuel = 98f, oxygen = 450f, health = 100f },
+                new (2.05f,
+                    new("Moon_Body", new(-26.4f, 45.5f, -47.5f), new(311f, 164f, 32f)) { fuel = 98f, oxygen = 450f, health = 100f },
                     new("Moon_Body", new(-28.6f, 54.5f, -38f), new(305f, 338f, 38f))),
             ]
         ),

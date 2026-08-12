@@ -96,6 +96,21 @@
     </ExploreFact>
   </Entry>
   <Entry>
+    <ID>GITM_FIND_CLASSROOM</ID>
+    <Name>GITM_FIND_CLASSROOM</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_CLASSROOM_RUMOR</ID>
+      <SourceID>GITM_GHOST_CLASSROOM_HINT</SourceID>
+      <RumorName>GITM_FIND_CLASSROOM_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_WALL_TOOL_UNLOCK</ID>
+      <Text>GITM_WALL_TOOL_UNLOCK</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
     <ID>GITM_PLAYER_STEP_0</ID>
     <Name>GITM_PLAYER_STEP_0</Name>
     <Curiosity>GITM_PLAYER_CURIOSITY</Curiosity>

@@ -12,6 +12,8 @@ public class NomaiStaffItem : OWItem
     ScreenPrompt altFirePrompt;
     ScreenPrompt cancelPrompt;
 
+    public bool IsWallToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.WallToolUnlock);
+
     public override string GetDisplayName() => translatedName;
 
     public override bool CheckIsDroppable() => true;
@@ -68,7 +70,7 @@ public class NomaiStaffItem : OWItem
         if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hit, 75f, OWLayerMask.blockableInteractMask))
         {
             targetSurfaceType = Locator.GetSurfaceManager().GetHitSurfaceType(hit);
-            if (fireInput || altFireInput)
+            if (IsWallToolUnlocked() && (fireInput || altFireInput))
             {
                 var targetWall = hit.collider.GetComponentInParent<SpawnedWallController>();
 
@@ -119,7 +121,7 @@ public class NomaiStaffItem : OWItem
     void UpdatePromptVisibility()
     {
         var inToolMode = Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() == this;
-        var promptsVisible = inToolMode && !OWTime.IsPaused();
+        var promptsVisible = inToolMode && !OWTime.IsPaused() && IsWallToolUnlocked();
 
         if (firePrompt == null)
         {

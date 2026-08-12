@@ -3,6 +3,11 @@ namespace GhostInTheMachine;
 
 public static class Constants
 {
+    public static class ShipLogFacts
+    {
+        public const string WallToolUnlock = "GITM_WALL_TOOL_UNLOCK";
+    }
+
     public static class DialogueConditions
     {
         public const string StatueInstalledThisLoop = "GITM_StatueInstalledThisLoop";

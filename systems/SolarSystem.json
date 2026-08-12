@@ -68,6 +68,13 @@
         "x": 1181,
         "y": -1753
       }
+    },
+    {
+      "id": "GITM_FIND_CLASSROOM",
+      "position": {
+        "x": 1400,
+        "y": -2000
+      }
     }
   ],
   "initialReveal": [
