@@ -59,6 +59,7 @@ public class SpawnedWallController : MonoBehaviour
         growing = true;
         shrinking = false;
         enabled = true;
+        audioSource.Play();
         audioSource.Stop();
         audioSource.Play();
     }

@@ -1,3 +1,33 @@
 {
-    "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/addon_manifest_schema.json"
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/addon_manifest_schema.json",
+  "popupMessage": "GITM_ADDON_POPUP",
+  "credits": [
+    "Hawkbar#Programming and Music",
+    "Insmoshable#Art and Design"
+  ],
+  "gameOver": [
+    {
+      "text": "TerribleFateGameOver",
+      "condition": "GITM_TerribleFate",
+      "creditsType": "fast",
+      "colour": {
+        "r": 255,
+        "g": 63,
+        "b": 63,
+        "a": 255
+      }
+    },
+    {
+      "text": "GoodEndingGameOver",
+      "condition": "GITM_GameOver",
+      "creditsType": "none",
+      "colour": {
+        "r": 63,
+        "g": 95,
+        "b": 255,
+        "a": 255
+      }
+    }
+  ],
+  "preloadAssetBundles": ["assetbundles/ghostinthemachine"]
 }

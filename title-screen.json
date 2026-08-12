@@ -1,3 +1,78 @@
 {
-    "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/title_screen_schema.json"
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/title_screen_schema.json",
+  "titleScreens": [
+    {
+      "shareTitleScreen": false,
+      "disableNHPlanets": true,
+      "Skybox": {
+        "destroyStarField": true
+      },
+      "ambience": "Singularity_BlackHole_LP",
+      "ambienceVolume": 0.25,
+      "music": "None",
+      "musicVolume": 0,
+      "menuTextTint": {
+        "r": 255,
+        "g": 63,
+        "b": 63,
+        "a": 255
+      },
+      "MenuPlanet": {
+        "destroyMenuPlanet": true,
+        "details": [
+          {
+            "assetBundle": "assetbundles/gitm-titlescreen",
+            "path": "Assets/GhostInTheMachine/TitleScreenMaskRed.prefab",
+            "position": {
+              "x": 0,
+              "y": 10,
+              "z": 0
+            },
+            "rotation": {
+              "x": 0,
+              "y": 270,
+              "z": 0
+            }
+          }
+        ]
+      },
+      "Background": {
+        "rotationSpeed": 15
+      }
+    },
+    {
+      "shareTitleScreen": false,
+      "disableNHPlanets": true,
+      "music": "TimeLoopDevice_Ambient",
+      "menuTextTint": {
+        "r": 63,
+        "g": 95,
+        "b": 255,
+        "a": 255
+      },
+      "MenuPlanet": {
+        "destroyMenuPlanet": true,
+        "details": [
+          {
+            "assetBundle": "assetbundles/gitm-titlescreen",
+            "path": "Assets/GhostInTheMachine/TitleScreenMaskBlue.prefab",
+            "position": {
+              "x": 0,
+              "y": 10,
+              "z": 0
+            },
+            "rotation": {
+              "x": 0,
+              "y": 270,
+              "z": 0
+            }
+          }
+        ]
+      },
+      "Background": {
+        "rotationSpeed": 15
+      },
+      "persistentConditionRequiredForTitle": "GITM_MASK_INSTALLED"
+    }
+  ]
 }

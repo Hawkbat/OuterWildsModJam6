@@ -144,7 +144,7 @@ public class NomaiStaffItem : OWItem
 
     protected void OnGUI()
     {
-        if (!GhostInTheMachine.Instance.DebugModeEnabled) return;
+        if (OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
         if (!Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) || Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() != this) return;
         GUILayout.Label($"Surface Type: {targetSurfaceType}");
     }

@@ -10,15 +10,24 @@ public class DebugManager : ManagerBase<DebugManager>
     protected void OnGUI()
     {
         if (!OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
+        if (PlayerState.IsWearingSuit() && GUILayout.Button("Remove Suit"))
+        {
+            Locator.GetPlayerSuit().RemoveSuit(true);
+        }
+        if (!PlayerState.IsWearingSuit() && GUILayout.Button("Suit Up"))
+        {
+            Locator.GetPlayerSuit().SuitUp(false, true);
+        }
+        GUILayout.Space(20);
         if (GUILayout.Button("Reset Persistent Conditions"))
         {
-            foreach (var condition in typeof(Constants.PersistentConditions).GetFields())
+            foreach (var condition in typeof(Constants.PersistentConditions).GetFields().Where(f => f.FieldType == typeof(string)))
             {
                 var conditionName = (string)condition.GetValue(null);
                 PlayerData.SetPersistentCondition(conditionName, false);
             }
         }
-        foreach (var condition in typeof(Constants.PersistentConditions).GetFields())
+        foreach (var condition in typeof(Constants.PersistentConditions).GetFields().Where(f => f.FieldType == typeof(string)))
         {
             var conditionName = (string)condition.GetValue(null);
             if (GUILayout.Button($"{conditionName}: {PlayerData.GetPersistentCondition(conditionName)}"))

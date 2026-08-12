@@ -1,0 +1,14 @@
+﻿<NomaiObject>
+  <TextBlock>
+    <ID>1</ID>
+    <Text>GITM_MASK_COMPUTER_1</Text>
+  </TextBlock>
+  <TextBlock>
+    <ID>2</ID>
+    <Text>GITM_MASK_COMPUTER_2</Text>
+  </TextBlock>
+  <TextBlock>
+    <ID>3</ID>
+    <Text>GITM_MASK_COMPUTER_3</Text>
+  </TextBlock>
+</NomaiObject>

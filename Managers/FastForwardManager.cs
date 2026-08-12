@@ -29,8 +29,9 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         audioSrc = gameObject.AddComponent<OWAudioSource>();
         audioSrc.SetTrack(OWAudioMixer.TrackName.Menu);
         audioSrc.spatialBlend = 0f;
-        audioSrc.SetLocalVolume(0.2f);
+        audioSrc.SetLocalVolume(0.25f);
         audioSrc.AssignAudioLibraryClip(AudioType.StationDiscovery);
+        audioSrc.playOnAwake = false;
         audioSrc.Stop();
     }
 
@@ -38,6 +39,7 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
     {
         if (!OWTime.IsPaused())
         {
+            OWInput.ChangeInputMode(InputMode.None);
             fastForwardMultiplier = Mathf.MoveTowards(fastForwardMultiplier, MAX_FAST_FORWARD_MULTIPLIER, 2f * Time.unscaledDeltaTime);
             OWTime.SetTimeScale(fastForwardMultiplier);
         }
@@ -79,7 +81,16 @@ public class FastForwardManager : ManagerBase<FastForwardManager>
         GlobalMessenger.FireEvent("StartFastForward");
         OWInput.ChangeInputMode(InputMode.None);
         audioSrc.Stop();
+        if (PlayerData.GetPersistentCondition(Constants.PersistentConditions.MASK_INSTALLED))
+        {
+            audioSrc.AssignAudioLibraryClip(AudioType.ShipCabinAmbience);
+        }
+        else
+        {
+            audioSrc.AssignAudioLibraryClip(AudioType.StationDiscovery);
+        }
         audioSrc.Play();
+        audioSrc.SetLocalVolume(0.25f);
         enabled = true;
     }
 

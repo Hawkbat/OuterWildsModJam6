@@ -33,16 +33,16 @@ public class SolanumManager : ManagerBase<SolanumManager>
         // TODO: This is slow (crawls all of the Quantum Moon hierarchy) but the states are inactive so regular Find won't work. May need to depend on NH DLL for SearchUtils
         conversationManager = quantumMoon.GetComponentInChildren<NomaiConversationManager>(true);
 
-        AddConversationPair(CustomWord, NomaiWord.Identify, "planets/QuantumMoon/Solanum_Identify.xml");
-        AddConversationPair(CustomWord, NomaiWord.Explain, "planets/QuantumMoon/Solanum_Explain.xml");
-        AddConversationPair(CustomWord, NomaiWord.Eye, "planets/QuantumMoon/Solanum_Eye.xml");
-        AddConversationPair(CustomWord, NomaiWord.QuantumMoon, "planets/QuantumMoon/Solanum_QuantumMoon.xml");
-        AddConversationPair(CustomWord, NomaiWord.You, "planets/QuantumMoon/Solanum_You.xml");
-        AddConversationPair(CustomWord, NomaiWord.Me, "planets/QuantumMoon/Solanum_Me.xml");
-        AddConversationPair(CustomWord, NomaiWord.TheNomai, "planets/QuantumMoon/Solanum_TheNomai.xml");
+        AddConversationPair(CustomWord, NomaiWord.Identify, "planets/QuantumMoon/Solanum_Identify.xml", 7);
+        AddConversationPair(CustomWord, NomaiWord.Explain, "planets/QuantumMoon/Solanum_Explain.xml", 8);
+        AddConversationPair(CustomWord, NomaiWord.Eye, "planets/QuantumMoon/Solanum_Eye.xml", 9);
+        AddConversationPair(CustomWord, NomaiWord.QuantumMoon, "planets/QuantumMoon/Solanum_QuantumMoon.xml", 10);
+        AddConversationPair(CustomWord, NomaiWord.You, "planets/QuantumMoon/Solanum_You.xml", 11);
+        AddConversationPair(CustomWord, NomaiWord.Me, "planets/QuantumMoon/Solanum_Me.xml", 12);
+        AddConversationPair(CustomWord, NomaiWord.TheNomai, "planets/QuantumMoon/Solanum_TheNomai.xml", 13);
     }
 
-    void AddConversationPair(NomaiWord wordA, NomaiWord wordB, string xmlPath)
+    void AddConversationPair(NomaiWord wordA, NomaiWord wordB, string xmlPath, int seed)
     {
         var xmlText = File.ReadAllText(Path.Combine(GhostInTheMachine.Instance.ModHelper.Manifest.ModFolderPath, xmlPath));
         var wallJson = $@"{{
@@ -51,7 +51,7 @@ public class SolanumManager : ManagerBase<SolanumManager>
 			""position"": {{""x"": 0.5, ""y"": -0.4168, ""z"": -0.9157}}, 
 			""rotation"" : {{""x"": 354.7477, ""y"": 327.7819, ""z"": 271.4651}},
             ""xmlFile"": ""{xmlPath}"",
-			""seed"": {54352 + (int)wordA + (int)wordB}
+			""seed"": {seed}
 		}}";
         var wallObj = GhostInTheMachine.NewHorizons.CreateNomaiText(xmlText, wallJson, quantumMoon);
         var wallText = wallObj.GetComponentInChildren<NomaiWallText>(true);

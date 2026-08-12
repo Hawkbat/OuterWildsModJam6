@@ -11,9 +11,7 @@ public class GhostVisionController : MonoBehaviour
 
     public void Start()
     {
-        CustomAssetsManager.Instance.ApplyGhostMaterial(gameObject);
-        ToggleCollision(false);
-        solid = false;
+        SetIsSolid(false);
     }
 
     public void SetIsSolid(bool solid)

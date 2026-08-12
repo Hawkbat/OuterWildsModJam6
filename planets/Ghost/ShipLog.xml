@@ -1,5 +1,4 @@
-﻿<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
+﻿<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
   <ID>GITM_GHOST</ID>
   <Entry>
     <ID>GITM_GHOST_CURIOSITY</ID>
@@ -66,6 +65,34 @@
     <ExploreFact>
       <ID>GITM_GHOST_HELLO_FOLLOWUP_REVEAL</ID>
       <Text>GITM_GHOST_HELLO_FOLLOWUP_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_CHOICE_PLACES</ID>
+    <Name>GITM_CHOICE_PLACES</Name>
+    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_CHOICE_PLACES_RUMOR</ID>
+      <SourceID>GITM_GHOST_HELLO_FOLLOWUP</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_CHOICE_PLACES_REVEAL</ID>
+      <Text>GITM_CHOICE_PLACES_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_CLASSROOM_HINT</ID>
+    <Name>GITM_GHOST_CLASSROOM_HINT</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_CLASSROOM_HINT_RUMOR</ID>
+      <SourceID>GITM_CHOICE_PLACES</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_CLASSROOM_HINT_REVEAL</ID>
+      <Text>GITM_GHOST_CLASSROOM_HINT_REVEAL</Text>
     </ExploreFact>
   </Entry>
   <Entry>

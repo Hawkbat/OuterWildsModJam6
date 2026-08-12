@@ -1,13 +1,21 @@
 ﻿using GhostInTheMachine.Controllers;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
+using static GhostInTheMachine.Constants;
 using static GhostInTheMachine.Constants.PersistentConditions;
 
 namespace GhostInTheMachine.Managers;
 
 public class StatueManager : ManagerBase<StatueManager>
 {
+    const string PLAYER_STATUE_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiHeadStatue";
+    const string PLAYER_STATUE_AUDIO_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiStatue_Audio";
+
+    static AudioClip finaleAudioClip;
+
     GameObject headPrefab;
+    OWAudioSource finaleAudioSrc;
 
     protected override void Awake()
     {
@@ -15,7 +23,7 @@ public class StatueManager : ManagerBase<StatueManager>
 
         headPrefab = new GameObject("GhostStatue");
 
-        var head = GhostInTheMachine.CloneVanillaProp("TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiHeadStatue");
+        var head = GhostInTheMachine.CloneVanillaProp(PLAYER_STATUE_PATH);
         head.transform.SetParent(headPrefab.transform, false);
         head.transform.localPosition = Vector3.up * 1f;
 
@@ -23,7 +31,7 @@ public class StatueManager : ManagerBase<StatueManager>
         headProp.transform.localPosition = Vector3.zero;
         headProp.transform.localEulerAngles = Vector3.zero;
 
-        var audio = GhostInTheMachine.CloneVanillaProp("TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiStatue_Audio");
+        var audio = GhostInTheMachine.CloneVanillaProp(PLAYER_STATUE_AUDIO_PATH);
         audio.transform.SetParent(headPrefab.transform, false);
         audio.transform.localPosition = Vector3.up * 1.5f;
 
@@ -31,23 +39,28 @@ public class StatueManager : ManagerBase<StatueManager>
         mount.transform.SetParent(headPrefab.transform, false);
         mount.transform.localPosition = Vector3.zero;
 
-        var eyeLidAnimators = head.GetComponentsInChildren<TransformAnimator>();
-        var lowerLidAnimators = eyeLidAnimators.Where(anim => anim.name.Contains("eyelid_bot")).ToArray();
-        var upperLidAnimators = eyeLidAnimators.Where(anim => anim.name.Contains("eyelid_top")).ToArray();
-
-        var eyeRenderer = head.transform.Find("Props_NOM_StatueHead/Statue_Eyes").GetComponent<OWRenderer>();
-
-        var turnTransformAnimator = head.GetComponent<TransformAnimator>();
-        var turnAudioSource = audio.GetComponent<OWAudioSource>();
-
-        var visuals = headPrefab.AddComponent<StatueVisualsController>();
-        visuals.lowerLidAnimators = lowerLidAnimators;
-        visuals.upperLidAnimators = upperLidAnimators;
-        visuals.eyeRenderer = eyeRenderer;
-        visuals.turnTransformAnimator = turnTransformAnimator;
-        visuals.turnAudioSource = turnAudioSource;
+        ConfigureStatueVisuals(headPrefab, head, audio);
 
         headPrefab.SetActive(false);
+
+        // Also wire up vanilla player statue
+        var playerStatue = GameObject.Find(PLAYER_STATUE_PATH);
+        var playerStatueAudio = GameObject.Find(PLAYER_STATUE_AUDIO_PATH);
+        ConfigureStatueVisuals(playerStatue, playerStatue, playerStatueAudio);
+        WireGhostStatue(playerStatue, STATUE_PLAYER, true, 1f);
+
+        if (!finaleAudioClip)
+        {
+            finaleAudioClip = GhostInTheMachine.Instance.ModHelper.Assets.GetAudio("planets/TimeLoopRing/OW_EndTimes_Reversed.mp3");
+        }
+
+        finaleAudioSrc = gameObject.AddComponent<OWAudioSource>();
+        finaleAudioSrc.SetTrack(OWAudioMixer.TrackName.Menu);
+        finaleAudioSrc.spatialBlend = 0f;
+        finaleAudioSrc.SetLocalVolume(0.5f);
+        finaleAudioSrc.clip = finaleAudioClip;
+        finaleAudioSrc.playOnAwake = false;
+        finaleAudioSrc.Stop();
     }
 
     public void CreateGhostStatue(string persistentCondition, string parentPath, Vector3 localPosition, Vector3 localRotation, float localScale, bool hasPedestal, bool canTurn)
@@ -62,6 +75,29 @@ public class StatueManager : ManagerBase<StatueManager>
         {
             statue.transform.Find("Structure_NOM_Column_Base_Square").gameObject.SetActive(false);
         }
+
+        WireGhostStatue(statue, persistentCondition, canTurn, localScale);
+
+        statue.SetActive(true);
+    }
+
+    void ConfigureStatueVisuals(GameObject statue, GameObject head, GameObject audio)
+    {
+        var eyeLidAnimators = head.GetComponentsInChildren<TransformAnimator>();
+        var lowerLidAnimators = eyeLidAnimators.Where(anim => anim.name.Contains("eyelid_bot")).ToArray();
+        var upperLidAnimators = eyeLidAnimators.Where(anim => anim.name.Contains("eyelid_top")).ToArray();
+        var eyeRenderer = head.transform.Find("Props_NOM_StatueHead/Statue_Eyes").GetComponent<OWRenderer>();
+
+        var visuals = statue.AddComponent<StatueVisualsController>();
+        visuals.lowerLidAnimators = lowerLidAnimators;
+        visuals.upperLidAnimators = upperLidAnimators;
+        visuals.eyeRenderer = eyeRenderer;
+        visuals.turnTransformAnimator = head.GetComponent<TransformAnimator>();
+        visuals.turnAudioSource = audio.GetComponent<OWAudioSource>();
+    }
+
+    void WireGhostStatue(GameObject statue, string persistentCondition, bool canTurn, float localScale)
+    {
         var ghostController = statue.AddComponent<StatueGhostController>();
         ghostController.persistentCondition = persistentCondition;
         ghostController.canTurn = canTurn;
@@ -75,8 +111,6 @@ public class StatueManager : ManagerBase<StatueManager>
         col.radius = 2f * localScale;
         var receiver = interactable.AddComponent<StatuePromptReceiver>();
         receiver.SetInteractRange(4f * localScale);
-
-        statue.SetActive(true);
     }
 
     public void PlaceInitialStatues()
@@ -98,7 +132,7 @@ public class StatueManager : ManagerBase<StatueManager>
 
         // Forge statue is unbatched, can just disable the original head (no pedestal)
         GameObject.Find("BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/StatueHead").SetActive(false);
-        CreateGhostStatue(STATUE_FORGE, "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge", new(0.08f, 63.7f -3.75f * 2f), new(0f, 90f, 90f), 1.7f, false, false);
+        CreateGhostStatue(STATUE_FORGE, "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge", new(0.08f, 63.7f, -3.75f), new(0f, 90f, 90f), 1.7f, false, false);
 
         // Ash Twin Project statue has unbatched renderer but batched collider, just disable the head and pedestal
         GameObject.Find("TimeLoopRing_Body/Props_TimeLoopRing/OtherComponentsGroup/Props_NOM_StatueHead").SetActive(false);
@@ -113,7 +147,37 @@ public class StatueManager : ManagerBase<StatueManager>
         GameObject.Find("SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup/Prefab_NOM_StatueHead").SetActive(false);
         GameObject.Find("SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup/Structure_NOM_ShortColumnBridge").SetActive(false);
         CreateGhostStatue(STATUE_SS_LOWER, "SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup", new(12.968f, -34.5851f, 7.8967f), new(43.8725f, 0f, 270f), 1f, true, true);
+    }
 
+    public void OnMaskInstalled()
+    {
+        DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.StatueInstalledThisLoop, true);
+        PlayerData.SetPersistentCondition(MASK_INSTALLED, true);
+        FastForwardManager.Instance.SetDisplayTimes(TimeLoop.GetSecondsElapsed(), TimeLoop._loopDuration);
+        var actualTimeOffset = 10f;
+        TimeLoop.SetSecondsRemaining(60f + actualTimeOffset);
+        FastForwardManager.Instance.SetTargetTime(TimeLoop._loopDuration - actualTimeOffset);
+        if (Locator.GetGlobalMusicController()._playingEndTimes)
+        {
+            Locator.GetGlobalMusicController()._playingEndTimes = false;
+            Locator.GetGlobalMusicController()._endTimesSource.Stop();
+        }
+        else
+        {
+            Locator.GetAudioMixer().MixEndTimes(1f);
+        }
+        Locator.GetGlobalMusicController().enabled = false;
+        finaleAudioSrc.FadeIn(0.5f);
+    }
+
+    public void OnMaskRemoved()
+    {
+        DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.StatueInstalledThisLoop, false);
+        PlayerData.SetPersistentCondition(MASK_INSTALLED, false);
+        if (finaleAudioSrc.isPlaying)
+        {
+            finaleAudioSrc.FadeOut(0.5f);
+        }
     }
 }
 

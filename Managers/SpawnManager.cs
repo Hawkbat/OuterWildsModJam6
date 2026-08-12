@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using static GhostInTheMachine.Constants.PersistentConditions;
 
@@ -47,10 +48,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_FORGE, STATUE_ATP],
             [
                 new(13.14f,
-                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 324f, 180f)) { fuel = 33f, oxygen = 230f, health = 44f },
+                    new("BrittleHollow_Body", new(1f, 280f, -30f), new(0f, 324f, 180f)) { fuel = 33f, oxygen = 230f, health = 66f },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
                 new(11.11f,
-                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 0f, 180f)) { fuel = 38f, oxygen = 320f, health = 44f },
+                    new("BrittleHollow_Body", new(13.8f, 281f, 18.7f), new(0f, 0f, 180f)) { fuel = 38f, oxygen = 320f, health = 66f },
                     new("BrittleHollow_Body", new(2.6f, 170f, 62f), new(355f, 105f, 12f)) { outOfFuel = true }),
             ]
         ) {
@@ -68,7 +69,7 @@ public class SpawnManager : ManagerBase<SpawnManager>
             ]
         ),
         new(
-            [SOLANUM_MASK_FIX],
+            [MASK_INSTALLED],
             [
                 new (4.05f,
                     new("Moon_Body", new(-26.4f, 43.5f, -45.5f), new(311f, 164f, 32f)) { fuel = 98f, oxygen = 450f, health = 100f },
@@ -78,6 +79,11 @@ public class SpawnManager : ManagerBase<SpawnManager>
     ];
 
     PlayerResources playerResources;
+    Spawn activeSpawn;
+    SpawnGroup activeSpawnGroup;
+
+    public Spawn ActiveSpawn => activeSpawn;
+    public SpawnGroup ActiveSpawnGroup => activeSpawnGroup;
 
     protected override void Awake()
     {
@@ -87,7 +93,15 @@ public class SpawnManager : ManagerBase<SpawnManager>
 
     public void DoInitialSpawn()
     {
+        if (PlayerData.GetPersistentCondition(MASK_INSTALLED))
+        {
+            // System is fixed, use default spawn
+            return;
+        }
+
         var (spawn, spawnGroup) = CalculateSpawn();
+        activeSpawn = spawn;
+        activeSpawnGroup = spawnGroup;
         if (spawn == null)
         {
             // No custom spawn; fall back to default spawn
@@ -97,11 +111,11 @@ public class SpawnManager : ManagerBase<SpawnManager>
         var initialTimeLoopTime = TimeLoop.GetSecondsElapsed();
 
         // Set time loop time to target time minus 1 minute
-        TimeLoop.SetSecondsRemaining((SUPERNOVA_TIME - spawn.loopTime) * 60f + 60f);
+        TimeLoop.SetSecondsRemaining(spawn.GetSecondsRemaining() + 60f);
         if (spawn.ship.destroyed)
         {
             var shipDestroyer = Locator.GetShipTransform().gameObject.AddComponent<ShipDestructionController>();
-            shipDestroyer.SetTargetTime(spawn.loopTime * 60f + spawn.ship.destroyDelay);
+            shipDestroyer.SetTargetTime(spawn.GetSecondsElapsed() + spawn.ship.destroyDelay);
         }
         if (spawn.ship.outOfFuel)
         {
@@ -110,18 +124,18 @@ public class SpawnManager : ManagerBase<SpawnManager>
             var fuelTank = FindObjectOfType<ShipFuelTankComponent>();
             fuelTank.SetDamaged(true);
         }
-        if (spawn.loopTime >= SUN_STATION_DESTRUCTION_TIME)
+        if (spawn.GetMinutesElapsed() >= SUN_STATION_DESTRUCTION_TIME)
         {
             Locator.GetAstroObject(AstroObject.Name.SunStation).gameObject.SetActive(false);
         }
-        if (spawn.loopTime >= INTERLOPER_DESTRUCTION_TIME)
+        if (spawn.GetMinutesElapsed() >= INTERLOPER_DESTRUCTION_TIME)
         {
             Locator.GetAstroObject(AstroObject.Name.Comet).gameObject.SetActive(false);
         }
 
 
         var fragments = new List<FragmentIntegrity>(FindObjectsOfType<FragmentIntegrity>().Where(f => !f.GetIgnoreMeteorDamage()));
-        var frac = TimeLoop.GetFractionElapsed();
+        var frac = TimeLoop.GetFractionElapsed() * 0.5f;
         var totalDamage = frac * fragments.Sum(frag => frag.GetIntegrity());
         while (totalDamage > 0f && fragments.Count > 0)
         {
@@ -152,7 +166,23 @@ public class SpawnManager : ManagerBase<SpawnManager>
 
         if (spawn.player.hasSuit)
         {
+            // Shamelessly stolen from New Horizons
+
             Locator.GetPlayerSuit().SuitUp(false, true, true);
+            var spv = Locator.GetShipTransform().Find("Module_Supplies/Systems_Supplies/ExpeditionGear").GetComponent<SuitPickupVolume>();
+            var command = spv._interactVolume.GetInteractionAt(spv._pickupSuitCommandIndex).inputCommand;
+
+            // Make the ship act as if the player took the suit
+            var eventDelegate = (System.MulticastDelegate)typeof(MultipleInteractionVolume).GetField(
+                nameof(MultipleInteractionVolume.OnPressInteract),
+                BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(spv._interactVolume);
+            foreach (var handler in eventDelegate.GetInvocationList())
+            {
+                handler.Method.Invoke(handler.Target, new object[] { command });
+            }
+            spv._interactVolume._listInteractions.First(x => x.promptText == UITextType.SuitUpPrompt).interactionEnabled = true;
+            StartCoroutine(SignalScopeZoomCoroutine());
         }
         if (spawn.player.hasStaff)
         {
@@ -160,8 +190,8 @@ public class SpawnManager : ManagerBase<SpawnManager>
         }
 
         // Fast forward remaining minute to target time to let debris settle; player will wake up after
-        FastForwardManager.Instance.SetDisplayTimes(initialTimeLoopTime, spawn.loopTime * 60f);
-        FastForwardManager.Instance.SetTargetTime(spawn.loopTime * 60f);
+        FastForwardManager.Instance.SetDisplayTimes(TimeLoop._loopDuration, spawn.GetSecondsElapsed());
+        FastForwardManager.Instance.SetTargetTime(spawn.GetSecondsElapsed());
         StartCoroutine(DoInitialSpawnCoroutine(spawn));
     }
 
@@ -192,6 +222,17 @@ public class SpawnManager : ManagerBase<SpawnManager>
         var shipHudMarker = FindObjectOfType<ShipHUDMarker>();
         shipHudMarker.RefreshOwnVisibility();
         shipHudMarker.gameObject.GetComponent<MapMarker>().enabled = true;
+    }
+
+    private static IEnumerator SignalScopeZoomCoroutine()
+    {
+        while (!Locator.GetToolModeSwapper().GetSignalScope().InZoomMode())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
+        Locator.GetToolModeSwapper().GetSignalScope().ExitSignalscopeZoom();
+        Locator.GetToolModeSwapper().GetSignalScope().EnterSignalscopeZoom();
     }
 
     (Spawn, SpawnGroup) CalculateSpawn()
@@ -228,6 +269,11 @@ public class SpawnManager : ManagerBase<SpawnManager>
         public readonly float loopTime = loopTime;
         public readonly PlayerSpawnPoint player = player;
         public readonly ShipSpawnPoint ship = ship;
+
+        public float GetSecondsElapsed() => loopTime * 60f;
+        public float GetSecondsRemaining() => (SUPERNOVA_TIME - loopTime) * 60f;
+        public float GetMinutesElapsed() => loopTime;
+        public float GetMinutesRemaining() => SUPERNOVA_TIME - loopTime;
     }
 
     public abstract class SpawnPoint(string parentPath, Vector3 pos, Vector3 rot)
