@@ -111,6 +111,21 @@
     </ExploreFact>
   </Entry>
   <Entry>
+    <ID>GITM_FIND_DOORS</ID>
+    <Name>GITM_FIND_DOORS</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_DOORS_RUMOR</ID>
+      <SourceID>GITM_CHOICE_PLACES</SourceID>
+      <RumorName>GITM_FIND_DOORS_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_DOOR_TOOL_UNLOCK</ID>
+      <Text>GITM_DOOR_TOOL_UNLOCK</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
     <ID>GITM_PLAYER_STEP_0</ID>
     <Name>GITM_PLAYER_STEP_0</Name>
     <Curiosity>GITM_PLAYER_CURIOSITY</Curiosity>

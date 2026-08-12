@@ -15,27 +15,6 @@ public static class ShipLogDetectiveModePatches
 {
     static bool skipFrameAll = false;
 
-    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.UpdateMode))]
-    public static void UpdateMode(ShipLogDetectiveMode __instance)
-    {
-        var card = __instance._focusedSelectable as ShipLogEntryCard;
-        if (card != null)
-        {
-            var entryID = card.GetEntry().GetID();
-            if (ShipLogDialogueManager.Instance.CanActivateEntry(entryID))
-            {
-                // If the focused entry is one of ours and can be activated, change mark prompt to be our activation prompt instead
-                __instance._markOnHUDPrompt.SetText(GhostInTheMachine.NewHorizons.GetTranslationForUI("ActivateShipLogEntryPrompt"));
-                __instance._markOnHUDPrompt.SetVisibility(true);
-
-                if (OWInput.IsNewlyPressed(InputLibrary.markEntryOnHUD) && !__instance._updateFrameAll && !__instance._updateRevealAnim)
-                {
-                    ShipLogDialogueManager.Instance.OnActivateEntry(entryID);
-                }
-            }
-        }
-    }
-
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.PrepareRevealAnimations))]
     public static void PrepareRevealAnimations(ShipLogDetectiveMode __instance)
     {
@@ -101,23 +80,6 @@ public static class ShipLogMapModePatches
         }
         __result = false;
         return true; // Continue with original method
-    }
-
-    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogMapMode.UpdateMode))]
-    public static void UpdateMode(ShipLogMapMode __instance)
-    {
-        if (OWInput.IsNewlyPressed(InputLibrary.markEntryOnHUD))
-        {
-            if (__instance._isEntryMenuOpen && __instance._entryIndex >= 0 && __instance._pressedUpTimer <= __instance._nextHoldUpTime && __instance._pressedDownTimer <= __instance._nextHoldDownTime)
-            {
-                var listItem = __instance._listItems[__instance._entryIndex];
-                if (!Locator.GetEntryLocation(listItem.GetEntry().GetID()))
-                {
-                    // Used mark entry key to mark an entry that doesn't have a location, might be one of ours
-                    ShipLogDialogueManager.Instance.OnActivateEntry(listItem.GetEntry().GetID());
-                }
-            }
-        }
     }
 }
 

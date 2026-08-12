@@ -75,6 +75,13 @@
         "x": 1400,
         "y": -2000
       }
+    },
+    {
+      "id": "GITM_FIND_DOORS",
+      "position": {
+        "x": 1000,
+        "y": -1900
+      }
     }
   ],
   "initialReveal": [

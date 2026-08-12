@@ -12,7 +12,17 @@ public class NomaiStaffItem : OWItem
     ScreenPrompt altFirePrompt;
     ScreenPrompt cancelPrompt;
 
+    public bool IsStatueToolUnlocked() => true;
+
     public bool IsWallToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.WallToolUnlock);
+
+    public bool IsDoorToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.DoorToolUnlock);
+
+    public static NomaiStaffItem GetHeldStaff()
+    {
+        var toolModeSwapper = Locator.GetToolModeSwapper();
+        return toolModeSwapper.IsInToolMode(ToolMode.Item) ? toolModeSwapper.GetItemCarryTool().GetHeldItem() as NomaiStaffItem : null;
+    }
 
     public override string GetDisplayName() => translatedName;
 
@@ -46,6 +56,7 @@ public class NomaiStaffItem : OWItem
         Locator.GetPlayerAudioController()._oneShotExternalSource.PlayOneShot(AudioType.ToolItemWarpCorePickUp);
         transform.localPosition = new Vector3(0.25f, -1.25f, 0.25f);
         transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+        UpdatePromptVisibility();
         enabled = true;
     }
 
@@ -54,12 +65,13 @@ public class NomaiStaffItem : OWItem
         _localDropNormal = Vector3.Lerp(Vector3.up, Random.onUnitSphere, 0.1f).normalized;
         base.DropItem(position, normal, parent, sector, customDropTarget);
         Locator.GetPlayerAudioController()._oneShotExternalSource.PlayOneShot(AudioType.ToolItemWarpCoreDrop);
+        UpdatePromptVisibility();
         enabled = false;
     }
 
     protected void Update()
     {
-        var inToolMode = Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() == this;
+        var inToolMode = GetHeldStaff() == this;
         var fireInput = inToolMode && (OWInput.IsNewlyPressed(InputLibrary.lockOn, InputMode.Character) || OWInput.IsNewlyPressed(InputLibrary.toolActionPrimary, InputMode.Character));
         var altFireInput = inToolMode && OWInput.IsNewlyPressed(InputLibrary.toolActionSecondary, InputMode.Character);
         var cancelInput = inToolMode && OWInput.IsNewlyPressed(InputLibrary.cancel, InputMode.Character);
@@ -120,7 +132,7 @@ public class NomaiStaffItem : OWItem
 
     void UpdatePromptVisibility()
     {
-        var inToolMode = Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() == this;
+        var inToolMode = GetHeldStaff() == this;
         var promptsVisible = inToolMode && !OWTime.IsPaused() && IsWallToolUnlocked();
 
         if (firePrompt == null)
@@ -147,7 +159,7 @@ public class NomaiStaffItem : OWItem
     protected void OnGUI()
     {
         if (OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
-        if (!Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) || Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() != this) return;
+        if (GetHeldStaff() != this) return;
         GUILayout.Label($"Surface Type: {targetSurfaceType}");
     }
 }

@@ -28,6 +28,40 @@
         "path": "Assets/GhostInTheMachine/Props_StatueIslandInterior/BatchedMeshRenderers_4_Edited.prefab",
         "parentPath": "Sector_StatueIsland/Sector_StatueIslandInterior/Props_StatueIslandInterior/BatchedGroup",
         "isRelativeToParent": true
+      },
+      {
+        "rename": "GITM_TORNADO_LAUNCHER",
+        "path": "BrittleHollow_Body/Sector_BH/Sector_QuantumFragment/Interactables_QuantumFragment/VisibleFrom_BH/Undercrust/Prefab_NOM_TractorBeam_HighSpeed",
+        "position": {
+          "x": -7,
+          "y": 3.5,
+          "z": -27
+        },
+        "rotation": {
+          "x": 330,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "tornados": [
+      {
+        "rename": "GITM_TORNADO",
+        "position": {
+          "x": -10,
+          "y": -150,
+          "z": -90
+        },
+        "rotation": {
+          "x": 346.163,
+          "y": 314.0263,
+          "z": 17.7542
+        },
+        "height": 300,
+        "type": "downwards",
+        "wanderDegreesX": 0,
+        "wanderDegreesZ": 0,
+        "wanderRate": 0
       }
     ]
   }

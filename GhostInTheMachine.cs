@@ -51,6 +51,7 @@ public class GhostInTheMachine : ModBehaviour
             FastForwardManager.EnsureInstance();
             ShipLogDialogueManager.EnsureInstance();
             StatueManager.EnsureInstance();
+            DoorManager.EnsureInstance();
             SpawnManager.EnsureInstance();
             TornadoManager.EnsureInstance();
             SolanumManager.EnsureInstance();
@@ -59,6 +60,7 @@ public class GhostInTheMachine : ModBehaviour
 
             StatueManager.Instance.PlaceInitialStatues();
             StaffManager.Instance.PlaceInitialStaffs();
+            DoorManager.Instance.PlaceDoorInteractions();
             SpawnManager.Instance.DoInitialSpawn();
         }, 1);
     }

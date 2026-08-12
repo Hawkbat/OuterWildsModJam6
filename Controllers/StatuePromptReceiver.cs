@@ -41,7 +41,7 @@ public class StatuePromptReceiver : InteractReceiver
 
     bool CanInteract()
     {
-        return Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() is NomaiStaffItem;
+        return Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Item) && Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() is NomaiStaffItem staff && staff.IsStatueToolUnlocked();
     }
 
     public override void GainFocus()

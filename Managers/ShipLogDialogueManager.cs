@@ -35,22 +35,6 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         Shader.SetGlobalVector("_DataGhostUIEffectOffset", (Vector4)offset);
     }
 
-    public bool CanActivateEntry(string entryID)
-    {
-        var entry = detectiveMode._manager.GetEntry(entryID);
-        if (entry.GetState() == ShipLogEntry.State.Explored)
-        {
-            return false;
-        }
-        // TODO: Check if entry is a choice and if the choice has already been made, etc.
-        return entryID.StartsWith("GITM_CHOICE_");
-    }
-
-    public void OnActivateEntry(string entryID)
-    {
-
-    }
-
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
@@ -73,7 +57,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
     public void OnInitCard(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
-        if (entry.GetID().StartsWith("GITM_GHOST_"))
+        if (entry.GetID().StartsWith("GITM_GHOST_") || entry.GetID().StartsWith("GITM_FIND_"))
         {
             if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
             {
@@ -83,15 +67,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             card._name.color = new Color(0.75f, 0.75f, 1f);
             card._photo.sprite = ghostDefaultSprite;
         }
-        else if (entry.GetID().StartsWith("GITM_PLAYER_"))
-        {
-            if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
-            {
-                entry.SetSprite(playerDefaultSprite);
-                card._photo.sprite = playerDefaultSprite;
-            }
-        }
-        else if (entry.GetID().StartsWith("GITM_CHOICE_"))
+        else if (entry.GetID().StartsWith("GITM_PLAYER_") || entry.GetID().StartsWith("GITM_CHOICE_"))
         {
             if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
             {
