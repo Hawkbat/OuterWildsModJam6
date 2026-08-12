@@ -45,6 +45,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             foreach (var fact in followupFacts)
             {
                 detectiveMode._manager.RevealFact(fact.GetID());
+                RefreshCardName(fact.GetEntryID());
             }
             RestartRevealQueue(followupFacts);
             if (detectiveMode._descriptionField.IsVisible())
@@ -75,6 +76,13 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
                 card._photo.sprite = playerDefaultSprite;
             }
         }
+    }
+
+    void RefreshCardName(string entryID)
+    {
+        if (!detectiveMode._cardDict.TryGetValue(entryID, out var card)) return;
+        card._name.text = card.GetEntry().GetName(true);
+        card._name.SetAllDirty();
     }
 
     void RestartRevealQueue(List<ShipLogFact> revealQueue)
