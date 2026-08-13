@@ -1,0 +1,88 @@
+<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>GITM_ERNESTO_NAME</NameField>
+
+  <!-- Entry nodes are matched last to first, so the DEFAULT one has to come before the escalations -->
+  <DialogueNode>
+    <Name>ERNESTO_FIRST</Name>
+    <EntryCondition>DEFAULT</EntryCondition>
+    <Dialogue>
+      <Page>GITM_ERNESTO_FIRST_1</Page>
+      <Page>GITM_ERNESTO_FIRST_2</Page>
+      <Page>GITM_ERNESTO_FIRST_3</Page>
+      <Page>GITM_ERNESTO_FIRST_4</Page>
+      <Page>GITM_ERNESTO_FIRST_5</Page>
+      <Page>GITM_ERNESTO_FIRST_6</Page>
+      <Page>GITM_ERNESTO_FIRST_7</Page>
+    </Dialogue>
+    <SetCondition>GITM_ErnestoWarned</SetCondition>
+    <DialogueOptionsList>
+      <DialogueOption>
+        <Text>GITM_ERNESTO_OPTION_UNDO</Text>
+        <DialogueTarget>ERNESTO_UNDO</DialogueTarget>
+        <ConditionToSet>GITM_ErnestoUndo</ConditionToSet>
+      </DialogueOption>
+      <DialogueOption>
+        <Text>GITM_ERNESTO_OPTION_REFUSE</Text>
+        <DialogueTarget>ERNESTO_REFUSE</DialogueTarget>
+      </DialogueOption>
+    </DialogueOptionsList>
+  </DialogueNode>
+
+  <DialogueNode>
+    <Name>ERNESTO_UNDO</Name>
+    <Dialogue>
+      <Page>GITM_ERNESTO_UNDO_1</Page>
+      <Page>GITM_ERNESTO_UNDO_2</Page>
+      <Page>GITM_ERNESTO_UNDO_3</Page>
+    </Dialogue>
+  </DialogueNode>
+
+  <DialogueNode>
+    <Name>ERNESTO_REFUSE</Name>
+    <Dialogue>
+      <Page>GITM_ERNESTO_REFUSE_1</Page>
+      <Page>GITM_ERNESTO_REFUSE_2</Page>
+      <Page>GITM_ERNESTO_REFUSE_3</Page>
+      <Page>GITM_ERNESTO_REFUSE_4</Page>
+    </Dialogue>
+  </DialogueNode>
+
+  <DialogueNode>
+    <Name>ERNESTO_SECOND</Name>
+    <EntryCondition>GITM_ErnestoWarned</EntryCondition>
+    <Dialogue>
+      <Page>GITM_ERNESTO_SECOND_1</Page>
+      <Page>GITM_ERNESTO_SECOND_2</Page>
+      <Page>GITM_ERNESTO_SECOND_3</Page>
+    </Dialogue>
+    <SetCondition>GITM_ErnestoWarnedTwice</SetCondition>
+    <DialogueOptionsList>
+      <DialogueOption>
+        <Text>GITM_ERNESTO_OPTION_UNDO_AGAIN</Text>
+        <DialogueTarget>ERNESTO_UNDO_AGAIN</DialogueTarget>
+        <ConditionToSet>GITM_ErnestoUndo</ConditionToSet>
+      </DialogueOption>
+      <DialogueOption>
+        <Text>GITM_ERNESTO_OPTION_REFUSE_AGAIN</Text>
+        <DialogueTarget>ERNESTO_REFUSE_AGAIN</DialogueTarget>
+      </DialogueOption>
+    </DialogueOptionsList>
+  </DialogueNode>
+
+  <DialogueNode>
+    <Name>ERNESTO_UNDO_AGAIN</Name>
+    <Dialogue>
+      <Page>GITM_ERNESTO_UNDO_AGAIN_1</Page>
+      <Page>GITM_ERNESTO_UNDO_AGAIN_2</Page>
+    </Dialogue>
+  </DialogueNode>
+
+  <DialogueNode>
+    <Name>ERNESTO_REFUSE_AGAIN</Name>
+    <Dialogue>
+      <Page>GITM_ERNESTO_REFUSE_AGAIN_1</Page>
+      <Page>GITM_ERNESTO_REFUSE_AGAIN_2</Page>
+    </Dialogue>
+  </DialogueNode>
+
+</DialogueTree>

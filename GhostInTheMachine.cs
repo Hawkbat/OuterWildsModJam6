@@ -50,6 +50,7 @@ public class GhostInTheMachine : ModBehaviour
             InvincibilityManager.EnsureInstance();
             FastForwardManager.EnsureInstance();
             ShipLogDialogueManager.EnsureInstance();
+            ErnestoManager.EnsureInstance();
             StatueManager.EnsureInstance();
             MaskManager.EnsureInstance();
             DoorManager.EnsureInstance();

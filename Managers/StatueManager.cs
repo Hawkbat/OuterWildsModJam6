@@ -42,7 +42,8 @@ public class StatueManager : ManagerBase<StatueManager>
         var playerStatue = GameObject.Find(PLAYER_STATUE_PATH);
         var playerStatueAudio = GameObject.Find(PLAYER_STATUE_AUDIO_PATH);
         ConfigureStatueVisuals(playerStatue, playerStatue, playerStatueAudio);
-        WireGhostStatue(playerStatue, STATUE_PLAYER, true, 1f);
+        var playerGhostStatue = WireGhostStatue(playerStatue, STATUE_PLAYER, true, 1f, 0f);
+        ErnestoManager.Instance.Attach(playerGhostStatue);
     }
 
     public void CreateGhostStatue(string persistentCondition, string parentPath, Vector3 localPosition, Vector3 localRotation, float localScale, bool hasPedestal, bool canTurn)
@@ -78,7 +79,7 @@ public class StatueManager : ManagerBase<StatueManager>
         visuals.turnAudioSource = audio.GetComponent<OWAudioSource>();
     }
 
-    void WireGhostStatue(GameObject statue, string persistentCondition, bool canTurn, float localScale)
+    StatueGhostController WireGhostStatue(GameObject statue, string persistentCondition, bool canTurn, float localScale, float interactReceiverOffset = 3f)
     {
         var ghostController = statue.AddComponent<StatueGhostController>();
         ghostController.persistentCondition = persistentCondition;
@@ -86,13 +87,15 @@ public class StatueManager : ManagerBase<StatueManager>
 
         var interactable = new GameObject("InteractReceiver");
         interactable.transform.SetParent(statue.transform, false);
-        interactable.transform.localPosition = Vector3.up * 3f * localScale;
+        interactable.transform.localPosition = Vector3.up * interactReceiverOffset * localScale;
         interactable.layer = LayerMask.NameToLayer("Interactible");
         var col = interactable.AddComponent<SphereCollider>();
         col.isTrigger = true;
         col.radius = 2f * localScale;
         var receiver = interactable.AddComponent<StatuePromptReceiver>();
         receiver.SetInteractRange(4f * localScale);
+
+        return ghostController;
     }
 
     public void PlaceInitialStatues()

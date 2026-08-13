@@ -15,6 +15,10 @@ public static class Constants
         public const string StatueInstalledThisLoop = "GITM_StatueInstalledThisLoop";
         public const string GameOver = "GITM_GameOver";
         public const string TerribleFate = "GITM_TerribleFate";
+        public const string ErnestoWarned = "GITM_ErnestoWarned";
+        public const string ErnestoWarnedTwice = "GITM_ErnestoWarnedTwice";
+        public const string ErnestoUndo = "GITM_ErnestoUndo";
+        public const string ErnestoRockDeath = "GITM_ErnestoRockDeath";
     }
 
     public static class PersistentConditions
