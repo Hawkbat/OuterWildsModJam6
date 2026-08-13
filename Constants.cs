@@ -6,9 +6,7 @@ public static class Constants
     public static class ShipLogFacts
     {
         public const string WallToolUnlock = "GITM_WALL_TOOL_UNLOCK";
-        public const string DoorToolHint = "GITM_FIND_DOORS_RUMOR";
         public const string DoorToolUnlock = "GITM_DOOR_TOOL_UNLOCK";
-        public const string BeamToolHint = "GITM_FIND_BEAMS_RUMOR";
         public const string BeamToolUnlock = "GITM_BEAM_TOOL_UNLOCK";
     }
 

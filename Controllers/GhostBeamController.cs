@@ -4,11 +4,8 @@ namespace GhostInTheMachine.Controllers;
 
 public class GhostBeamController : MonoBehaviour
 {
-    const float UNLOCK_TRIGGER_RADIUS = 20f;
-
     TractorBeamController beam;
     SafetyTractorBeamController safetyBeam;
-    OWTriggerVolume unlockTrigger;
 
     public BeamState State
     {
@@ -19,24 +16,11 @@ public class GhostBeamController : MonoBehaviour
         }
     }
 
-    public void Init(TractorBeamController beam, bool triggersUnlock)
+    public void Init(TractorBeamController beam)
     {
         this.beam = beam;
         safetyBeam = beam.GetComponent<SafetyTractorBeamController>();
-
         // Vanilla beams keep whatever state their location set up, so nothing is switched here
-        if (triggersUnlock)
-        {
-            CreateUnlockTrigger();
-        }
-    }
-
-    protected void OnDestroy()
-    {
-        if (unlockTrigger != null)
-        {
-            unlockTrigger.OnEntry -= HandleUnlockTriggerEntry;
-        }
     }
 
     public void Cycle()
@@ -69,31 +53,6 @@ public class GhostBeamController : MonoBehaviour
         {
             beam.SetActivation(active, false);
         }
-    }
-
-    void CreateUnlockTrigger()
-    {
-        var volume = new GameObject("BeamUnlockTrigger");
-        volume.transform.SetParent(transform, false);
-        volume.layer = LayerMask.NameToLayer("BasicEffectVolume");
-        var col = volume.AddComponent<SphereCollider>();
-        col.isTrigger = true;
-        col.radius = UNLOCK_TRIGGER_RADIUS;
-        unlockTrigger = volume.AddComponent<OWTriggerVolume>();
-        unlockTrigger.OnEntry += HandleUnlockTriggerEntry;
-    }
-
-    void HandleUnlockTriggerEntry(GameObject hitObj)
-    {
-        // Similar to vanilla reveal volume but gated on the unlock hint fact
-        if (!hitObj.CompareTag("PlayerDetector")) return;
-
-        var shipLogManager = Locator.GetShipLogManager();
-        if (!shipLogManager.IsFactRevealed(Constants.ShipLogFacts.BeamToolHint)) return;
-        if (shipLogManager.IsFactRevealed(Constants.ShipLogFacts.BeamToolUnlock)) return;
-
-        shipLogManager.RevealFact(Constants.ShipLogFacts.BeamToolUnlock);
-        unlockTrigger.OnEntry -= HandleUnlockTriggerEntry;
     }
 
     public enum BeamState

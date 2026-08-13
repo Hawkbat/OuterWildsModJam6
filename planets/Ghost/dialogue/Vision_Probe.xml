@@ -1,0 +1,16 @@
+﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>GITM_VISION_PROBE_NAME</NameField>
+  <DialogueNode>
+    <Name>VISION_PROBE</Name>
+    <EntryCondition>DEFAULT</EntryCondition>
+    <Dialogue>
+        <Page>GITM_VISION_PROBE_1</Page>
+        <Page>GITM_VISION_PROBE_2</Page>
+        <Page>GITM_VISION_PROBE_3</Page>
+        <Page>GITM_VISION_PROBE_4</Page>
+    </Dialogue>
+    <RevealFacts>
+      <FactID>GITM_GHOST_VISION_PROBE_REVEAL</FactID>
+    </RevealFacts>
+  </DialogueNode>
+</DialogueTree>

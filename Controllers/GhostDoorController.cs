@@ -6,12 +6,9 @@ namespace GhostInTheMachine.Controllers;
 public class GhostDoorController : MonoBehaviour
 {
     const float ORB_TRAVEL_DURATION = 0.75f;
-    const float UNLOCK_TRIGGER_RADIUS = 20f;
 
     NomaiMultiPartDoor door;
     NomaiGateway gateway;
-
-    OWTriggerVolume unlockTrigger;
 
     NomaiInterfaceOrb orb;
     OWRigidbody orbBody;
@@ -31,12 +28,6 @@ public class GhostDoorController : MonoBehaviour
     {
         this.door = door;
         enabled = false;
-
-        // Only broken doors (single working switch) trigger the unlock.
-        if (door is not NomaiAirlock && door._cycleSwitches.Length < 2)
-        {
-            CreateUnlockTrigger();
-        }
     }
 
     public void Init(NomaiGateway gateway)
@@ -51,39 +42,6 @@ public class GhostDoorController : MonoBehaviour
         {
             gateway._audioSource = gatewayAudio;
         }
-    }
-
-    protected void OnDestroy()
-    {
-        if (unlockTrigger != null)
-        {
-            unlockTrigger.OnEntry -= HandleUnlockTriggerEntry;
-        }
-    }
-
-    void CreateUnlockTrigger()
-    {
-        var volume = new GameObject("DoorUnlockTrigger");
-        volume.transform.SetParent(transform, false);
-        volume.layer = LayerMask.NameToLayer("BasicEffectVolume");
-        var col = volume.AddComponent<SphereCollider>();
-        col.isTrigger = true;
-        col.radius = UNLOCK_TRIGGER_RADIUS;
-        unlockTrigger = volume.AddComponent<OWTriggerVolume>();
-        unlockTrigger.OnEntry += HandleUnlockTriggerEntry;
-    }
-
-    void HandleUnlockTriggerEntry(GameObject hitObj)
-    {
-        // Similar to vanilla reveal volume but gated on the unlock hint fact so it doesn't trigger on statue island at the start
-        if (!hitObj.CompareTag("PlayerDetector")) return;
-
-        var shipLogManager = Locator.GetShipLogManager();
-        if (!shipLogManager.IsFactRevealed(Constants.ShipLogFacts.DoorToolHint)) return;
-        if (shipLogManager.IsFactRevealed(Constants.ShipLogFacts.DoorToolUnlock)) return;
-
-        shipLogManager.RevealFact(Constants.ShipLogFacts.DoorToolUnlock);
-        unlockTrigger.OnEntry -= HandleUnlockTriggerEntry;
     }
 
     public void Cycle()

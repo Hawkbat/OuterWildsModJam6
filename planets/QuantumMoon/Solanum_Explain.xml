@@ -8,4 +8,9 @@
     <ParentID>1</ParentID>
     <Text>GITM_SOLANUM_EXPLAIN_2</Text>
   </TextBlock>
+  <RevealFact>
+    <FactID>GITM_SOLANUM_ANSWER</FactID>
+    <Condition>1</Condition>
+    <Condition>2</Condition>
+  </RevealFact>
 </NomaiObject>

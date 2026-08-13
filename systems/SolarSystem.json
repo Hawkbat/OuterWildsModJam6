@@ -17,6 +17,24 @@
         "setConditions": [ "GITM_GameOver" ],
         "reversible": true
       }
+    },
+    {
+      "check": {
+        "allFactsRevealed": [
+          "GITM_MEMORY_CLASSROOM_REVEAL",
+          "GITM_MEMORY_FOSSIL_REVEAL",
+          "GITM_MEMORY_HOME_REVEAL"
+        ]
+      },
+      "then": {
+        "revealFacts": [ "GITM_GHOST_SOLANUM_RUMOR" ]
+      }
+    },
+    {
+      "check": { "allPersistentConditionsSet": [ "GITM_MASK_INSTALLED" ] },
+      "then": {
+        "revealFacts": [ "GITM_GHOST_CURIOSITY_REVEAL" ]
+      }
     }
   ],
   "curiosities": [
@@ -74,20 +92,6 @@
       "position": {
         "x": 1400,
         "y": -2000
-      }
-    },
-    {
-      "id": "GITM_FIND_DOORS",
-      "position": {
-        "x": 1000,
-        "y": -1900
-      }
-    },
-    {
-      "id": "GITM_FIND_BEAMS",
-      "position": {
-        "x": 800,
-        "y": -1800
       }
     }
   ],

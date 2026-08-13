@@ -38,8 +38,9 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
-        // Ghost entries unlock their own explore facts and any follow-up rumors when marked as read
-        if (entry.GetID().StartsWith("GITM_GHOST_") || entry.GetID().StartsWith("GITM_CHOICE_"))
+        var entryID = entry.GetID();
+        // Ghost entries unlock their own explore facts and any follow-up rumors when marked as read.
+        if ((entryID.StartsWith("GITM_GHOST_") || entryID.StartsWith("GITM_CHOICE_")) && !entryID.EndsWith("_CURIOSITY"))
         {
             var followupFacts = detectiveMode._manager._factDict.Values.Where(f => !f.IsRevealed() && ((f.IsRumor() && f.GetSourceID() == entry.GetID()) || (!f.IsRumor() && f.GetEntryID() == entry.GetID()))).ToList();
             foreach (var fact in followupFacts)

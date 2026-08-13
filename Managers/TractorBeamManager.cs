@@ -35,10 +35,7 @@ public class TractorBeamManager : ManagerBase<TractorBeamManager>
     {
         if (beam.GetComponent<GhostBeamController>() != null) return;
 
-        var controller = beam.gameObject.AddComponent<GhostBeamController>();
-        // Only our own beams hand out the unlock memory, so the ability comes from the puzzle we built it for rather than from wandering past any of the eighty odd vanilla ones
-        var triggersUnlock = beam.name.StartsWith("GITM_");
-        controller.Init(beam, triggersUnlock);
+        beam.gameObject.AddComponent<GhostBeamController>().Init(beam);
 
         // The emitter is the only solid part of a beam, so measure the volume off its colliders instead of guessing at the prefab. The beam column itself is an effect volume, so it won't be caught up in this
         var bounds = new Bounds(beam.transform.position, Vector3.zero);

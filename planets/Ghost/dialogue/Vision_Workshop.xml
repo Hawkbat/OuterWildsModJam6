@@ -1,0 +1,16 @@
+﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>GITM_VISION_WORKSHOP_NAME</NameField>
+  <DialogueNode>
+    <Name>VISION_WORKSHOP</Name>
+    <EntryCondition>DEFAULT</EntryCondition>
+    <Dialogue>
+        <Page>GITM_VISION_WORKSHOP_1</Page>
+        <Page>GITM_VISION_WORKSHOP_2</Page>
+        <Page>GITM_VISION_WORKSHOP_3</Page>
+        <Page>GITM_VISION_WORKSHOP_4</Page>
+    </Dialogue>
+    <RevealFacts>
+      <FactID>GITM_GHOST_VISION_WORKSHOP_REVEAL</FactID>
+    </RevealFacts>
+  </DialogueNode>
+</DialogueTree>

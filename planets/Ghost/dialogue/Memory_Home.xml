@@ -1,0 +1,17 @@
+﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>GITM_MEMORY_LAMI_NAME</NameField>
+  <DialogueNode>
+    <Name>MEMORY_HOME</Name>
+    <EntryCondition>DEFAULT</EntryCondition>
+    <Dialogue>
+        <Page>GITM_MEMORY_HOME_1</Page>
+        <Page>GITM_MEMORY_HOME_2</Page>
+        <Page>GITM_MEMORY_HOME_3</Page>
+        <Page>GITM_MEMORY_HOME_4</Page>
+    </Dialogue>
+    <RevealFacts>
+      <FactID>GITM_MEMORY_HOME_REVEAL</FactID>
+      <FactID>GITM_BEAM_TOOL_UNLOCK</FactID>
+    </RevealFacts>
+  </DialogueNode>
+</DialogueTree>
