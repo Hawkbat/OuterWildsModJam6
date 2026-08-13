@@ -9,6 +9,8 @@ public class GhostDoorController : MonoBehaviour
     const float UNLOCK_TRIGGER_RADIUS = 20f;
 
     NomaiMultiPartDoor door;
+    NomaiGateway gateway;
+
     OWTriggerVolume unlockTrigger;
 
     NomaiInterfaceOrb orb;
@@ -19,19 +21,28 @@ public class GhostDoorController : MonoBehaviour
     float progress;
     bool returning;
 
-    public bool IsOpen => door.IsOpen() || door.IsOpening();
-    public bool IsCycling => enabled || door.IsCycling();
+    // A rotating door's activation slot is a momentary button, so its orb has to go home again before the controls will work a second time. Airlocks and gateways instead have the orb rest in whichever of a pair of slots matches the state, so it stays put and doubles as the readout of which way they are
+    bool ReturnsHome => door != null && door is not NomaiAirlock;
+
+    public bool IsOpen => door != null ? door.IsOpen() || door.IsOpening() : gateway._open;
+    public bool IsCycling => enabled || (door != null ? door.IsCycling() : gateway.enabled);
 
     public void Init(NomaiMultiPartDoor door)
     {
         this.door = door;
         enabled = false;
 
-        // Only broken doors (single working switch) trigger the unlock memory
-        if (door._cycleSwitches.Length < 2)
+        // Only broken doors (single working switch) trigger the unlock.
+        if (door is not NomaiAirlock && door._cycleSwitches.Length < 2)
         {
             CreateUnlockTrigger();
         }
+    }
+
+    public void Init(NomaiGateway gateway)
+    {
+        this.gateway = gateway;
+        enabled = false;
     }
 
     protected void OnDestroy()
@@ -71,19 +82,36 @@ public class GhostDoorController : MonoBehaviour
     {
         if (IsCycling) return;
 
-        // Sliding an orb into its activation slot works the door through the same slot event the Nomai controls use, so the audio, the panel locking and the orb suspension all behave as they should
-        orb = FindNearestOrb();
+        // Sliding an orb into its slot works the mechanism through the same slot event the Nomai controls use, so the audio, the panel locking and the orb suspension all behave as they should
+        orb = FindOrb();
         orbBody = orb != null ? orb.GetAttachedOWRigidbody() : null;
         idleSlot = orb != null ? orb.GetComponentInParent<NomaiInterfaceSlot>() : null;
-        var activationSlot = idleSlot != null ? FindActivationSlot(idleSlot) : null;
-        if (orbBody == null || activationSlot == null)
+        var slot = orb != null ? FindTargetSlot() : null;
+        if (orbBody == null || slot == null)
         {
-            // Nothing we can move, so drive the door directly instead. Vanilla passes a null slot here too
-            door.Cycle(null);
+            // Nothing we can move, so drive the mechanism directly instead
+            DriveMechanism();
             return;
         }
 
-        StartTravel(activationSlot, false);
+        StartTravel(slot, false);
+    }
+
+    void DriveMechanism()
+    {
+        if (door != null)
+        {
+            // Vanilla passes a null slot here too, and airlocks override Cycle to swap their air over with it
+            door.Cycle(null);
+        }
+        else if (IsOpen)
+        {
+            gateway.CloseGate(null);
+        }
+        else
+        {
+            gateway.OpenGate(null);
+        }
     }
 
     void StartTravel(NomaiInterfaceSlot slot, bool returning)
@@ -113,21 +141,35 @@ public class GhostDoorController : MonoBehaviour
         if (returning)
         {
             enabled = false;
+            return;
         }
-        else
+
+        // Landing in the slot should have set the mechanism off, but make sure it actually moves
+        if (!IsMechanismCycling())
         {
-            // Landing in the slot should have set the door off, but make sure it actually moves
-            if (!door.IsCycling())
-            {
-                door.Cycle(null);
-            }
+            DriveMechanism();
+        }
+
+        if (ReturnsHome)
+        {
             // Park the orb back where it started so the controls are ready to be used again
             StartTravel(idleSlot, true);
         }
+        else
+        {
+            enabled = false;
+        }
     }
 
-    NomaiInterfaceOrb FindNearestOrb()
+    bool IsMechanismCycling()
     {
+        return door != null ? door.IsCycling() : gateway.enabled;
+    }
+
+    NomaiInterfaceOrb FindOrb()
+    {
+        if (gateway != null) return gateway._orb;
+
         // Intact doors have an orb on either face, so use whichever one is on the player's side
         var position = Locator.GetPlayerTransform().position;
         return door._listInterfaceOrb
@@ -136,10 +178,21 @@ public class GhostDoorController : MonoBehaviour
             .FirstOrDefault();
     }
 
-    NomaiInterfaceSlot FindActivationSlot(NomaiInterfaceSlot idleSlot)
+    NomaiInterfaceSlot FindTargetSlot()
     {
+        if (gateway != null)
+        {
+            return IsOpen ? gateway._closeSlot : gateway._openSlot;
+        }
+        if (door is NomaiAirlock)
+        {
+            var slots = IsOpen ? door._closeSwitches : door._openSwitches;
+            return slots.FirstOrDefault(slot => slot != null);
+        }
+
         // Both variants of the door prefab name their slots in pairs, so IdleSlot_Front belongs with
         // ActivateSlot_Front, while the broken variant just has the one unsuffixed IdleSlot/ActivateSlot
+        if (idleSlot == null) return null;
         var slotName = idleSlot.name.Replace("IdleSlot", "ActivateSlot");
         return door._cycleSwitches.FirstOrDefault(slot => slot != null && slot.name == slotName);
     }
