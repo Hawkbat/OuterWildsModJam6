@@ -82,6 +82,13 @@
         "x": 1000,
         "y": -1900
       }
+    },
+    {
+      "id": "GITM_FIND_BEAMS",
+      "position": {
+        "x": 800,
+        "y": -1800
+      }
     }
   ],
   "initialReveal": [

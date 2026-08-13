@@ -37,6 +37,7 @@ public class StaffManager : ManagerBase<StaffManager>
     public static string ItemName => itemName;
 
     GameObject staffPrefab;
+    NomaiStaffItem staffToGive;
 
     List<SpawnedWallData> activeWalls = [];
     Stack<SpawnedWallController> wallPool = [];
@@ -57,6 +58,8 @@ public class StaffManager : ManagerBase<StaffManager>
         staffPrefab = GhostInTheMachine.CloneVanillaProp("BrittleHollow_Body/Sector_BH/Sector_OldSettlement/Fragment OldSettlement 0/Core_OldSettlement0/Props_Core_OldSettlement0/Prefab_NOM_Staff");
         staffPrefab.AddComponent<NomaiStaffItem>();
         staffPrefab.SetActive(false);
+
+        staffToGive = Instantiate(staffPrefab).GetComponent<NomaiStaffItem>();
     }
 
     protected void Update()
@@ -104,10 +107,9 @@ public class StaffManager : ManagerBase<StaffManager>
 
     public NomaiStaffItem GivePlayerStaff()
     {
-        var staff = Instantiate(staffPrefab).GetComponent<NomaiStaffItem>();
-        staff.gameObject.SetActive(true);
-        Locator.GetToolModeSwapper().GetItemCarryTool().PickUpItemInstantly(staff);
-        return staff;
+        staffToGive.gameObject.SetActive(true);
+        Locator.GetToolModeSwapper().GetItemCarryTool().PickUpItemInstantly(staffToGive);
+        return staffToGive;
     }
 
     public void PlaceInitialStaffs()

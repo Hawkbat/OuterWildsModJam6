@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using GhostInTheMachine.Controllers;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class DebugManager : ManagerBase<DebugManager>
     protected void OnGUI()
     {
         if (!OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
+
         if (PlayerState.IsWearingSuit() && GUILayout.Button("Remove Suit"))
         {
             Locator.GetPlayerSuit().RemoveSuit(true);
@@ -18,6 +20,19 @@ public class DebugManager : ManagerBase<DebugManager>
         {
             Locator.GetPlayerSuit().SuitUp(false, true);
         }
+        if (Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() != null)
+        {
+            GUI.enabled = false;
+        }
+        if (GUILayout.Button("Give Staff"))
+        {
+            StaffManager.Instance.GivePlayerStaff();
+        }
+        if (GUILayout.Button("Give Mask"))
+        {
+            MaskManager.Instance.GivePlayerMask();
+        }
+        GUI.enabled = true;
         GUILayout.Space(20);
         if (GUILayout.Button("Reset Persistent Conditions"))
         {
@@ -66,6 +81,14 @@ public class DebugManager : ManagerBase<DebugManager>
             Locator.GetQuantumMoon()._collapseToIndex = 5;
             Locator.GetQuantumMoon().Collapse(true);
             WarpToSpawnPoint("Spawn_NorthPole");
+        }
+
+        var staff = NomaiStaffItem.GetHeldStaff();
+        if (staff != null)
+        {
+            GUILayout.Label($"Surface Type: {staff.TargetSurfaceType}");
+            GUILayout.Label($"Wall Target: {staff.WallTarget}");
+
         }
     }
 

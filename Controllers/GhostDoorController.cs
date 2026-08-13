@@ -43,6 +43,14 @@ public class GhostDoorController : MonoBehaviour
     {
         this.gateway = gateway;
         enabled = false;
+
+        // Fix gateway grabbing orb audio source instead of its own
+        var gatewayAudio = gateway.GetComponentsInChildren<OWAudioSource>(true)
+            .FirstOrDefault(source => gateway._orb == null || !source.transform.IsChildOf(gateway._orb.transform));
+        if (gatewayAudio != null)
+        {
+            gateway._audioSource = gatewayAudio;
+        }
     }
 
     protected void OnDestroy()

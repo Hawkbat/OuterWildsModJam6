@@ -1,8 +1,6 @@
 ﻿using GhostInTheMachine.Controllers;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
-using static GhostInTheMachine.Constants;
 using static GhostInTheMachine.Constants.PersistentConditions;
 
 namespace GhostInTheMachine.Managers;
@@ -12,10 +10,7 @@ public class StatueManager : ManagerBase<StatueManager>
     const string PLAYER_STATUE_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiHeadStatue";
     const string PLAYER_STATUE_AUDIO_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiStatue_Audio";
 
-    static AudioClip finaleAudioClip;
-
     GameObject headPrefab;
-    OWAudioSource finaleAudioSrc;
 
     protected override void Awake()
     {
@@ -48,21 +43,6 @@ public class StatueManager : ManagerBase<StatueManager>
         var playerStatueAudio = GameObject.Find(PLAYER_STATUE_AUDIO_PATH);
         ConfigureStatueVisuals(playerStatue, playerStatue, playerStatueAudio);
         WireGhostStatue(playerStatue, STATUE_PLAYER, true, 1f);
-
-        GameObject.Find("TimeLoopRing_Body/Interactibles_TimeLoopRing_Hidden/GITM_MASK_COMPUTER").AddComponent<MaskComputerController>();
-
-        if (!finaleAudioClip)
-        {
-            finaleAudioClip = GhostInTheMachine.Instance.ModHelper.Assets.GetAudio("planets/TimeLoopRing/OW_EndTimes_Reversed.mp3");
-        }
-
-        finaleAudioSrc = gameObject.AddComponent<OWAudioSource>();
-        finaleAudioSrc.SetTrack(OWAudioMixer.TrackName.Menu);
-        finaleAudioSrc.spatialBlend = 0f;
-        finaleAudioSrc.SetLocalVolume(0.5f);
-        finaleAudioSrc.clip = finaleAudioClip;
-        finaleAudioSrc.playOnAwake = false;
-        finaleAudioSrc.Stop();
     }
 
     public void CreateGhostStatue(string persistentCondition, string parentPath, Vector3 localPosition, Vector3 localRotation, float localScale, bool hasPedestal, bool canTurn)
@@ -149,37 +129,6 @@ public class StatueManager : ManagerBase<StatueManager>
         GameObject.Find("SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup/Prefab_NOM_StatueHead").SetActive(false);
         GameObject.Find("SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup/Structure_NOM_ShortColumnBridge").SetActive(false);
         CreateGhostStatue(STATUE_SS_LOWER, "SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup", new(12.968f, -34.5851f, 7.8967f), new(43.8725f, 0f, 270f), 1f, true, true);
-    }
-
-    public void OnMaskInstalled()
-    {
-        DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.StatueInstalledThisLoop, true);
-        PlayerData.SetPersistentCondition(MASK_INSTALLED, true);
-        FastForwardManager.Instance.SetDisplayTimes(TimeLoop.GetSecondsElapsed(), TimeLoop._loopDuration);
-        var actualTimeOffset = 10f;
-        TimeLoop.SetSecondsRemaining(60f + actualTimeOffset);
-        FastForwardManager.Instance.SetTargetTime(TimeLoop._loopDuration - actualTimeOffset);
-        if (Locator.GetGlobalMusicController()._playingEndTimes)
-        {
-            Locator.GetGlobalMusicController()._playingEndTimes = false;
-            Locator.GetGlobalMusicController()._endTimesSource.Stop();
-        }
-        else
-        {
-            Locator.GetAudioMixer().MixEndTimes(1f);
-        }
-        Locator.GetGlobalMusicController().enabled = false;
-        finaleAudioSrc.FadeIn(0.5f);
-    }
-
-    public void OnMaskRemoved()
-    {
-        DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.StatueInstalledThisLoop, false);
-        PlayerData.SetPersistentCondition(MASK_INSTALLED, false);
-        if (finaleAudioSrc.isPlaying)
-        {
-            finaleAudioSrc.FadeOut(0.5f);
-        }
     }
 }
 

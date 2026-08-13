@@ -23,7 +23,7 @@ public class NomaiMaskSocket : OWItemSocket
             item.SetVisible(false);
             EnableInteraction(false);
 
-            StatueManager.Instance.OnMaskInstalled();
+            MaskManager.Instance.OnMaskInstalled();
 
             return true;
         }
@@ -38,7 +38,7 @@ public class NomaiMaskSocket : OWItemSocket
             monolith.SetHasMask(false);
             item.SetVisible(true);
 
-            StatueManager.Instance.OnMaskRemoved();
+            MaskManager.Instance.OnMaskRemoved();
         }
         return item;
     }

@@ -9,6 +9,7 @@ public class NomaiStaffItem : OWItem
     SurfaceType targetSurfaceType;
     WallToolTarget wallTarget;
 
+    public SurfaceType TargetSurfaceType => targetSurfaceType;
     public WallToolTarget WallTarget => wallTarget;
 
     ScreenPrompt firePrompt;
@@ -163,14 +164,6 @@ public class NomaiStaffItem : OWItem
         firePrompt.SetVisibility(promptsVisible);
         altFirePrompt.SetVisibility(promptsVisible);
         cancelPrompt.SetVisibility(promptsVisible && PlayerState.IsWearingSuit());
-    }
-
-    protected void OnGUI()
-    {
-        if (OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
-        if (GetHeldStaff() != this) return;
-        GUILayout.Label($"Surface Type: {targetSurfaceType}");
-        GUILayout.Label($"Wall Target: {wallTarget}");
     }
 
     public enum WallToolTarget
