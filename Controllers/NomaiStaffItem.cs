@@ -7,6 +7,9 @@ public class NomaiStaffItem : OWItem
 {
     string translatedName;
     SurfaceType targetSurfaceType;
+    WallToolTarget wallTarget;
+
+    public WallToolTarget WallTarget => wallTarget;
 
     ScreenPrompt firePrompt;
     ScreenPrompt altFirePrompt;
@@ -17,6 +20,8 @@ public class NomaiStaffItem : OWItem
     public bool IsWallToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.WallToolUnlock);
 
     public bool IsDoorToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.DoorToolUnlock);
+
+    public bool IsBeamToolUnlocked() => Locator.GetShipLogManager().IsFactRevealed(Constants.ShipLogFacts.BeamToolUnlock);
 
     public static NomaiStaffItem GetHeldStaff()
     {
@@ -82,13 +87,17 @@ public class NomaiStaffItem : OWItem
         if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hit, 75f, OWLayerMask.blockableInteractMask))
         {
             targetSurfaceType = Locator.GetSurfaceManager().GetHitSurfaceType(hit);
+            var targetWall = hit.collider.GetComponentInParent<SpawnedWallController>();
+            
+            wallTarget = targetWall != null ? WallToolTarget.Removable
+                : (targetSurfaceType == SurfaceType.Ceramic || targetSurfaceType == SurfaceType.Stone) ? WallToolTarget.Placeable
+                : WallToolTarget.None;
+
             if (IsWallToolUnlocked() && (fireInput || altFireInput))
             {
-                var targetWall = hit.collider.GetComponentInParent<SpawnedWallController>();
-
                 if (fireInput)
                 {
-                    if (!targetWall && (targetSurfaceType == SurfaceType.Ceramic || targetSurfaceType == SurfaceType.Stone))
+                    if (wallTarget == WallToolTarget.Placeable)
                     {
                         var wallParent = hit.transform.root;
                         var wallWorldPos = hit.point;
@@ -161,5 +170,13 @@ public class NomaiStaffItem : OWItem
         if (OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
         if (GetHeldStaff() != this) return;
         GUILayout.Label($"Surface Type: {targetSurfaceType}");
+        GUILayout.Label($"Wall Target: {wallTarget}");
+    }
+
+    public enum WallToolTarget
+    {
+        None,
+        Placeable,
+        Removable
     }
 }

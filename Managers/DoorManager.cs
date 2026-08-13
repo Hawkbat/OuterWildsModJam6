@@ -1,5 +1,4 @@
 using GhostInTheMachine.Controllers;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,8 +13,16 @@ public class DoorManager : ManagerBase<DoorManager>
     const float INTERACTION_RADIUS = 1.75f;
     const float INTERACTION_RANGE = 4f;
 
-    readonly List<DoorPromptReceiver> receivers = [];
-    bool receiversInteractive = true;
+    // Reaching past the faces also means covering the orb rails that run down the middle of the door, so
+    // the volume only takes the raycast while the staff is actually able to work the door
+    StaffInteractionGate gate;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        gate = gameObject.AddComponent<StaffInteractionGate>();
+        gate.Init(staff => staff.IsDoorToolUnlocked());
+    }
 
     public void PlaceDoorInteractions()
     {
@@ -23,24 +30,6 @@ public class DoorManager : ManagerBase<DoorManager>
         foreach (var door in Resources.FindObjectsOfTypeAll<NomaiMultiPartDoor>().Where(door => door is not NomaiAirlock))
         {
             PlaceDoorInteraction(door);
-        }
-    }
-
-    protected void Update()
-    {
-        // Reaching past the faces also means covering the orb rails that run down the middle of the door,
-        // so the volume only takes the raycast while the staff is actually able to work the door
-        var staff = NomaiStaffItem.GetHeldStaff();
-        var interactive = staff != null && staff.IsDoorToolUnlocked();
-        if (interactive == receiversInteractive) return;
-
-        receiversInteractive = interactive;
-        foreach (var receiver in receivers)
-        {
-            if (receiver != null)
-            {
-                receiver.SetInteractionEnabled(interactive);
-            }
         }
     }
 
@@ -63,6 +52,6 @@ public class DoorManager : ManagerBase<DoorManager>
         var receiver = interactable.AddComponent<DoorPromptReceiver>();
         receiver.SetInteractRange(INTERACTION_RANGE);
 
-        receivers.Add(receiver);
+        gate.Add(receiver);
     }
 }

@@ -412,6 +412,48 @@ public static class TranslatorWordPatches
     }
 }
 
+[HarmonyPatch(typeof(ReticleController))]
+public static class ReticleControllerPatches
+{
+    static readonly Color PLACE_COLOR = new(0.45f, 0.8f, 1f);
+    static readonly Color REMOVE_COLOR = new(1f, 0.6f, 0.25f);
+
+    const float TARGET_SCALE = 1.35f;
+
+    [HarmonyPostfix, HarmonyPatch(nameof(ReticleController.LateUpdate))]
+    public static void LateUpdate(ReticleController __instance)
+    {
+        if (!__instance._canvas.enabled) return;
+
+        var target = GetWallToolTarget();
+        var color = __instance._image.color;
+
+        if (target == NomaiStaffItem.WallToolTarget.None)
+        {
+            // The original only ever writes the alpha, so any tint we applied sticks until we clear it
+            color.r = color.g = color.b = 1f;
+        }
+        else
+        {
+            var tint = target == NomaiStaffItem.WallToolTarget.Placeable ? PLACE_COLOR : REMOVE_COLOR;
+            color.r = tint.r;
+            color.g = tint.g;
+            color.b = tint.b;
+            __instance._image.rectTransform.localScale = Vector3.one * TARGET_SCALE;
+        }
+
+        __instance._image.color = color;
+    }
+
+    static NomaiStaffItem.WallToolTarget GetWallToolTarget()
+    {
+        if (PlayerState.InMapView()) return NomaiStaffItem.WallToolTarget.None;
+
+        var staff = NomaiStaffItem.GetHeldStaff();
+        return staff != null && staff.IsWallToolUnlocked() ? staff.WallTarget : NomaiStaffItem.WallToolTarget.None;
+    }
+}
+
 [HarmonyPatch(typeof(PauseMenuManager))]
 public static class PauseMenuManagerPatches
 {

@@ -31,7 +31,7 @@
       },
       {
         "rename": "GITM_TORNADO_LAUNCHER",
-        "path": "BrittleHollow_Body/Sector_BH/Sector_QuantumFragment/Interactables_QuantumFragment/VisibleFrom_BH/Undercrust/Prefab_NOM_TractorBeam_HighSpeed",
+        "path": "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_District3/Interactables_HangingCity_District3/Prefab_NOM_TractorBeam",
         "position": {
           "x": -7,
           "y": 3.5,

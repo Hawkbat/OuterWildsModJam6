@@ -54,6 +54,7 @@ public class GhostInTheMachine : ModBehaviour
             DoorManager.EnsureInstance();
             SpawnManager.EnsureInstance();
             TornadoManager.EnsureInstance();
+            TractorBeamManager.EnsureInstance();
             SolanumManager.EnsureInstance();
 
             if (debugModeEnabled) DebugManager.EnsureInstance();
@@ -61,6 +62,7 @@ public class GhostInTheMachine : ModBehaviour
             StatueManager.Instance.PlaceInitialStatues();
             StaffManager.Instance.PlaceInitialStaffs();
             DoorManager.Instance.PlaceDoorInteractions();
+            TractorBeamManager.Instance.PlaceBeamInteractions();
             SpawnManager.Instance.DoInitialSpawn();
         }, 1);
     }

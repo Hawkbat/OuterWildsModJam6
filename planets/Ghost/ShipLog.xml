@@ -126,6 +126,21 @@
     </ExploreFact>
   </Entry>
   <Entry>
+    <ID>GITM_FIND_BEAMS</ID>
+    <Name>GITM_FIND_BEAMS</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_BEAMS_RUMOR</ID>
+      <SourceID>GITM_CHOICE_PLACES</SourceID>
+      <RumorName>GITM_FIND_BEAMS_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_BEAM_TOOL_UNLOCK</ID>
+      <Text>GITM_BEAM_TOOL_UNLOCK</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
     <ID>GITM_PLAYER_STEP_0</ID>
     <Name>GITM_PLAYER_STEP_0</Name>
     <Curiosity>GITM_PLAYER_CURIOSITY</Curiosity>

@@ -16,8 +16,10 @@ public class TornadoManager : ManagerBase<TornadoManager>
 
         var tractorBeam = GameObject.Find("StatueIsland_Body/Sector_StatueIsland/GITM_TORNADO_LAUNCHER").GetComponent<TractorBeamController>();
 
-        tractorBeam._fluid._reverseSpeed = tractorBeam._fluid._verticalSpeed = -64f;
-        tractorBeam.SetActivation(true);
+        // Speed is applied along -up, so the forward direction pushes down into the island and only the reversed direction throws the player up into the tornado. TractorBeamManager starts it switched off, so the staff has to both power it up and flip it before it's any use
+        tractorBeam._fluid._verticalSpeed = 64f;
+        tractorBeam._fluid._reverseSpeed = -64f;
+        tractorBeam.SetActivation(false, true);
     }
 
 }
