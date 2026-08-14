@@ -11,7 +11,7 @@ public class VisionManager : ManagerBase<VisionManager>
     {
         base.Awake();
 
-        // These two are clones of vanilla props rather than our own prefabs, so they don't come with the controller
+        // Gabbro's vision is a clone of a vanilla prop rather than one of our own prefabs, so it doesn't come with the controller
         GameObject.Find(GABBRO_VISION_PATH).AddComponent<GhostVisionController>();
     }
 }
