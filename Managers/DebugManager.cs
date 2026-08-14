@@ -1,95 +1,137 @@
 ﻿using GhostInTheMachine.Controllers;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace GhostInTheMachine.Managers;
 
 public class DebugManager : ManagerBase<DebugManager>
 {
+    PlayerResources playerResources;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        playerResources = FindObjectOfType<PlayerResources>();
+    }
 
     protected void OnGUI()
     {
-        if (!OWTime.IsPaused() || !GhostInTheMachine.Instance.DebugModeEnabled) return;
+        if (!GhostInTheMachine.Instance.DebugModeEnabled) return;
 
-        if (PlayerState.IsWearingSuit() && GUILayout.Button("Remove Suit"))
+        if (OWTime.IsPaused())
         {
-            Locator.GetPlayerSuit().RemoveSuit(true);
-        }
-        if (!PlayerState.IsWearingSuit() && GUILayout.Button("Suit Up"))
-        {
-            Locator.GetPlayerSuit().SuitUp(false, true);
-        }
-        if (Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() != null)
-        {
-            GUI.enabled = false;
-        }
-        if (GUILayout.Button("Give Staff"))
-        {
-            StaffManager.Instance.GivePlayerStaff();
-        }
-        if (GUILayout.Button("Give Mask"))
-        {
-            MaskManager.Instance.GivePlayerMask();
-        }
-        GUI.enabled = true;
-        GUILayout.Space(20);
-        if (GUILayout.Button("Reset Persistent Conditions"))
-        {
+            if (PlayerState.IsWearingSuit() && GUILayout.Button("Remove Suit"))
+            {
+                Locator.GetPlayerSuit().RemoveSuit(true);
+            }
+            if (!PlayerState.IsWearingSuit() && GUILayout.Button("Suit Up"))
+            {
+                Locator.GetPlayerSuit().SuitUp(false, true);
+            }
+            if (GUILayout.Button($"{(playerResources._invincible ? "Disable" : "Enable")} Invincibility"))
+            {
+                playerResources.ToggleInvincibility();
+            }
+            if (GUILayout.Button("Refill Resources"))
+            {
+                playerResources.DebugRefillResources();
+            }
+            if (Locator.GetToolModeSwapper().GetItemCarryTool().GetHeldItem() != null)
+            {
+                GUI.enabled = false;
+            }
+            if (GUILayout.Button("Give Staff"))
+            {
+                StaffManager.Instance.GivePlayerStaff();
+            }
+            if (GUILayout.Button("Give Mask"))
+            {
+                MaskManager.Instance.GivePlayerMask();
+            }
+            if (GUILayout.Button("Give Orb"))
+            {
+                TornadoManager.Instance.GivePlayerOrb();
+            }
+            GUI.enabled = true;
+            GUILayout.Space(20);
+            if (GUILayout.Button("Reset Persistent Conditions"))
+            {
+                foreach (var condition in typeof(Constants.PersistentConditions).GetFields().Where(f => f.FieldType == typeof(string)))
+                {
+                    var conditionName = (string)condition.GetValue(null);
+                    PlayerData.SetPersistentCondition(conditionName, false);
+                }
+            }
             foreach (var condition in typeof(Constants.PersistentConditions).GetFields().Where(f => f.FieldType == typeof(string)))
             {
                 var conditionName = (string)condition.GetValue(null);
-                PlayerData.SetPersistentCondition(conditionName, false);
+                if (GUILayout.Button($"{conditionName}: {PlayerData.GetPersistentCondition(conditionName)}"))
+                {
+                    PlayerData.SetPersistentCondition(conditionName, !(PlayerData.PersistentConditionExists(conditionName) && PlayerData.GetPersistentCondition(conditionName)));
+                }
             }
-        }
-        foreach (var condition in typeof(Constants.PersistentConditions).GetFields().Where(f => f.FieldType == typeof(string)))
-        {
-            var conditionName = (string)condition.GetValue(null);
-            if (GUILayout.Button($"{conditionName}: {PlayerData.GetPersistentCondition(conditionName)}"))
+            GUILayout.Space(20);
+            if (GUILayout.Button("Reset Dialogue Conditions"))
             {
-                PlayerData.SetPersistentCondition(conditionName, !(PlayerData.PersistentConditionExists(conditionName) && PlayerData.GetPersistentCondition(conditionName)));
+                foreach (var condition in typeof(Constants.DialogueConditions).GetFields().Where(f => f.FieldType == typeof(string)))
+                {
+                    var conditionName = (string)condition.GetValue(null);
+                    DialogueConditionManager.SharedInstance.SetConditionState(conditionName, false);
+                }
             }
-        }
-        GUILayout.Space(20);
-        if (GUILayout.Button("Reset Mod Ship Logs (Reloads Scene)"))
-        {
-            var saves = PlayerData._currentGameSave.shipLogFactSaves.Where(s => s.Value.id.StartsWith("GITM_")).Select(s => s.Value).ToList();
-            foreach (var save in saves)
+            foreach (var condition in typeof(Constants.DialogueConditions).GetFields().Where(f => f.FieldType == typeof(string)))
             {
-                PlayerData._currentGameSave.shipLogFactSaves.Remove(save.id);
+                var conditionName = (string)condition.GetValue(null);
+                if (GUILayout.Button($"{conditionName}: {DialogueConditionManager.SharedInstance.GetConditionState(conditionName)}"))
+                {
+                    DialogueConditionManager.SharedInstance.SetConditionState(conditionName, !DialogueConditionManager.SharedInstance.GetConditionState(conditionName));
+                }
             }
-            PlayerData.SaveCurrentGame();
-            Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
-        }
-        foreach (var fact in typeof(Constants.ShipLogFacts).GetFields().Where(f => f.FieldType == typeof(string)))
-        {
-            var factID = (string)fact.GetValue(null);
-            GUI.enabled = !Locator.GetShipLogManager().IsFactRevealed(factID);
-            if (GUILayout.Button($"Reveal {factID}"))
+            GUILayout.Space(20);
+            if (GUILayout.Button("Reset Mod Ship Logs (Reloads Scene)"))
             {
-                Locator.GetShipLogManager().RevealFact(factID);
+                var saves = PlayerData._currentGameSave.shipLogFactSaves.Where(s => s.Value.id.StartsWith("GITM_")).Select(s => s.Value).ToList();
+                foreach (var save in saves)
+                {
+                    PlayerData._currentGameSave.shipLogFactSaves.Remove(save.id);
+                }
+                PlayerData.SaveCurrentGame();
+                Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
+            }
+            foreach (var fact in typeof(Constants.ShipLogFacts).GetFields().Where(f => f.FieldType == typeof(string)))
+            {
+                var factID = (string)fact.GetValue(null);
+                GUI.enabled = !Locator.GetShipLogManager().IsFactRevealed(factID);
+                if (GUILayout.Button($"Reveal {factID}"))
+                {
+                    Locator.GetShipLogManager().RevealFact(factID);
+                }
+            }
+            GUI.enabled = true;
+            GUILayout.Space(20);
+            if (GUILayout.Button("Default Spawn")) WarpToSpawnPoint("Spawn_TH");
+            if (GUILayout.Button("Spawn at Statue Island")) WarpToSpawnPoint("Spawn_StatueIsland_Beach");
+            if (GUILayout.Button("Spawn inside ATP")) WarpToSpawnPoint("Spawn_TimeLoopDevice");
+            if (GUILayout.Button("Spawn at Vessel")) WarpToSpawnPoint("Spawn_Vessel");
+            if (GUILayout.Button("Spawn at Solanum"))
+            {
+                Locator.GetQuantumMoon()._collapseToIndex = 5;
+                Locator.GetQuantumMoon().Collapse(true);
+                WarpToSpawnPoint("Spawn_NorthPole");
             }
         }
-        GUI.enabled = true;
-        GUILayout.Space(20);
-        if (GUILayout.Button("Default Spawn")) WarpToSpawnPoint("Spawn_TH");
-        if (GUILayout.Button("Spawn at Statue Island")) WarpToSpawnPoint("Spawn_StatueIsland_Beach");
-        if (GUILayout.Button("Spawn inside ATP")) WarpToSpawnPoint("Spawn_TimeLoopDevice");
-        if (GUILayout.Button("Spawn at Vessel")) WarpToSpawnPoint("Spawn_Vessel");
-        if (GUILayout.Button("Spawn at Solanum"))
+        else
         {
-            Locator.GetQuantumMoon()._collapseToIndex = 5;
-            Locator.GetQuantumMoon().Collapse(true);
-            WarpToSpawnPoint("Spawn_NorthPole");
+            var staff = NomaiStaffItem.GetHeldStaff();
+            if (staff != null)
+            {
+                GUILayout.Label($"Surface Type: {staff.TargetSurfaceType}");
+                GUILayout.Label($"Wall Target: {staff.WallTarget}");
+
+            }
         }
 
-        var staff = NomaiStaffItem.GetHeldStaff();
-        if (staff != null)
-        {
-            GUILayout.Label($"Surface Type: {staff.TargetSurfaceType}");
-            GUILayout.Label($"Wall Target: {staff.WallTarget}");
-
-        }
     }
 
     void WarpToSpawnPoint(string spawnPointName)

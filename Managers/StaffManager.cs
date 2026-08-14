@@ -27,6 +27,14 @@ public class StaffManager : ManagerBase<StaffManager>
         "SunStation_Body/Sector_SunStation/Sector_ControlModule/Props/OtherComponentsGroup/ARTPASS_Props_ControlINT",
     ];
 
+    static readonly CustomStaffPlacement[] CUSTOM_STAFFS = [
+        new("StatueIsland_Body/Sector_StatueIsland/Tornado Lab", new(35.45065f, 17.36366f, -47.93872f), new(0f, 330f, 0f)),
+        new("StatueIsland_Body/Sector_StatueIsland", new(-8.466702f, 33.74698f, 84.35114f), new(355f, 204f, 351f)),
+        new("CaveTwin_Body/Sector_CaveTwin", new(-99f, -109f, -24f), new(345f, 180f, 221f)),
+        new("CaveTwin_Body/Sector_CaveTwin", new(14.67846f, -106.6276f, 47.13413f), new(19f,204f, 184f)),
+        new("TimberHearth_Body/Sector_TH", new(11.85f, -44.5f, 185f), new(3f, 94f, 103f), Constants.PersistentConditions.MASK_INSTALLED),
+    ];
+
     public const float WALL_LIFETIME = 60f;
     public const int MAX_ACTIVE_WALLS = 30;
 
@@ -128,6 +136,22 @@ public class StaffManager : ManagerBase<StaffManager>
             oldStaff.gameObject.SetActive(false);
         }
 
+        foreach (var loc in CUSTOM_STAFFS)
+        {
+            if (!string.IsNullOrEmpty(loc.requiredPersistentCondition))
+            {
+                if (!PlayerData.GetPersistentCondition(loc.requiredPersistentCondition))
+                {
+                    continue;
+                }
+            }
+            var parent = GameObject.Find(loc.parentPath).transform;
+            var staff = Instantiate(staffPrefab);
+            staff.transform.SetParent(parent, false);
+            staff.transform.position = parent.root.TransformPoint(loc.bodyPos);
+            staff.transform.rotation = parent.root.rotation * Quaternion.Euler(loc.bodyRot);
+            staff.SetActive(true);
+        }
     }
 
     public SpawnedWallController SpawnWall(string parentPath, Vector3 localPosition, Vector3 localRotation)
@@ -153,5 +177,13 @@ public class StaffManager : ManagerBase<StaffManager>
     {
         public SpawnedWallController wall;
         public float spawnTime;
+    }
+
+    class CustomStaffPlacement(string parentPath, Vector3 pos, Vector3 rot, string requiredPersistentCondition = null)
+    {
+        public string parentPath = parentPath;
+        public Vector3 bodyPos = pos;
+        public Vector3 bodyRot = rot;
+        public string requiredPersistentCondition = requiredPersistentCondition;
     }
 }

@@ -10,7 +10,7 @@
         <Page>GITM_VISION_FORGE_4</Page>
     </Dialogue>
     <RevealFacts>
-      <FactID>GITM_GHOST_VISION_FORGE_REVEAL</FactID>
+      <FactID>GITM_VISION_FORGE_RUMOR</FactID>
     </RevealFacts>
   </DialogueNode>
 </DialogueTree>

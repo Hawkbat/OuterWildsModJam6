@@ -1,5 +1,16 @@
-﻿<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
+<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
   <ID>GITM_GHOST</ID>
+  <!--
+    Entry ID prefixes drive how the log behaves; see ShipLogDialogueManager.
+      GITM_GHOST_   Lami talking. Reading the card prints what she said and offers whatever comes next.
+      GITM_CHOICE_  The player talking. Same, but it's a reply the player picks.
+      GITM_VISION_  A Nomai memory Lami reviews. The rumor is earned by watching the vision out in the
+                    world; reading the card prints her review of it.
+      GITM_FIND_    Somewhere the player has to go. Rumors are leads Lami hands out, but the explore
+                    facts are only ever revealed by the world itself.
+    Follow-ups Lami offers in response to a world discovery are revealed by conditionalChecks in
+    systems/SolarSystem.json, since reading a GITM_FIND_ card deliberately doesn't advance anything.
+  -->
   <Entry>
     <ID>GITM_GHOST_CURIOSITY</ID>
     <Name>GITM_GHOST_CURIOSITY</Name>
@@ -24,6 +35,8 @@
     <Name>GITM_CHOICE_CURIOSITY</Name>
     <IsCuriosity />
   </Entry>
+
+  <!-- Act 2: first contact, once the player reaches the ship in the Hanging City -->
   <Entry>
     <ID>GITM_CHOICE_HELLO_A</ID>
     <Name>GITM_CHOICE_HELLO_A</Name>
@@ -71,6 +84,8 @@
       <Text>GITM_GHOST_HELLO_FOLLOWUP_REVEAL</Text>
     </ExploreFact>
   </Entry>
+
+  <!-- Act 2: grounding Lami's memories in places -->
   <Entry>
     <ID>GITM_CHOICE_PLACES</ID>
     <Name>GITM_CHOICE_PLACES</Name>
@@ -110,14 +125,383 @@
       <Text>NONE</Text>
     </RumorFact>
     <ExploreFact>
-      <ID>GITM_WALL_TOOL_UNLOCK</ID>
-      <Text>GITM_WALL_TOOL_UNLOCK</Text>
-    </ExploreFact>
-    <ExploreFact>
       <ID>GITM_MEMORY_CLASSROOM_REVEAL</ID>
       <Text>GITM_MEMORY_CLASSROOM_REVEAL</Text>
     </ExploreFact>
+    <ExploreFact>
+      <ID>GITM_WALL_TOOL_UNLOCK</ID>
+      <Text>GITM_WALL_TOOL_UNLOCK</Text>
+    </ExploreFact>
   </Entry>
+  <!-- The nudge that the player can wall-climb back up to the ceiling of the Hanging City -->
+  <Entry>
+    <ID>GITM_GHOST_CLIMB_HINT</ID>
+    <Name>GITM_GHOST_CLIMB_HINT</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_CLIMB_HINT_RUMOR</ID>
+      <SourceID>GITM_FIND_CLASSROOM</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_CLIMB_HINT_REVEAL</ID>
+      <Text>GITM_GHOST_CLIMB_HINT_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <!-- Found in act 1, long before the player has a ship log to read it in -->
+  <Entry>
+    <ID>GITM_FIND_HOME</ID>
+    <Name>GITM_FIND_HOME</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_HOME_RUMOR</ID>
+      <SourceID>GITM_CHOICE_PLACES</SourceID>
+      <RumorName>GITM_FIND_HOME_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_MEMORY_HOME_REVEAL</ID>
+      <Text>GITM_MEMORY_HOME_REVEAL</Text>
+    </ExploreFact>
+    <ExploreFact>
+      <ID>GITM_BEAM_TOOL_UNLOCK</ID>
+      <Text>GITM_BEAM_TOOL_UNLOCK</Text>
+    </ExploreFact>
+  </Entry>
+
+  <!-- Act 2: the statues, and Lami's reviews of the visions attached to them -->
+  <Entry>
+    <ID>GITM_CHOICE_STATUES</ID>
+    <Name>GITM_CHOICE_STATUES</Name>
+    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_CHOICE_STATUES_RUMOR</ID>
+      <SourceID>GITM_GHOST_HELLO_FOLLOWUP</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_CHOICE_STATUES_REVEAL</ID>
+      <Text>GITM_CHOICE_STATUES_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <!-- The mask platform readout: which statues are still connected, and the one mask that isn't there -->
+  <Entry>
+    <ID>GITM_FIND_MASKS</ID>
+    <Name>GITM_FIND_MASKS</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_MASKS_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_FIND_MASKS_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_FIND_MASKS_REVEAL</ID>
+      <Text>GITM_FIND_MASKS_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_GABBRO</ID>
+    <Name>GITM_VISION_GABBRO</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_GABBRO_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_GABBRO_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_GABBRO_REVIEW</ID>
+      <Text>GITM_VISION_GABBRO_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_WORKSHOP</ID>
+    <Name>GITM_VISION_WORKSHOP</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_WORKSHOP_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_WORKSHOP_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_WORKSHOP_REVIEW</ID>
+      <Text>GITM_VISION_WORKSHOP_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_PROBE</ID>
+    <Name>GITM_VISION_PROBE</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_PROBE_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_PROBE_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_PROBE_REVIEW</ID>
+      <Text>GITM_VISION_PROBE_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_FORGE</ID>
+    <Name>GITM_VISION_FORGE</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_FORGE_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_FORGE_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_FORGE_REVIEW</ID>
+      <Text>GITM_VISION_FORGE_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_ATP</ID>
+    <Name>GITM_VISION_ATP</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_ATP_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_ATP_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_ATP_REVIEW</ID>
+      <Text>GITM_VISION_ATP_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_SS_UPPER</ID>
+    <Name>GITM_VISION_SS_UPPER</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_SS_UPPER_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_SS_UPPER_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_SS_UPPER_REVIEW</ID>
+      <Text>GITM_VISION_SS_UPPER_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_VISION_SS_LOWER</ID>
+    <Name>GITM_VISION_SS_LOWER</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_VISION_SS_LOWER_RUMOR</ID>
+      <SourceID>GITM_CHOICE_STATUES</SourceID>
+      <RumorName>GITM_VISION_SS_LOWER_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_VISION_SS_LOWER_REVIEW</ID>
+      <Text>GITM_VISION_SS_LOWER_REVIEW</Text>
+    </ExploreFact>
+  </Entry>
+
+  <!-- Act 3: opened by the Brittle Hollow statues, gated in systems/SolarSystem.json -->
+  <Entry>
+    <ID>GITM_CHOICE_MORE</ID>
+    <Name>GITM_CHOICE_MORE</Name>
+    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_CHOICE_MORE_RUMOR</ID>
+      <SourceID>GITM_GHOST_HELLO_FOLLOWUP</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_CHOICE_MORE_REVEAL</ID>
+      <Text>GITM_CHOICE_MORE_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_FOSSIL_HINT</ID>
+    <Name>GITM_GHOST_FOSSIL_HINT</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_FOSSIL_HINT_RUMOR</ID>
+      <SourceID>GITM_CHOICE_MORE</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_FOSSIL_HINT_REVEAL</ID>
+      <Text>GITM_GHOST_FOSSIL_HINT_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_FIND_FOSSIL</ID>
+    <Name>GITM_FIND_FOSSIL</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_FOSSIL_RUMOR</ID>
+      <SourceID>GITM_GHOST_FOSSIL_HINT</SourceID>
+      <RumorName>GITM_FIND_FOSSIL_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_MEMORY_FOSSIL_REVEAL</ID>
+      <Text>GITM_MEMORY_FOSSIL_REVEAL</Text>
+    </ExploreFact>
+    <ExploreFact>
+      <ID>GITM_DOOR_TOOL_UNLOCK</ID>
+      <Text>GITM_DOOR_TOOL_UNLOCK</Text>
+    </ExploreFact>
+  </Entry>
+  <!--
+    The fossil scroll in the Sunless City is vanilla text, and it hands us Lami's whole family: Laevi is her
+    older sister, the two of them have parents, and the kids call Pye their aunt. Both of these hang off
+    GITM_FIND_FOSSIL rather than off a readable entry, so that reading a card can never reveal them early.
+  -->
+  <Entry>
+    <ID>GITM_GHOST_LAEVI</ID>
+    <Name>GITM_GHOST_LAEVI</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_LAEVI_RUMOR</ID>
+      <SourceID>GITM_FIND_FOSSIL</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_LAEVI_REVEAL</ID>
+      <Text>GITM_GHOST_LAEVI_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_AUNT_PYE</ID>
+    <Name>GITM_GHOST_AUNT_PYE</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_AUNT_PYE_RUMOR</ID>
+      <SourceID>GITM_FIND_FOSSIL</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_AUNT_PYE_REVEAL</ID>
+      <Text>GITM_GHOST_AUNT_PYE_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <!-- Lami places the last two statues, pointing the player at the Sun Station -->
+  <Entry>
+    <ID>GITM_GHOST_SUNSTATION</ID>
+    <Name>GITM_GHOST_SUNSTATION</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_SUNSTATION_RUMOR</ID>
+      <SourceID>GITM_CHOICE_MORE</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_SUNSTATION_REVEAL</ID>
+      <Text>GITM_GHOST_SUNSTATION_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+
+  <!-- Act 4: every statue is down, but Lami's prototype mask is still connected -->
+  <Entry>
+    <ID>GITM_GHOST_MASK</ID>
+    <Name>GITM_GHOST_MASK</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_MASK_RUMOR</ID>
+      <SourceID>GITM_FIND_MASKS</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_MASK_REVEAL</ID>
+      <Text>GITM_GHOST_MASK_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <!-- The sealed door is found back in act 1; the mask itself is only reachable once all three staff abilities are unlocked -->
+  <Entry>
+    <ID>GITM_FIND_STOREROOM</ID>
+    <Name>GITM_FIND_STOREROOM</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_STOREROOM_RUMOR</ID>
+      <SourceID>GITM_GHOST_MASK</SourceID>
+      <RumorName>GITM_FIND_STOREROOM_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_FIND_STOREROOM_REVEAL</ID>
+      <Text>GITM_FIND_STOREROOM_REVEAL</Text>
+    </ExploreFact>
+    <ExploreFact>
+      <ID>GITM_FIND_MASK_REVEAL</ID>
+      <Text>GITM_FIND_MASK_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_SOLANUM</ID>
+    <Name>GITM_GHOST_SOLANUM</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_SOLANUM_RUMOR</ID>
+      <SourceID>GITM_FIND_STOREROOM</SourceID>
+      <RumorName>GITM_GHOST_SOLANUM_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_SOLANUM_REVEAL</ID>
+      <Text>GITM_GHOST_SOLANUM_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_CHOICE_SOLANUM_ALIVE</ID>
+    <Name>GITM_CHOICE_SOLANUM_ALIVE</Name>
+    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_CHOICE_SOLANUM_ALIVE_RUMOR</ID>
+      <SourceID>GITM_GHOST_SOLANUM</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_CHOICE_SOLANUM_ALIVE_REVEAL</ID>
+      <Text>GITM_CHOICE_SOLANUM_ALIVE_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_TAKE_MASK</ID>
+    <Name>GITM_GHOST_TAKE_MASK</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_TAKE_MASK_RUMOR</ID>
+      <SourceID>GITM_CHOICE_SOLANUM_ALIVE</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_TAKE_MASK_REVEAL</ID>
+      <Text>GITM_GHOST_TAKE_MASK_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_FIND_SOLANUM</ID>
+    <Name>GITM_FIND_SOLANUM</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_FIND_SOLANUM_RUMOR</ID>
+      <SourceID>GITM_GHOST_TAKE_MASK</SourceID>
+      <RumorName>GITM_FIND_SOLANUM_RUMOR_NAME</RumorName>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_SOLANUM_RECOGNISES</ID>
+      <Text>GITM_SOLANUM_RECOGNISES</Text>
+    </ExploreFact>
+    <ExploreFact>
+      <ID>GITM_SOLANUM_ANSWER</ID>
+      <Text>GITM_SOLANUM_ANSWER</Text>
+    </ExploreFact>
+  </Entry>
+
+  <!-- The player's own log from before the loop was cut short, all revealed up front -->
   <Entry>
     <ID>GITM_PLAYER_STEP_0</ID>
     <Name>GITM_PLAYER_STEP_0</Name>
@@ -223,197 +607,6 @@
     <ExploreFact>
       <ID>GITM_PLAYER_STEP_7_REVEAL</ID>
       <Text>GITM_PLAYER_STEP_7_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_CHOICE_STATUES</ID>
-    <Name>GITM_CHOICE_STATUES</Name>
-    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_CHOICE_STATUES_RUMOR</ID>
-      <SourceID>GITM_GHOST_HELLO_FOLLOWUP</SourceID>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_CHOICE_STATUES_REVEAL</ID>
-      <Text>GITM_CHOICE_STATUES_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_SOLANUM</ID>
-    <Name>GITM_GHOST_SOLANUM</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_SOLANUM_RUMOR</ID>
-      <SourceID>GITM_FIND_HOME</SourceID>
-      <RumorName>GITM_GHOST_SOLANUM_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_SOLANUM_REVEAL</ID>
-      <Text>GITM_GHOST_SOLANUM_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_FIND_SOLANUM</ID>
-    <Name>GITM_FIND_SOLANUM</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_FIND_SOLANUM_RUMOR</ID>
-      <SourceID>GITM_GHOST_SOLANUM</SourceID>
-      <RumorName>GITM_FIND_SOLANUM_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_SOLANUM_RECOGNISES</ID>
-      <Text>GITM_SOLANUM_RECOGNISES</Text>
-    </ExploreFact>
-    <ExploreFact>
-      <ID>GITM_SOLANUM_ANSWER</ID>
-      <Text>GITM_SOLANUM_ANSWER</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_GABBRO</ID>
-    <Name>GITM_GHOST_VISION_GABBRO</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_GABBRO_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_GABBRO_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_GABBRO_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_GABBRO_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_WORKSHOP</ID>
-    <Name>GITM_GHOST_VISION_WORKSHOP</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_WORKSHOP_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_WORKSHOP_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_WORKSHOP_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_WORKSHOP_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_PROBE</ID>
-    <Name>GITM_GHOST_VISION_PROBE</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_PROBE_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_PROBE_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_PROBE_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_PROBE_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_FORGE</ID>
-    <Name>GITM_GHOST_VISION_FORGE</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_FORGE_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_FORGE_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_FORGE_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_FORGE_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_ATP</ID>
-    <Name>GITM_GHOST_VISION_ATP</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_ATP_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_ATP_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_ATP_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_ATP_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_SS_UPPER</ID>
-    <Name>GITM_GHOST_VISION_SS_UPPER</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_SS_UPPER_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_SS_UPPER_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_SS_UPPER_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_SS_UPPER_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_GHOST_VISION_SS_LOWER</ID>
-    <Name>GITM_GHOST_VISION_SS_LOWER</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_GHOST_VISION_SS_LOWER_RUMOR</ID>
-      <SourceID>GITM_CHOICE_STATUES</SourceID>
-      <RumorName>GITM_GHOST_VISION_SS_LOWER_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_GHOST_VISION_SS_LOWER_REVEAL</ID>
-      <Text>GITM_GHOST_VISION_SS_LOWER_REVEAL</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_FIND_FOSSIL</ID>
-    <Name>GITM_FIND_FOSSIL</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_FIND_FOSSIL_RUMOR</ID>
-      <SourceID>GITM_CHOICE_PLACES</SourceID>
-      <RumorName>GITM_FIND_FOSSIL_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_MEMORY_FOSSIL_REVEAL</ID>
-      <Text>GITM_MEMORY_FOSSIL_REVEAL</Text>
-    </ExploreFact>
-    <ExploreFact>
-      <ID>GITM_DOOR_TOOL_UNLOCK</ID>
-      <Text>GITM_DOOR_TOOL_UNLOCK</Text>
-    </ExploreFact>
-  </Entry>
-  <Entry>
-    <ID>GITM_FIND_HOME</ID>
-    <Name>GITM_FIND_HOME</Name>
-    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
-    <RumorFact>
-      <ID>GITM_FIND_HOME_RUMOR</ID>
-      <SourceID>GITM_CHOICE_PLACES</SourceID>
-      <RumorName>GITM_FIND_HOME_RUMOR_NAME</RumorName>
-      <Text>NONE</Text>
-    </RumorFact>
-    <ExploreFact>
-      <ID>GITM_MEMORY_HOME_REVEAL</ID>
-      <Text>GITM_MEMORY_HOME_REVEAL</Text>
-    </ExploreFact>
-    <ExploreFact>
-      <ID>GITM_BEAM_TOOL_UNLOCK</ID>
-      <Text>GITM_BEAM_TOOL_UNLOCK</Text>
     </ExploreFact>
   </Entry>
 </AstroObjectEntry>

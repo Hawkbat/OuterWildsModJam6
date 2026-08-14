@@ -73,8 +73,12 @@ public class ErnestoManager : ManagerBase<ErnestoManager>
         var conditions = DialogueConditionManager.SharedInstance;
         if (conditions.GetConditionState(DialogueConditions.ErnestoWarnedTwice))
         {
-            // Twice was already twice more than he wanted to explain it
-            TriggerRockDeath();
+            var volume = Resources.FindObjectsOfTypeAll<OWTriggerVolume>()
+                .FirstOrDefault(volume => volume.name == ROCK_DEATH_VOLUME_NAME);
+
+            // Add player to volume directly, bypassing physical overlap check
+            DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.ErnestoRockDeath, true);
+            volume.AddObjectToVolume(Locator.GetPlayerDetector().gameObject);
             return;
         }
 
@@ -94,23 +98,7 @@ public class ErnestoManager : ManagerBase<ErnestoManager>
         var conditions = DialogueConditionManager.SharedInstance;
         if (!conditions.GetConditionState(DialogueConditions.ErnestoUndo)) return;
 
-        // Reactivating clears the persistent condition, which walks back the terrible fate check in SolarSystem.json
         conditions.SetConditionState(DialogueConditions.ErnestoUndo, false);
         playerStatue.Activate();
-    }
-
-    void TriggerRockDeath()
-    {
-        var volume = FindRockDeathVolume();
-
-        // Add player to volume directly, bypassing physical overlap check
-        DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.ErnestoRockDeath, true);
-        volume.AddObjectToVolume(Locator.GetPlayerDetector().gameObject);
-    }
-
-    OWTriggerVolume FindRockDeathVolume()
-    {
-        return Resources.FindObjectsOfTypeAll<OWTriggerVolume>()
-            .FirstOrDefault(volume => volume.name == ROCK_DEATH_VOLUME_NAME);
     }
 }

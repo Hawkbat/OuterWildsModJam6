@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,6 +7,11 @@ namespace GhostInTheMachine.Managers;
 
 public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
 {
+    const string GHOST_PREFIX = "GITM_GHOST_";
+    const string CHOICE_PREFIX = "GITM_CHOICE_";
+    const string VISION_PREFIX = "GITM_VISION_";
+    const string FIND_PREFIX = "GITM_FIND_";
+
     static Sprite ghostDefaultSprite;
     static Sprite playerDefaultSprite;
 
@@ -35,31 +41,68 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         Shader.SetGlobalVector("_DataGhostUIEffectOffset", (Vector4)offset);
     }
 
+    // Lami's entries and the player's replies are the conversation itself, so reading one is what carries it forward
+    static bool IsConversationEntry(string entryID) => entryID.StartsWith(GHOST_PREFIX) || entryID.StartsWith(CHOICE_PREFIX);
+
+    // Vision reviews read like Lami talking, but there's nothing for her to say until the vision has been seen
+    static bool IsReadableEntry(string entryID) => IsConversationEntry(entryID) || entryID.StartsWith(VISION_PREFIX);
+
+    // A rumor is only the reader's to unlock if nothing else already owns it: visions are earned out in the
+    // world, and the act gates own the leads that shouldn't surface until the act they belong to
+    static bool CanRevealOnRead(ShipLogFact fact) =>
+        !fact.GetEntryID().StartsWith(VISION_PREFIX) &&
+        !Constants.ShipLogFacts.GATED_RUMORS.Contains(fact.GetID());
+
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
-        var entryID = entry.GetID();
         // Ghost entries unlock their own explore facts and any follow-up rumors when marked as read.
-        if ((entryID.StartsWith("GITM_GHOST_") || entryID.StartsWith("GITM_CHOICE_")) && !entryID.EndsWith("_CURIOSITY"))
+        // Rumors pointing at a vision are left alone, since those are earned by finding the vision out in
+        // the world; otherwise asking Lami about the statues would hand over a checklist of every one there is.
+        if (IsReadableEntry(entry.GetID()))
         {
-            var followupFacts = detectiveMode._manager._factDict.Values.Where(f => !f.IsRevealed() && ((f.IsRumor() && f.GetSourceID() == entry.GetID()) || (!f.IsRumor() && f.GetEntryID() == entry.GetID()))).ToList();
-            foreach (var fact in followupFacts)
-            {
-                detectiveMode._manager.RevealFact(fact.GetID());
-                RefreshCardName(fact.GetEntryID());
-            }
-            RestartRevealQueue(followupFacts);
-            if (detectiveMode._descriptionField.IsVisible())
-            {
-                detectiveMode._descriptionField.SetEntry(entry);
-            }
+            StartCoroutine(RevealFollowupsCoroutine(card, entry));
+        }
+    }
+
+    IEnumerator RevealFollowupsCoroutine(ShipLogEntryCard card, ShipLogEntry entry)
+    {
+        var entryID = entry.GetID();
+        var alreadyRevealed = new HashSet<string>(detectiveMode._manager._factDict.Values.Where(f => f.IsRevealed()).Select(f => f.GetID()));
+
+        var followupFacts = detectiveMode._manager._factDict.Values.Where(f => !f.IsRevealed() && ((f.IsRumor() && f.GetSourceID() == entryID && CanRevealOnRead(f)) || (!f.IsRumor() && f.GetEntryID() == entryID && !entryID.EndsWith("_CURIOSITY")))).ToList();
+        foreach (var fact in followupFacts)
+        {
+            detectiveMode._manager.RevealFact(fact.GetID());
+        }
+
+        // Wait a frame before animating. New Horizons runs its conditional checks in LateUpdate after the
+        // ShipLogUpdated event, so anything an act gate unlocks in response to what we just revealed only
+        // exists after this point; without the wait it wouldn't show up until the log was closed and reopened
+        yield return null;
+
+        var revealedFacts = detectiveMode._manager._factDict.Values.Where(f => f.IsRevealed() && !alreadyRevealed.Contains(f.GetID())).ToList();
+        foreach (var fact in revealedFacts)
+        {
+            RefreshCardName(fact.GetEntryID());
+        }
+
+        // Revealing an explore fact moves this entry from rumored to explored, and the vanilla MarkAsRead
+        // that got us here only ever marked the rumor facts, so the card would be left showing as unread
+        entry.MarkAsRead();
+        card.UpdateUnreadIconVisibility();
+
+        RestartRevealQueue(revealedFacts);
+        if (detectiveMode._descriptionField.IsVisible())
+        {
+            detectiveMode._descriptionField.SetEntry(entry);
         }
     }
 
     public void OnInitCard(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
-        if (entry.GetID().StartsWith("GITM_GHOST_") || entry.GetID().StartsWith("GITM_FIND_"))
+        if (entry.GetID().StartsWith(GHOST_PREFIX) || entry.GetID().StartsWith(FIND_PREFIX) || entry.GetID().StartsWith(VISION_PREFIX))
         {
             if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
             {
@@ -69,7 +112,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             card._name.color = new Color(0.75f, 0.75f, 1f);
             card._photo.sprite = ghostDefaultSprite;
         }
-        else if (entry.GetID().StartsWith("GITM_PLAYER_") || entry.GetID().StartsWith("GITM_CHOICE_"))
+        else if (entry.GetID().StartsWith("GITM_PLAYER_") || entry.GetID().StartsWith(CHOICE_PREFIX))
         {
             if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
             {

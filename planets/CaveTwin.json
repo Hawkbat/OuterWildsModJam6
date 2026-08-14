@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "Props": {
+    "details": [
+      {
+        "rename": "GITM_MEMORY_FOSSIL",
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/Lamie Skeleton 03 Anglerfish.prefab",
+        "deactivationCondition": "GITM_MASK_INSTALLED",
+        "position": {
+          "x": -66.16737,
+          "y": -84.73034,
+          "z": -10.34251
+        },
+        "rotation": {
+          "x": 39.06364,
+          "y": 76.66798,
+          "z": 178.4246
+        }
+      }
+    ],
+    "dialogue": [
+      {
+        "xmlFile": "planets/Ghost/dialogue/Memory_Fossil.xml",
+        "parentPath": "Sector_CaveTwin/GITM_MEMORY_FOSSIL",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "remoteTrigger": {
+          "parentPath": "Sector_CaveTwin/GITM_MEMORY_FOSSIL",
+          "isRelativeToParent": true,
+          "radius": 7
+        }
+      }
+    ]
+  }
+}

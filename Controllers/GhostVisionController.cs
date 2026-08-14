@@ -25,15 +25,15 @@ public class GhostVisionController : MonoBehaviour
         {
             CustomAssetsManager.Instance.ApplyGhostMaterial(gameObject);
         }
-        ToggleCollision(!solid);
+        ToggleCollision(solid);
     }
 
     void ToggleCollision(bool enable)
     {
-        var colliders = GetComponentsInChildren<Collider>();
+        var colliders = GetComponentsInChildren<OWCollider>(true);
         foreach (var collider in colliders)
         {
-            collider.isTrigger = !enable;
+            collider.SetActivation(enable);
         }
     }
 }

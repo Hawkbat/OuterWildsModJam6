@@ -32,6 +32,7 @@ public class NomaiMaskItem : NomaiConversationStone
         base.PickUpItem(holdTranform);
         transform.localPosition = holdOffset;
         transform.localEulerAngles = holdEulerAngles;
+        Locator.GetShipLogManager().RevealFact(Constants.ShipLogFacts.MaskAcquired);
     }
 
     public override void DropItem(Vector3 position, Vector3 normal, Transform parent, Sector sector, IItemDropTarget customDropTarget)

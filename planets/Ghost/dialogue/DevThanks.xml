@@ -1,0 +1,15 @@
+<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>GITM_DEV_THANKS_NAME</NameField>
+  <DialogueNode>
+    <Name>DEV_THANKS</Name>
+    <EntryCondition>DEFAULT</EntryCondition>
+    <Dialogue>
+        <Page>GITM_DEV_THANKS_1</Page>
+        <Page>GITM_DEV_THANKS_2</Page>
+        <Page>GITM_DEV_THANKS_3</Page>
+        <Page>GITM_DEV_THANKS_4</Page>
+        <Page>GITM_DEV_THANKS_5</Page>
+    </Dialogue>
+    <SetPersistentCondition>GITM_DEV_THANKS_SEEN</SetPersistentCondition>
+  </DialogueNode>
+</DialogueTree>

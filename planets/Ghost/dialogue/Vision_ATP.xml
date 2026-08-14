@@ -10,7 +10,7 @@
         <Page>GITM_VISION_ATP_4</Page>
     </Dialogue>
     <RevealFacts>
-      <FactID>GITM_GHOST_VISION_ATP_REVEAL</FactID>
+      <FactID>GITM_VISION_ATP_RUMOR</FactID>
     </RevealFacts>
   </DialogueNode>
 </DialogueTree>

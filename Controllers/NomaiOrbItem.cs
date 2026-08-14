@@ -8,6 +8,19 @@ public class NomaiOrbItem : OWItem
     static ItemType itemType;
     static string translatedName;
 
+    // Sockets need the type before any orb has awoken, so it can't wait for one to be built
+    public static ItemType ItemType
+    {
+        get
+        {
+            if (itemType == ItemType.Invalid)
+            {
+                itemType = EnumUtils.Create<ItemType>(nameof(NomaiOrbItem));
+            }
+            return itemType;
+        }
+    }
+
     public Vector3 holdOffset;
     public Vector3 holdEulerAngles;
     public Vector3 socketOffset;
@@ -24,11 +37,7 @@ public class NomaiOrbItem : OWItem
         {
             translatedName = GhostInTheMachine.NewHorizons.GetTranslationForUI(nameof(NomaiOrbItem));
         }
-        if (itemType == ItemType.Invalid)
-        {
-            itemType = EnumUtils.Create<ItemType>(nameof(NomaiOrbItem));
-        }
-        _type = itemType;
+        _type = ItemType;
         _interactable = true;
         _interactRange = 2f;
         _localDropOffset = new Vector3(0f, 0.1f, 0f);

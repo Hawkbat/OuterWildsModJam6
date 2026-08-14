@@ -9,18 +9,78 @@
         "keepLoaded": true
       },
       {
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/Tornado Lab.prefab",
+        "isRelativeToParent": true,
+        "keepLoaded": true
+      },
+      {
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/StoreroomGuantlet.prefab",
+        "isRelativeToParent": true,
+        "keepLoaded": true
+      },
+      {
+        "rename": "GITM_VISION_GABBRO",
+        "path": "GabbroIsland_Pivot/GabbroIsland_Body/Sector_GabbroIsland/Interactables_GabbroIsland/Traveller_HEA_Gabbro/Traveller_HEA_Gabbro_ANIM_IdleFlute",
+        "deactivationCondition": "GITM_STATUE_GABBRO",
+        "isRelativeToParent": true,
+        "position": {
+          "x": -5.3431,
+          "y": 1.5479,
+          "z": -45.6202
+        },
+        "rotation": {
+          "x": 0.9665177,
+          "y": 138.1622,
+          "z": 359.8296
+        }
+      },
+      {
+        "rename": "GITM_VISION_WORKSHOP",
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/Phlox Skeleton.prefab",
+        "deactivationCondition": "GITM_STATUE_WORKSHOP",
+        "position": {
+          "x": -18.12165,
+          "y": 2.868184,
+          "z": 78.91495
+        },
+        "rotation": {
+          "x": 4.274905,
+          "y": 43.59315,
+          "z": 6.909434
+        }
+      },
+      {
+        "rename": "GITM_MEMORY_HOME",
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/Lamie Skeleton 01.prefab",
+        "deactivationCondition": "GITM_MASK_INSTALLED",
+        "position": {
+          "x": -11.20806,
+          "y": 33.83212,
+          "z": 83.37334
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
         "assetBundle": "assetbundles/ghostinthemachine",
         "path": "Assets/GhostInTheMachine/NomaiMaskItem.prefab",
         "keepLoaded": true,
         "position": {
-          "x": 3.055038,
-          "y": 10.73177,
-          "z": 7.415567
+          "x": 26.52622,
+          "y": 49.44287,
+          "z": 60.67125
         },
         "rotation": {
-          "x": 359.7843,
-          "y": 245.6487,
-          "z": 0.5087637
+          "x": 275,
+          "y": 348,
+          "z": 348
         }
       },
       {
@@ -33,35 +93,146 @@
         "rename": "GITM_TORNADO_LAUNCHER",
         "path": "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_District3/Interactables_HangingCity_District3/Prefab_NOM_TractorBeam",
         "position": {
-          "x": -7,
-          "y": 3.5,
-          "z": -27
+          "x": 36.75482,
+          "y": 17.05178,
+          "z": -44.02162
         },
         "rotation": {
-          "x": 330,
-          "y": 0,
+          "x": 0.1579392,
+          "y": 259.929,
+          "z": 355.0025
+        }
+      },
+      {
+        "rename": "GITM_STORAGE_BEAM",
+        "path": "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_District3/Interactables_HangingCity_District3/Prefab_NOM_TractorBeam",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 22.2985,
+          "y": 35.2702,
+          "z": 21.4907
+        },
+        "rotation": {
+          "x": 352.8558,
+          "y": 175.482,
+          "z": 358
+        }
+      },
+      {
+        "rename": "GITM_STORAGE_DOOR",
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/Prefab_NOM_RotatingDoor_Broken",
+        "parentPath": "Sector_StatueIsland/StoreroomGuantlet",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 35.9426,
+          "y": 44.8906,
+          "z": 1.9768
+        },
+        "rotation": {
+          "x": 0,
+          "y": 270,
           "z": 0
+        }
+      }
+    ],
+    "translatorText": [
+      {
+        "xmlFile": "planets/StatueIsland/GITM_TORNADO_MARKER.xml",
+        "type": "trailmarker",
+        "position": {
+          "x": 33.50051,
+          "y": 17.19964,
+          "z": -46.43289
+        },
+        "rotation": {
+          "x": 4.612511,
+          "y": 10.87918,
+          "z": 1.93192
         }
       }
     ],
     "tornados": [
       {
         "rename": "GITM_TORNADO",
+        "isRelativeToParent": true,
         "position": {
-          "x": -10,
-          "y": -150,
-          "z": -90
+          "x": 60,
+          "y": -75,
+          "z": -120
         },
         "rotation": {
-          "x": 346.163,
-          "y": 314.0263,
-          "z": 17.7542
+          "x": 0,
+          "y": 0,
+          "z": 0
         },
-        "height": 300,
+        "height": 100,
         "type": "downwards",
         "wanderDegreesX": 0,
         "wanderDegreesZ": 0,
         "wanderRate": 0
+      }
+    ],
+    "dialogue": [
+      {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Gabbro.xml",
+        "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "remoteTrigger": {
+          "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
+          "isRelativeToParent": true,
+          "radius": 7
+        }
+      },
+      {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Workshop.xml",
+        "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "remoteTrigger": {
+          "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
+          "isRelativeToParent": true,
+          "radius": 10
+        }
+      },
+      {
+        "xmlFile": "planets/Ghost/dialogue/Memory_Home.xml",
+        "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "remoteTrigger": {
+          "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
+          "isRelativeToParent": true,
+          "radius": 7
+        }
+      }
+    ]
+  },
+  "Volumes": {
+    "revealVolumes": [
+      {
+        "rename": "GITM_STOREROOM_REVEAL",
+        "revealOn": "enter",
+        "revealFor": "player",
+        "reveals": [ "GITM_FIND_STOREROOM_REVEAL" ],
+        "radius": 8,
+        "position": {
+          "x": 7.348211,
+          "y": 37,
+          "z": 82.77087
+        }
       }
     ]
   }

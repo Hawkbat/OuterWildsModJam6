@@ -29,5 +29,5 @@
       }
     }
   ],
-  "preloadAssetBundles": ["assetbundles/ghostinthemachine"]
+  "preloadAssetBundles": ["assetbundles/ghostinthemachine", "assetbundles/gitm_insm"]
 }

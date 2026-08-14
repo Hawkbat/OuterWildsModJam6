@@ -56,7 +56,7 @@ public class MaskManager : ManagerBase<MaskManager>
             Locator.GetAudioMixer().MixEndTimes(1f);
         }
         Locator.GetGlobalMusicController().enabled = false;
-        finaleAudioSrc.FadeIn(0.5f);
+        finaleAudioSrc.FadeIn(0.5f, targetVolume: 0.5f);
     }
 
     public void OnMaskRemoved()

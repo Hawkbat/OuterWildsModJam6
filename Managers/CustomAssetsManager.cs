@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace GhostInTheMachine.Managers;
@@ -35,7 +36,7 @@ public class CustomAssetsManager : ManagerBase<CustomAssetsManager>
         var renderers = obj.GetComponentsInChildren<Renderer>();
         foreach (var renderer in renderers)
         {
-            renderer.material = ghostMaterial;
+            renderer.sharedMaterials = [.. renderer.sharedMaterials.Select(m => ghostMaterial)];
         }
     }
 
@@ -45,7 +46,7 @@ public class CustomAssetsManager : ManagerBase<CustomAssetsManager>
         var renderers = obj.GetComponentsInChildren<Renderer>();
         foreach (var renderer in renderers)
         {
-            renderer.material = sandstoneMaterial;
+            renderer.sharedMaterials = [.. renderer.sharedMaterials.Select(m =>  sandstoneMaterial)];
         }
     }
 

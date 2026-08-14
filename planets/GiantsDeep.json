@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "Props": {
+    "details": [
+      {
+        "rename": "GITM_VISION_PROBE",
+        "assetBundle": "assetbundles/gitm_insm",
+        "path": "Assets/Z-GhostInTheMachine Prefabs/Privet Skeleton.prefab",
+        "deactivationCondition": "GITM_STATUE_PROBE",
+        "isRelativeToParent": true,
+        "position": {
+          "x": -29.2282,
+          "y": -68.65128,
+          "z": -42.15142
+        },
+        "rotation": {
+          "x": 72.5717,
+          "y": 22.041,
+          "z": 61.47185
+        }
+      }
+    ],
+    "dialogue": [
+      {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Probe.xml",
+        "parentPath": "Sector_GD/GITM_VISION_PROBE",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "remoteTrigger": {
+          "parentPath": "Sector_GD/GITM_VISION_PROBE",
+          "isRelativeToParent": true,
+          "radius": 7
+        }
+      }
+    ]
+  }
+}

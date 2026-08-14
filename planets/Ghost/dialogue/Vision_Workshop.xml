@@ -10,7 +10,7 @@
         <Page>GITM_VISION_WORKSHOP_4</Page>
     </Dialogue>
     <RevealFacts>
-      <FactID>GITM_GHOST_VISION_WORKSHOP_REVEAL</FactID>
+      <FactID>GITM_VISION_WORKSHOP_RUMOR</FactID>
     </RevealFacts>
   </DialogueNode>
 </DialogueTree>

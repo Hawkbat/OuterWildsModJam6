@@ -10,7 +10,7 @@
         <Page>GITM_VISION_SS_UPPER_4</Page>
     </Dialogue>
     <RevealFacts>
-      <FactID>GITM_GHOST_VISION_SS_UPPER_REVEAL</FactID>
+      <FactID>GITM_VISION_SS_UPPER_RUMOR</FactID>
     </RevealFacts>
   </DialogueNode>
 </DialogueTree>

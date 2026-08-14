@@ -34,10 +34,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
             [STATUE_GABBRO, STATUE_WORKSHOP, STATUE_PROBE],
             [
                 new(20.24f,
-                    new("StatueIsland_Body", new(0.8378989f, 10.73179f, 6.672981f), new(0f, 330f, 0f)) { fuel = 13f, oxygen = 180f, health = 13f, hasStaff = true },
+                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(0f, 330f, 0f)) { fuel = 13f, oxygen = 180f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(17.12f,
-                    new("StatueIsland_Body", new(-38f, 0.4f, -74f), new(11f, 64f, 0f)) { fuel = 24f, oxygen = 240f, health = 13f, hasStaff = true },
+                    new("StatueIsland_Body", new(-27.77047f, 35.10791f, 65.16161f), new(0f, 55f, 0f)) { fuel = 24f, oxygen = 240f, health = 13f, hasStaff = true },
                     new("WhiteHole_Body") { destroyed = true }),
                 new(15.13f,
                     new("StatueIsland_Body", new(2.34f, 53.6f, -62f), new(0f, 185f, 0f)) { fuel = 44f, oxygen = 450f, health = 27f, hasStaff = true },

@@ -8,9 +8,10 @@
         <Page>GITM_VISION_GABBRO_2</Page>
         <Page>GITM_VISION_GABBRO_3</Page>
         <Page>GITM_VISION_GABBRO_4</Page>
+        <Page>GITM_VISION_GABBRO_5</Page>
     </Dialogue>
     <RevealFacts>
-      <FactID>GITM_GHOST_VISION_GABBRO_REVEAL</FactID>
+      <FactID>GITM_VISION_GABBRO_RUMOR</FactID>
     </RevealFacts>
   </DialogueNode>
 </DialogueTree>

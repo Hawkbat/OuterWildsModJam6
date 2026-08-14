@@ -23,7 +23,7 @@ public abstract class ManagerBase<T> : MonoBehaviour where T : ManagerBase<T>
         }
     }
 
-    public static T EnsureInstance() => Instance;
+    public static T Initialize() => Instance;
 
     protected virtual void Awake()
     {

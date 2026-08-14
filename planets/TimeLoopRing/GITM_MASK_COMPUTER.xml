@@ -11,4 +11,12 @@
     <ID>3</ID>
     <Text>GITM_MASK_COMPUTER_3</Text>
   </TextBlock>
+  <ShipLogConditions>
+    <RevealFact>
+      <FactID>GITM_FIND_MASKS_REVEAL</FactID>
+      <Condition>1</Condition>
+      <Condition>2</Condition>
+      <Condition>3</Condition>
+    </RevealFact>
+  </ShipLogConditions>
 </NomaiObject>

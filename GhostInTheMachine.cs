@@ -47,24 +47,26 @@ public class GhostInTheMachine : ModBehaviour
 
         ModHelper.Events.Unity.FireInNUpdates(() =>
         {
-            InvincibilityManager.EnsureInstance();
-            FastForwardManager.EnsureInstance();
-            ShipLogDialogueManager.EnsureInstance();
-            ErnestoManager.EnsureInstance();
-            StatueManager.EnsureInstance();
-            MaskManager.EnsureInstance();
-            DoorManager.EnsureInstance();
-            SpawnManager.EnsureInstance();
-            TornadoManager.EnsureInstance();
-            TractorBeamManager.EnsureInstance();
-            SolanumManager.EnsureInstance();
+            InvincibilityManager.Initialize();
+            FastForwardManager.Initialize();
+            ShipLogDialogueManager.Initialize();
+            ErnestoManager.Initialize();
+            StatueManager.Initialize();
+            MaskManager.Initialize();
+            VisionManager.Initialize();
+            DoorManager.Initialize();
+            SpawnManager.Initialize();
+            TornadoManager.Initialize();
+            TractorBeamManager.Initialize();
+            SolanumManager.Initialize();
 
-            if (debugModeEnabled) DebugManager.EnsureInstance();
+            if (debugModeEnabled) DebugManager.Initialize();
 
             StatueManager.Instance.PlaceInitialStatues();
             StaffManager.Instance.PlaceInitialStaffs();
             DoorManager.Instance.PlaceDoorInteractions();
             TractorBeamManager.Instance.PlaceBeamInteractions();
+            TornadoManager.Instance.PlaceOrbAndSocket();
             SpawnManager.Instance.DoInitialSpawn();
         }, 1);
     }
