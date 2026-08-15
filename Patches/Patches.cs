@@ -10,11 +10,22 @@ using static GhostInTheMachine.Constants.PersistentConditions;
 
 namespace GhostInTheMachine.Patches;
 
+[HarmonyPatch(typeof(TornadoController))]
+public static class TornadoControllerPatches
+{
+    // Skip processing if sector is null, which our custom tornado is
+    [HarmonyPrefix, HarmonyPatch(nameof(TornadoController.OnSectorOccupantsUpdated))]
+    public static bool OnSectorOccupantsUpdated(TornadoController __instance)
+    {
+        return __instance._sector != null;
+    }
+}
+
 [HarmonyPatch(typeof(TimeLoop))]
 public static class TimeLoopPatches
 {
     // Prefix on Start specifically; it reads LAUNCH_CODES_GIVEN into _isTimeFlowing once and then fires StartOfTimeLoop, so this is the last moment writing the save state changes anything
-    [HarmonyPrefix, HarmonyPatch("Start")]
+    [HarmonyPrefix, HarmonyPatch(nameof(TimeLoop.Start))]
     public static void Start()
     {
         if (!Constants.VanillaConditions.IsFreshSave()) return;
@@ -42,7 +53,7 @@ public static class ShipLogDetectiveModePatches
     static Vector3 heldScale;
 
     // Pin the board while the description field is open, so the reveal pan doesn't slide the read card off the reticle and close it
-    [HarmonyPrefix, HarmonyPatch("UpdateRevealAnimation")]
+    [HarmonyPrefix, HarmonyPatch(nameof(ShipLogDetectiveMode.UpdateRevealAnimation))]
     public static void UpdateRevealAnimationPrefix(ShipLogDetectiveMode __instance)
     {
         holdingBoard = __instance._descriptionField.IsVisible();
@@ -53,7 +64,7 @@ public static class ShipLogDetectiveModePatches
         }
     }
 
-    [HarmonyPostfix, HarmonyPatch("UpdateRevealAnimation")]
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.UpdateRevealAnimation))]
     public static void UpdateRevealAnimationPostfix(ShipLogDetectiveMode __instance)
     {
         if (!holdingBoard) return;
