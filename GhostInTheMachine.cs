@@ -1,4 +1,3 @@
-﻿using Epic.OnlineServices;
 using GhostInTheMachine.Managers;
 using HarmonyLib;
 using OWML.Common;
@@ -52,6 +51,7 @@ public class GhostInTheMachine : ModBehaviour
             ShipLogDialogueManager.Initialize();
             ErnestoManager.Initialize();
             StatueManager.Initialize();
+            LoopPulseManager.Initialize();
             MaskManager.Initialize();
             VisionManager.Initialize();
             DoorManager.Initialize();

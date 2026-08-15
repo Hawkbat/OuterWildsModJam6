@@ -75,10 +75,9 @@ public static class Constants
     // Vanilla conditions a fresh save profile lacks; the mod opens partway through a run the player is meant to have already been on
     public static class VanillaConditions
     {
-        // TimeLoop.Start reads this into _isTimeFlowing, and GetSecondsElapsed returns a flat zero without it
         public const string LAUNCH_CODES_GIVEN = "LAUNCH_CODES_GIVEN";
 
-        // Things the player character is supposed to have done before our story starts
+        // Things the player character is supposed to have done before the mod's story begins
         public static readonly string[] PROGRESSED_SAVE_CONDITIONS =
         [
             LAUNCH_CODES_GIVEN,
@@ -86,9 +85,7 @@ public static class Constants
             "KILLED_BY_SUPERNOVA_AND_KNOWS_IT",
             "TALKED_TO_GABBRO",
             "GABBRO_MERGE_TRIGGERED",
-            // Gates the skip-to-next-loop button in the pause menu, which our shortened loops badly need
             "KNOWS_MEDITATION",
-            // The rest just retire first-time tutorial prompts that would otherwise fire mid-story
             "COMPLETED_SHIPLOG_TUTORIAL",
             "HAS_USED_SHIPLOG",
             "PREFLIGHT_CHECKLIST_UNLOCKED",
@@ -104,7 +101,6 @@ public static class Constants
             "MARK_ON_HUD_TUTORIAL_COMPLETE"
         ];
 
-        // Anything past the observatory statue has the codes, so this can't fire on a real playthrough
         public static bool IsFreshSave() => PlayerData.LoadLoopCount() == 1 && !PlayerData.KnowsLaunchCodes();
     }
 }
