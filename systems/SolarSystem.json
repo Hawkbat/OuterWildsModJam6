@@ -42,6 +42,20 @@
       }
     },
     {
+      "check": { "allFactsRevealed": [ "GITM_FIND_MASKS_REVEAL" ] },
+      "then": {
+        "revealFacts": [
+          "GITM_VISION_GABBRO_LISTED",
+          "GITM_VISION_WORKSHOP_LISTED",
+          "GITM_VISION_PROBE_LISTED",
+          "GITM_VISION_FORGE_LISTED",
+          "GITM_VISION_ATP_LISTED",
+          "GITM_VISION_SS_UPPER_LISTED",
+          "GITM_VISION_SS_LOWER_LISTED"
+        ]
+      }
+    },
+    {
       "check": {
         "allFactsRevealed": [
           "GITM_MEMORY_FOSSIL_REVEAL",

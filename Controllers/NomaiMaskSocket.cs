@@ -21,9 +21,12 @@ public class NomaiMaskSocket : OWItemSocket
         {
             monolith.SetHasMask(true);
             item.SetVisible(false);
-            EnableInteraction(false);
 
-            MaskManager.Instance.OnMaskInstalled();
+            // If mask successfully installs, lock the socket to prevent removing it
+            if (MaskManager.Instance.OnMaskInstalled())
+            {
+                EnableInteraction(false);
+            }
 
             return true;
         }

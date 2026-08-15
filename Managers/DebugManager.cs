@@ -19,8 +19,10 @@ public class DebugManager : ManagerBase<DebugManager>
     {
         if (!GhostInTheMachine.Instance.DebugModeEnabled) return;
 
+        GUILayout.BeginHorizontal();
         if (OWTime.IsPaused())
         {
+            GUILayout.BeginVertical();
             if (PlayerState.IsWearingSuit() && GUILayout.Button("Remove Suit"))
             {
                 Locator.GetPlayerSuit().RemoveSuit(true);
@@ -71,7 +73,8 @@ public class DebugManager : ManagerBase<DebugManager>
                     PlayerData.SetPersistentCondition(conditionName, !(PlayerData.PersistentConditionExists(conditionName) && PlayerData.GetPersistentCondition(conditionName)));
                 }
             }
-            GUILayout.Space(20);
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical();
             if (GUILayout.Button("Reset Dialogue Conditions"))
             {
                 foreach (var condition in typeof(Constants.DialogueConditions).GetFields().Where(f => f.FieldType == typeof(string)))
@@ -120,15 +123,17 @@ public class DebugManager : ManagerBase<DebugManager>
                 Locator.GetQuantumMoon().Collapse(true);
                 WarpToSpawnPoint("Spawn_NorthPole");
             }
+            GUILayout.EndVertical();
         }
         else
         {
             var staff = NomaiStaffItem.GetHeldStaff();
             if (staff != null)
             {
+                GUILayout.BeginVertical();
                 GUILayout.Label($"Surface Type: {staff.TargetSurfaceType}");
                 GUILayout.Label($"Wall Target: {staff.WallTarget}");
-
+                GUILayout.EndVertical();
             }
         }
 

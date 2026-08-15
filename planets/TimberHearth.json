@@ -33,7 +33,7 @@
         "remoteTrigger": {
           "parentPath": "Sector_TH/GITM_VISION_DEVS",
           "isRelativeToParent": true,
-          "radius": 5
+          "radius": 3
         }
       }
     ]

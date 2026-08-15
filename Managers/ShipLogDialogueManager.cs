@@ -87,8 +87,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             RefreshCardName(fact.GetEntryID());
         }
 
-        // Revealing an explore fact moves this entry from rumored to explored, and the vanilla MarkAsRead
-        // that got us here only ever marked the rumor facts, so the card would be left showing as unread
+        // Revealing an explore fact moves this entry from rumored to explored, and the vanilla MarkAsRead that got us here only ever marked the rumor facts, so the card would be left showing as unread
         entry.MarkAsRead();
         card.UpdateUnreadIconVisibility();
 

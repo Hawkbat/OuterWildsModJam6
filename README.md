@@ -16,7 +16,3 @@ Ernesto is around here somewhere, but you'll have to make a truly terrible decis
 
 - Hawkbar: Programming, Writing, and Design
 - Insmoshable: Art and Design
-
-Special thanks to our playtesters:
-
-- TBD

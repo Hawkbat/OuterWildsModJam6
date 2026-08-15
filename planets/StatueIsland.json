@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
   "Props": {
     "details": [
@@ -92,15 +92,16 @@
       {
         "rename": "GITM_TORNADO_LAUNCHER",
         "path": "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_District3/Interactables_HangingCity_District3/Prefab_NOM_TractorBeam",
+        "isRelativeToParent": true,
         "position": {
-          "x": 36.75482,
-          "y": 17.05178,
-          "z": -44.02162
+          "x": 24.5,
+          "y": 4.2,
+          "z": -105
         },
         "rotation": {
-          "x": 0.1579392,
-          "y": 259.929,
-          "z": 355.0025
+          "x": 15,
+          "y": 180,
+          "z": 18
         }
       },
       {
@@ -116,6 +117,32 @@
           "x": 352.8558,
           "y": 175.482,
           "z": 358
+        }
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector_QuantumFragment/Interactables_QuantumFragment/Undercrust/Prefab_NOM_BH_Cairn_Light_A",
+        "position": {
+          "x": 13.98868,
+          "y": 16.40201,
+          "z": -29.76006
+        },
+        "rotation": {
+          "x": 346.0264,
+          "y": 238.6406,
+          "z": 350.9272
+        }
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector_QuantumFragment/Interactables_QuantumFragment/Undercrust/Prefab_NOM_BH_Cairn_Light_A",
+        "position": {
+          "x": 15.26093,
+          "y": 16.2456,
+          "z": -33.9165
+        },
+        "rotation": {
+          "x": 355.9075,
+          "y": 271.018,
+          "z": 359.2864
         }
       },
       {
@@ -149,6 +176,20 @@
           "y": 10.87918,
           "z": 1.93192
         }
+      },
+      {
+        "xmlFile": "planets/StatueIsland/GITM_TORNADO_CAIRN.xml",
+        "type": "cairnBH",
+        "position": {
+          "x": 13.59702,
+          "y": 16.26219,
+          "z": -34.37973
+        },
+        "rotation": {
+          "x": 4.701446,
+          "y": 251.5967,
+          "z": 357.6278
+        }
       }
     ],
     "tornados": [
@@ -175,6 +216,8 @@
     "dialogue": [
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_Gabbro.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_VISION_GABBRO",
         "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
         "isRelativeToParent": true,
         "position": {
@@ -189,7 +232,20 @@
         }
       },
       {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Gabbro.xml",
+        "radius": 3,
+        "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      {
         "xmlFile": "planets/Ghost/dialogue/Vision_Workshop.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_VISION_WORKSHOP",
         "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
         "isRelativeToParent": true,
         "position": {
@@ -204,7 +260,20 @@
         }
       },
       {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Workshop.xml",
+        "radius": 3,
+        "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      {
         "xmlFile": "planets/Ghost/dialogue/Memory_Home.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_MEMORY_HOME",
         "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
         "isRelativeToParent": true,
         "position": {
@@ -217,6 +286,17 @@
           "isRelativeToParent": true,
           "radius": 7
         }
+      },
+      {
+        "xmlFile": "planets/Ghost/dialogue/Memory_Home.xml",
+        "radius": 3,
+        "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
       }
     ]
   },
@@ -226,7 +306,9 @@
         "rename": "GITM_STOREROOM_REVEAL",
         "revealOn": "enter",
         "revealFor": "player",
-        "reveals": [ "GITM_FIND_STOREROOM_REVEAL" ],
+        "reveals": [
+          "GITM_FIND_STOREROOM_REVEAL"
+        ],
         "radius": 8,
         "position": {
           "x": 7.348211,

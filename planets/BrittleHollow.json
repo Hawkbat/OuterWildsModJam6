@@ -40,6 +40,8 @@
     "dialogue": [
       {
         "xmlFile": "planets/Ghost/dialogue/Memory_Classroom.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_MEMORY_CLASSROOM",
         "parentPath": "Sector_BH/GITM_MEMORY_CLASSROOM",
         "isRelativeToParent": true,
         "position": {
@@ -54,7 +56,20 @@
         }
       },
       {
+        "xmlFile": "planets/Ghost/dialogue/Memory_Classroom.xml",
+        "radius": 3,
+        "parentPath": "Sector_BH/GITM_MEMORY_CLASSROOM",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      {
         "xmlFile": "planets/Ghost/dialogue/Vision_Forge.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_VISION_FORGE",
         "parentPath": "Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/GITM_VISION_FORGE",
         "isRelativeToParent": true,
         "position": {
@@ -66,6 +81,17 @@
           "parentPath": "Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/GITM_VISION_FORGE",
           "isRelativeToParent": true,
           "radius": 7
+        }
+      },
+      {
+        "xmlFile": "planets/Ghost/dialogue/Vision_Forge.xml",
+        "radius": 3,
+        "parentPath": "Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/GITM_VISION_FORGE",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
         }
       }
     ]

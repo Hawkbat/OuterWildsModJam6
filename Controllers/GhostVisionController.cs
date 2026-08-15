@@ -33,6 +33,7 @@ public class GhostVisionController : MonoBehaviour
         var colliders = GetComponentsInChildren<OWCollider>(true);
         foreach (var collider in colliders)
         {
+            if (collider.GetComponent<InteractReceiver>()) continue;
             collider.SetActivation(enable);
         }
     }

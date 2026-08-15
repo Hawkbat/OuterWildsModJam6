@@ -15,6 +15,34 @@ public static class ShipLogDetectiveModePatches
 {
     static bool skipFrameAll = false;
 
+    static bool holdingBoard;
+    static Vector2 heldPanPos;
+    static Vector3 heldScale;
+
+    // The reveal animation pans the board over to whatever it just unlocked. If the player happens to be reading
+    // an entry at the time, that slides their card out from under the reticle, the mode sees the collision drop,
+    // and it closes the description field on them. Pinning the board while they read lets the queue run its
+    // course without moving anything; the new cards are waiting once they look up.
+
+    [HarmonyPrefix, HarmonyPatch("UpdateRevealAnimation")]
+    public static void UpdateRevealAnimationPrefix(ShipLogDetectiveMode __instance)
+    {
+        holdingBoard = __instance._descriptionField.IsVisible();
+        if (holdingBoard)
+        {
+            heldPanPos = __instance._panRoot.anchoredPosition;
+            heldScale = __instance._scaleRoot.localScale;
+        }
+    }
+
+    [HarmonyPostfix, HarmonyPatch("UpdateRevealAnimation")]
+    public static void UpdateRevealAnimationPostfix(ShipLogDetectiveMode __instance)
+    {
+        if (!holdingBoard) return;
+        __instance._panRoot.anchoredPosition = heldPanPos;
+        __instance._scaleRoot.localScale = heldScale;
+    }
+
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogDetectiveMode.PrepareRevealAnimations))]
     public static void PrepareRevealAnimations(ShipLogDetectiveMode __instance)
     {

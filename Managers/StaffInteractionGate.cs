@@ -7,7 +7,7 @@ namespace GhostInTheMachine.Managers;
 
 public class StaffInteractionGate : MonoBehaviour
 {
-    readonly List<GameObject> volumes = [];
+    readonly List<InteractReceiver> receivers = [];
     Func<NomaiStaffItem, bool> isUnlocked;
 
     bool interactive = true;
@@ -19,27 +19,24 @@ public class StaffInteractionGate : MonoBehaviour
 
     public void Add(InteractReceiver receiver)
     {
-        volumes.Add(receiver.gameObject);
+        receivers.Add(receiver);
     }
 
     public void Update()
     {
-        // Our volumes sit over props that the player already interacts with normally, so they only take the interact raycast while the staff is out and the matching ability has been unlocked
         var staff = NomaiStaffItem.GetHeldStaff();
         var nowInteractive = staff != null && isUnlocked(staff);
         if (nowInteractive == interactive) return;
 
         interactive = nowInteractive;
-        foreach (var volume in volumes)
+        foreach (var receiver in receivers)
         {
-            if (volume != null)
+            if (receiver == null) continue;
+            if (!nowInteractive && receiver.gameObject.activeInHierarchy)
             {
-                // Deactivating the volume rather than calling SetInteractionEnabled on the receiver, because
-                // most of these sit in sectors that haven't loaded yet, so InteractReceiver.Awake hasn't run
-                // and its collider is still null. Active state also sticks while the sector is away, so they
-                // come back in whichever state the staff was last left in
-                volume.SetActive(nowInteractive);
+                receiver.LoseFocus();
             }
+            receiver.gameObject.SetActive(nowInteractive);
         }
     }
 }

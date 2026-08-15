@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
   "removeChildren": [
     "Interactibles_TimeLoopRing_Hidden/Prefab_NOM_Computer"
@@ -32,6 +32,8 @@
     "dialogue": [
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_ATP.xml",
+        "radius": 0,
+        "blockAfterPersistentCondition": "GITM_SEEN_VISION_ATP",
         "parentPath": "Sector/GITM_VISION_ATP",
         "isRelativeToParent": true,
         "position": {
@@ -43,6 +45,17 @@
           "parentPath": "Sector/GITM_VISION_ATP",
           "isRelativeToParent": true,
           "radius": 7
+        }
+      },
+      {
+        "xmlFile": "planets/Ghost/dialogue/Vision_ATP.xml",
+        "radius": 3,
+        "parentPath": "Sector/GITM_VISION_ATP",
+        "isRelativeToParent": true,
+        "position": {
+          "x": 0,
+          "y": 1,
+          "z": 0
         }
       }
     ],

@@ -24,6 +24,9 @@ public class SpawnManager : ManagerBase<SpawnManager>
     // Supernova 22.0 min
     // Loop ends 22.667 min
 
+    // Share of Brittle Hollow's breakable fragments gone by the end of a full loop; scaled by elapsed time
+    const float FRAGMENT_DESTRUCTION_RATE = 0.5f;
+
     const float SUN_STATION_DESTRUCTION_TIME = 11.5f;
     const float INTERLOPER_DESTRUCTION_TIME = 19.75f;
     const float SUPERNOVA_TIME = 22f;
@@ -133,20 +136,13 @@ public class SpawnManager : ManagerBase<SpawnManager>
             Locator.GetAstroObject(AstroObject.Name.Comet).gameObject.SetActive(false);
         }
 
-
         var fragments = new List<FragmentIntegrity>(FindObjectsOfType<FragmentIntegrity>().Where(f => !f.GetIgnoreMeteorDamage()));
-        var frac = TimeLoop.GetFractionElapsed() * 0.5f;
-        var totalDamage = frac * fragments.Sum(frag => frag.GetIntegrity());
-        while (totalDamage > 0f && fragments.Count > 0)
+        var destroyCount = Mathf.RoundToInt(TimeLoop.GetFractionElapsed() * FRAGMENT_DESTRUCTION_RATE * fragments.Count);
+        for (int i = 0; i < destroyCount && fragments.Count > 0; i++)
         {
-            var instanceDamage = Mathf.Min(totalDamage, Random.Range(20f, 80f));
-            var frag = fragments[Random.Range(0, fragments.Count)];
-            frag.AddDamage(instanceDamage);
-            totalDamage -= instanceDamage;
-            if (frag.GetIntegrity() <= 0f)
-            {
-                fragments.Remove(frag);
-            }
+            var index = Random.Range(0, fragments.Count);
+            fragments[index].AddDamage(fragments[index].GetIntegrity());
+            fragments.RemoveAt(index);
         }
 
         GameObject.Find("TimberHearth_Body/Sector_TH/Sector_Village/Volumes_Village/MusicVolume_Village").GetComponent<VillageMusicVolume>().Deactivate();

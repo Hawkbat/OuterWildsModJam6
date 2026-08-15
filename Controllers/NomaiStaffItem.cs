@@ -15,6 +15,9 @@ public class NomaiStaffItem : OWItem
     ScreenPrompt firePrompt;
     ScreenPrompt altFirePrompt;
     ScreenPrompt cancelPrompt;
+    ScreenPrompt wallTutorialPrompt;
+
+    static bool HasPlacedWall() => PlayerData.GetPersistentCondition(Constants.PersistentConditions.WALL_PLACED);
 
     public bool IsStatueToolUnlocked() => true;
 
@@ -53,7 +56,10 @@ public class NomaiStaffItem : OWItem
 
     protected void OnDisable()
     {
-        UpdatePromptVisibility();
+        RemovePrompt(ref firePrompt);
+        RemovePrompt(ref altFirePrompt);
+        RemovePrompt(ref cancelPrompt);
+        RemovePrompt(ref wallTutorialPrompt);
     }
 
     public override void PickUpItem(Transform holdTranform)
@@ -115,6 +121,7 @@ public class NomaiStaffItem : OWItem
 
                         var wall = StaffManager.Instance.SpawnWall(wallParent.name, wallLocalPos, wallLocalRot.eulerAngles);
                         wall.Grow();
+                        PlayerData.SetPersistentCondition(Constants.PersistentConditions.WALL_PLACED, true);
                     }
                 }
                 else if (altFireInput)
@@ -140,10 +147,22 @@ public class NomaiStaffItem : OWItem
         UpdatePromptVisibility();
     }
 
+    static void RemovePrompt(ref ScreenPrompt prompt)
+    {
+        if (prompt == null) return;
+        var promptManager = Locator.GetPromptManager();
+        if (promptManager != null)
+        {
+            promptManager.RemoveScreenPrompt(prompt);
+        }
+        prompt = null;
+    }
+
     void UpdatePromptVisibility()
     {
         var inToolMode = GetHeldStaff() == this;
-        var promptsVisible = inToolMode && !OWTime.IsPaused() && IsWallToolUnlocked();
+        // Checking the input mode as well, so the prompts clear when the player is in the ship log, the map, or a conversation
+        var promptsVisible = inToolMode && !OWTime.IsPaused() && OWInput.IsInputMode(InputMode.Character) && IsWallToolUnlocked();
 
         if (firePrompt == null)
         {
@@ -161,9 +180,17 @@ public class NomaiStaffItem : OWItem
             Locator.GetPromptManager().AddScreenPrompt(cancelPrompt, PromptPosition.UpperRight);
         }
 
+        if (wallTutorialPrompt == null)
+        {
+            wallTutorialPrompt = new ScreenPrompt(InputLibrary.lockOn, InputLibrary.toolActionPrimary, GhostInTheMachine.NewHorizons.GetTranslationForUI($"{nameof(NomaiStaffItem)}_PlaceWall") + "   <CMD>", ScreenPrompt.MultiCommandType.NONE);
+            Locator.GetPromptManager().AddScreenPrompt(wallTutorialPrompt, PromptPosition.Center);
+        }
+
         firePrompt.SetVisibility(promptsVisible);
         altFirePrompt.SetVisibility(promptsVisible);
         cancelPrompt.SetVisibility(promptsVisible && PlayerState.IsWearingSuit());
+        // Sits in the middle of the screen until the player has actually made a wall
+        wallTutorialPrompt.SetVisibility(promptsVisible && !HasPlacedWall());
     }
 
     public enum WallToolTarget

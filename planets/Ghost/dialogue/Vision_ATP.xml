@@ -1,4 +1,4 @@
-﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
   <NameField>GITM_VISION_ATP_NAME</NameField>
   <DialogueNode>
     <Name>VISION_ATP</Name>
@@ -12,5 +12,6 @@
     <RevealFacts>
       <FactID>GITM_VISION_ATP_RUMOR</FactID>
     </RevealFacts>
+    <SetPersistentCondition>GITM_SEEN_VISION_ATP</SetPersistentCondition>
   </DialogueNode>
 </DialogueTree>

@@ -38,8 +38,28 @@ public class MaskManager : ManagerBase<MaskManager>
         return mask;
     }
 
-    public void OnMaskInstalled()
+    // The mask only does anything once every other statue is dark and Solanum has reworked it. A determined player can reach the storeroom with just the door ability and carry the mask here far too early
+    public static bool ArePrerequisitesMet()
     {
+        foreach (var condition in PersistentConditions.ALL_STATUE_CONDITIONS)
+        {
+            // Deliberately not requiring the player's own statue; deactivating that one is the bad ending
+            if (condition == PersistentConditions.STATUE_PLAYER) continue;
+            if (!PlayerData.GetPersistentCondition(condition)) return false;
+        }
+        return Locator.GetShipLogManager().IsFactRevealed(ShipLogFacts.SolanumAnswer);
+    }
+
+    /// <summary>Returns whether the mask actually did anything, and so whether it should stay put.</summary>
+    public bool OnMaskInstalled()
+    {
+        if (!ArePrerequisitesMet())
+        {
+            // Let the mask seat anyway, so the player can see it fits and that this is the right slot
+            NotificationManager.SharedInstance.PostNotification(new NotificationData(NotificationTarget.Player, GhostInTheMachine.NewHorizons.GetTranslationForUI("MaskUnresponsiveNotification")));
+            return false;
+        }
+
         DialogueConditionManager.SharedInstance.SetConditionState(DialogueConditions.StatueInstalledThisLoop, true);
         PlayerData.SetPersistentCondition(PersistentConditions.MASK_INSTALLED, true);
         FastForwardManager.Instance.SetDisplayTimes(TimeLoop.GetSecondsElapsed(), TimeLoop._loopDuration);
@@ -57,6 +77,7 @@ public class MaskManager : ManagerBase<MaskManager>
         }
         Locator.GetGlobalMusicController().enabled = false;
         finaleAudioSrc.FadeIn(0.5f, targetVolume: 0.5f);
+        return true;
     }
 
     public void OnMaskRemoved()
