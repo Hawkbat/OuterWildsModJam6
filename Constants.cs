@@ -73,4 +73,44 @@ public static class Constants
             STATUE_PLAYER
         ];
     }
+
+    /// <summary>
+    /// Vanilla persistent conditions. The mod opens partway through a run the player is meant to have already
+    /// been on, but a brand new save profile has none of this set, and the base game leaves the loop clock
+    /// switched off until the player has been handed the launch codes.
+    /// </summary>
+    public static class VanillaConditions
+    {
+        // TimeLoop.Start reads this into _isTimeFlowing, and GetSecondsElapsed returns a flat zero without it
+        public const string LAUNCH_CODES_GIVEN = "LAUNCH_CODES_GIVEN";
+
+        // Things the player character is supposed to have done before our story starts
+        public static readonly string[] PROGRESSED_SAVE_CONDITIONS =
+        [
+            LAUNCH_CODES_GIVEN,
+            "HAS_SEEN_SUN_EXPLODE",
+            "KILLED_BY_SUPERNOVA_AND_KNOWS_IT",
+            "TALKED_TO_GABBRO",
+            "GABBRO_MERGE_TRIGGERED",
+            // Gates the skip-to-next-loop button in the pause menu, which our shortened loops badly need
+            "KNOWS_MEDITATION",
+            // The rest just retire first-time tutorial prompts that would otherwise fire mid-story
+            "COMPLETED_SHIPLOG_TUTORIAL",
+            "HAS_USED_SHIPLOG",
+            "PREFLIGHT_CHECKLIST_UNLOCKED",
+            "HAS_USED_PREFLIGHT_CHECKLIST",
+            "HAS_USED_JETPACK",
+            "SUIT_BOOSTER_FIRED",
+            "HAS_USED_MAP_SUIT",
+            "HAS_USED_MAP_SHIP",
+            "HAS_PLAYER_LOCKED_ON",
+            "HAS_PLAYER_LOCKED_ON_MAP",
+            "HAS_AIMED_TRANSLATOR",
+            "HAS_USED_TRANSLATOR",
+            "MARK_ON_HUD_TUTORIAL_COMPLETE"
+        ];
+
+        // Anything past the observatory statue has the codes, so this can't fire on a real playthrough
+        public static bool IsFreshSave() => PlayerData.LoadLoopCount() == 1 && !PlayerData.KnowsLaunchCodes();
+    }
 }

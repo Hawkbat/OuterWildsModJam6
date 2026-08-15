@@ -6,7 +6,7 @@ You've met with a terrible fate, haven't you?
 
 Submission for the 14-day [Time Loop Mod Jam](https://outerwildsmods.com/jam/aug-2026/)!
 
-Contains major spoilers for the base game, and assumes you've already finished it.
+This mod assumes you've completed the base game on your current save profile. Users playing on a fresh profile may find exploration more difficult than intended.
 
 Ghost in the Machine is intended to be played standalone. Please disable other story mods before playing it, if any are enabled.
 
