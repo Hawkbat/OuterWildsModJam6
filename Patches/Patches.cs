@@ -13,26 +13,19 @@ namespace GhostInTheMachine.Patches;
 [HarmonyPatch(typeof(TimeLoop))]
 public static class TimeLoopPatches
 {
-    // Has to be a prefix on Start specifically. That method reads LAUNCH_CODES_GIVEN into _isTimeFlowing exactly
-    // once and then fires StartOfTimeLoop, which is also what tells the observatory statue's uplink trigger to
-    // delete itself, so this is the last moment where writing the save state still changes anything.
+    // Prefix on Start specifically; it reads LAUNCH_CODES_GIVEN into _isTimeFlowing once and then fires StartOfTimeLoop, so this is the last moment writing the save state changes anything
     [HarmonyPrefix, HarmonyPatch("Start")]
     public static void Start()
     {
         if (!Constants.VanillaConditions.IsFreshSave()) return;
 
-        // Straight onto the save rather than through PlayerData.SetPersistentCondition, which flushes the whole
-        // save file per call. Writing it the polite way would mean eighteen writes back to back during scene load
+        // Edit the save directly instead of SetPersistentCondition since it flushes to disk every call
         foreach (var condition in Constants.VanillaConditions.PROGRESSED_SAVE_CONDITIONS)
         {
             PlayerData._currentGameSave.SetPersistentCondition(condition, true);
         }
 
-        // Clears the remaining loop-one special cases: the first-time wake-up, the ship's thrust tutorial prompts
-        // and the early-death grace window. Three rather than two, because DialogueConditionManager seeds
-        // LOOP_COUNT_EQ_2 off an exact match and a couple of villagers have second-loop-only lines keyed to it.
-        // Goes last because SaveLoopCount is what actually writes to disk; PlayerData.SetPersistentCondition
-        // deliberately skips saving for LAUNCH_CODES_GIVEN
+        // Skip to loop 3 to avoid special case dialogue and other behavior on loops 1 and 2
         PlayerData.SaveLoopCount(3);
 
         GhostInTheMachine.Instance.ModHelper.Console.WriteLine("Fresh save profile detected; advanced it past the base game's first loop so the loop clock runs");
@@ -48,11 +41,7 @@ public static class ShipLogDetectiveModePatches
     static Vector2 heldPanPos;
     static Vector3 heldScale;
 
-    // The reveal animation pans the board over to whatever it just unlocked. If the player happens to be reading
-    // an entry at the time, that slides their card out from under the reticle, the mode sees the collision drop,
-    // and it closes the description field on them. Pinning the board while they read lets the queue run its
-    // course without moving anything; the new cards are waiting once they look up.
-
+    // Pin the board while the description field is open, so the reveal pan doesn't slide the read card off the reticle and close it
     [HarmonyPrefix, HarmonyPatch("UpdateRevealAnimation")]
     public static void UpdateRevealAnimationPrefix(ShipLogDetectiveMode __instance)
     {

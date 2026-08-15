@@ -37,7 +37,7 @@ public class TractorBeamManager : ManagerBase<TractorBeamManager>
 
         beam.gameObject.AddComponent<GhostBeamController>().Init(beam);
 
-        // The emitter is the only solid part of a beam, so measure the volume off its colliders instead of guessing at the prefab. The beam column itself is an effect volume, so it won't be caught up in this
+        // Emitter colliders are the only solid part of a beam; the column itself is an effect volume so it won't be caught
         var bounds = new Bounds(beam.transform.position, Vector3.zero);
         foreach (var collider in beam.GetComponentsInChildren<MeshCollider>(true))
         {

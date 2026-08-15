@@ -41,14 +41,10 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         Shader.SetGlobalVector("_DataGhostUIEffectOffset", (Vector4)offset);
     }
 
-    // Lami's entries and the player's replies are the conversation itself, so reading one is what carries it forward
     static bool IsConversationEntry(string entryID) => entryID.StartsWith(GHOST_PREFIX) || entryID.StartsWith(CHOICE_PREFIX);
 
-    // Vision reviews read like Lami talking, but there's nothing for her to say until the vision has been seen
     static bool IsReadableEntry(string entryID) => IsConversationEntry(entryID) || entryID.StartsWith(VISION_PREFIX);
-
-    // A rumor is only the reader's to unlock if nothing else already owns it: visions are earned out in the
-    // world, and the act gates own the leads that shouldn't surface until the act they belong to
+    
     static bool CanRevealOnRead(ShipLogFact fact) =>
         !fact.GetEntryID().StartsWith(VISION_PREFIX) &&
         !Constants.ShipLogFacts.GATED_RUMORS.Contains(fact.GetID());
@@ -56,9 +52,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
-        // Ghost entries unlock their own explore facts and any follow-up rumors when marked as read.
-        // Rumors pointing at a vision are left alone, since those are earned by finding the vision out in
-        // the world; otherwise asking Lami about the statues would hand over a checklist of every one there is.
+        // Ghost entries unlock their own explore facts and follow-up rumors when read
         if (IsReadableEntry(entry.GetID()))
         {
             StartCoroutine(RevealFollowupsCoroutine(card, entry));
@@ -76,9 +70,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             detectiveMode._manager.RevealFact(fact.GetID());
         }
 
-        // Wait a frame before animating. New Horizons runs its conditional checks in LateUpdate after the
-        // ShipLogUpdated event, so anything an act gate unlocks in response to what we just revealed only
-        // exists after this point; without the wait it wouldn't show up until the log was closed and reopened
+        // NH runs its conditional checks in LateUpdate after ShipLogUpdated, so anything an act gate unlocks in response only exists next frame
         yield return null;
 
         var revealedFacts = detectiveMode._manager._factDict.Values.Where(f => f.IsRevealed() && !alreadyRevealed.Contains(f.GetID())).ToList();
@@ -87,7 +79,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             RefreshCardName(fact.GetEntryID());
         }
 
-        // Revealing an explore fact moves this entry from rumored to explored, and the vanilla MarkAsRead that got us here only ever marked the rumor facts, so the card would be left showing as unread
+        // Revealing an explore fact moves the entry from rumored to explored, so mark it read again
         entry.MarkAsRead();
         card.UpdateUnreadIconVisibility();
 

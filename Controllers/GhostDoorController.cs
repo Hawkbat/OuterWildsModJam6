@@ -18,7 +18,7 @@ public class GhostDoorController : MonoBehaviour
     float progress;
     bool returning;
 
-    // A rotating door's activation slot is a momentary button, so its orb has to go home again before the controls will work a second time. Airlocks and gateways instead have the orb rest in whichever of a pair of slots matches the state, so it stays put and doubles as the readout of which way they are
+    // Rotating doors use a momentary activation slot, so the orb has to go home; airlocks and gateways park it in whichever slot matches the state
     bool ReturnsHome => door != null && door is not NomaiAirlock;
 
     public bool IsOpen => door != null ? door.IsOpen() || door.IsOpening() : gateway._open;
@@ -35,7 +35,6 @@ public class GhostDoorController : MonoBehaviour
         this.gateway = gateway;
         enabled = false;
 
-        // Fix gateway grabbing orb audio source instead of its own
         var gatewayAudio = gateway.GetComponentsInChildren<OWAudioSource>(true)
             .FirstOrDefault(source => gateway._orb == null || !source.transform.IsChildOf(gateway._orb.transform));
         if (gatewayAudio != null)
@@ -48,14 +47,13 @@ public class GhostDoorController : MonoBehaviour
     {
         if (IsCycling) return;
 
-        // Sliding an orb into its slot works the mechanism through the same slot event the Nomai controls use, so the audio, the panel locking and the orb suspension all behave as they should
+        // Sliding the orb in works the mechanism through the same slot event the Nomai controls use, so audio, panel locking and orb suspension all follow
         orb = FindOrb();
         orbBody = orb != null ? orb.GetAttachedOWRigidbody() : null;
         idleSlot = orb != null ? orb.GetComponentInParent<NomaiInterfaceSlot>() : null;
         var slot = orb != null ? FindTargetSlot() : null;
         if (orbBody == null || slot == null)
         {
-            // Nothing we can move, so drive the mechanism directly instead
             DriveMechanism();
             return;
         }
@@ -67,7 +65,6 @@ public class GhostDoorController : MonoBehaviour
     {
         if (door != null)
         {
-            // Vanilla passes a null slot here too, and airlocks override Cycle to swap their air over with it
             door.Cycle(null);
         }
         else if (IsOpen)
@@ -91,7 +88,7 @@ public class GhostDoorController : MonoBehaviour
 
     protected void Update()
     {
-        // The orb is locked to the panel it activated for as long as the door is swinging, so wait that out and keep the trip home anchored to wherever the panel has carried it
+        // The orb stays locked to its panel while the door swings, so re-anchor the trip home to wherever that carries it
         if (returning && (door.IsCycling() || orbBody.IsSuspended()))
         {
             travelStart = orb.transform.position;
@@ -110,7 +107,6 @@ public class GhostDoorController : MonoBehaviour
             return;
         }
 
-        // Landing in the slot should have set the mechanism off, but make sure it actually moves
         if (!IsMechanismCycling())
         {
             DriveMechanism();
@@ -118,7 +114,6 @@ public class GhostDoorController : MonoBehaviour
 
         if (ReturnsHome)
         {
-            // Park the orb back where it started so the controls are ready to be used again
             StartTravel(idleSlot, true);
         }
         else
@@ -156,8 +151,7 @@ public class GhostDoorController : MonoBehaviour
             return slots.FirstOrDefault(slot => slot != null);
         }
 
-        // Both variants of the door prefab name their slots in pairs, so IdleSlot_Front belongs with
-        // ActivateSlot_Front, while the broken variant just has the one unsuffixed IdleSlot/ActivateSlot
+        // Slots are named in pairs (IdleSlot_Front / ActivateSlot_Front); the broken variant has one unsuffixed pair
         if (idleSlot == null) return null;
         var slotName = idleSlot.name.Replace("IdleSlot", "ActivateSlot");
         return door._cycleSwitches.FirstOrDefault(slot => slot != null && slot.name == slotName);

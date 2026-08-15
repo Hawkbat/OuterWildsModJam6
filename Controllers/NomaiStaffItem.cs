@@ -161,7 +161,6 @@ public class NomaiStaffItem : OWItem
     void UpdatePromptVisibility()
     {
         var inToolMode = GetHeldStaff() == this;
-        // Checking the input mode as well, so the prompts clear when the player is in the ship log, the map, or a conversation
         var promptsVisible = inToolMode && !OWTime.IsPaused() && OWInput.IsInputMode(InputMode.Character) && IsWallToolUnlocked();
 
         if (firePrompt == null)

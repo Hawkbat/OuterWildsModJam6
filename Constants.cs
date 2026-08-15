@@ -11,12 +11,10 @@ public static class Constants
         // Revealed by picking up Lami's mask in the storeroom, which is what opens the Solanum thread
         public const string MaskAcquired = "GITM_FIND_MASK_REVEAL";
 
-        // Rumors an act gate in systems/SolarSystem.json owns. Reading the card they point back to must not
-        // hand them over early, which it otherwise would for any rumor hanging off one of Lami's entries or
-        // one of the player's replies. Keep this in sync with the conditionalChecks that reveal rumor facts
-        // Solanum has to have reworked the mask before it will do anything in the Ash Twin Project
+        // Solanum has to rework the mask before it does anything in the ATP
         public const string SolanumAnswer = "GITM_SOLANUM_ANSWER";
 
+        // Rumors owned by an act gate in systems/SolarSystem.json; keep in sync with the conditionalChecks that reveal them
         public static readonly string[] GATED_RUMORS =
         [
             "GITM_GHOST_CLIMB_HINT_RUMOR",
@@ -74,11 +72,7 @@ public static class Constants
         ];
     }
 
-    /// <summary>
-    /// Vanilla persistent conditions. The mod opens partway through a run the player is meant to have already
-    /// been on, but a brand new save profile has none of this set, and the base game leaves the loop clock
-    /// switched off until the player has been handed the launch codes.
-    /// </summary>
+    // Vanilla conditions a fresh save profile lacks; the mod opens partway through a run the player is meant to have already been on
     public static class VanillaConditions
     {
         // TimeLoop.Start reads this into _isTimeFlowing, and GetSecondsElapsed returns a flat zero without it

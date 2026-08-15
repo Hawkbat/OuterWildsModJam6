@@ -20,13 +20,11 @@ public class GhostBeamController : MonoBehaviour
     {
         this.beam = beam;
         safetyBeam = beam.GetComponent<SafetyTractorBeamController>();
-        // Vanilla beams keep whatever state their location set up, so nothing is switched here
     }
 
     public void Cycle()
     {
-        // Off, pushing along the beam, then pulling back down it. The same three states a
-        // TractorBeamSwitch offers, for beams that never got a switch to offer them with
+        // Cycles between off, forward, reversed
         switch (State)
         {
             case BeamState.Off:

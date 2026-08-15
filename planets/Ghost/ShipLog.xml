@@ -1,14 +1,6 @@
 <AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
   <ID>GITM_GHOST</ID>
-  <!--
-    Entry ID prefixes drive how the log behaves; see ShipLogDialogueManager.
-      GITM_GHOST_   Lami talking. Reading the card prints what she said and offers whatever comes next.
-      GITM_CHOICE_  The player talking. Similar but as a reply the player picks.
-      GITM_VISION_  A Nomai memory Lami reviews. The rumor is earned by watching the vision out in the world. Reading the card prints her review of it.
-      GITM_FIND_    Somewhere the player has to go. Rumors are leads Lami hands out, but the explore facts are only ever revealed by the world itself.
-    Follow-ups Lami offers in response to a world discovery are revealed by conditionalChecks in
-    systems/SolarSystem.json, since reading a GITM_FIND_ card deliberately doesn't advance anything.
-  -->
+  <!-- Entry ID prefix drives how the log behaves; see ShipLogDialogueManager -->
   <Entry>
     <ID>GITM_GHOST_CURIOSITY</ID>
     <Name>GITM_GHOST_CURIOSITY</Name>

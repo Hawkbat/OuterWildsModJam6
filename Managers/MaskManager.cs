@@ -38,7 +38,6 @@ public class MaskManager : ManagerBase<MaskManager>
         return mask;
     }
 
-    // The mask only does anything once every other statue is dark and Solanum has reworked it. A determined player can reach the storeroom with just the door ability and carry the mask here far too early
     public static bool ArePrerequisitesMet()
     {
         foreach (var condition in PersistentConditions.ALL_STATUE_CONDITIONS)
@@ -50,7 +49,6 @@ public class MaskManager : ManagerBase<MaskManager>
         return Locator.GetShipLogManager().IsFactRevealed(ShipLogFacts.SolanumAnswer);
     }
 
-    /// <summary>Returns whether the mask actually did anything, and so whether it should stay put.</summary>
     public bool OnMaskInstalled()
     {
         if (!ArePrerequisitesMet())

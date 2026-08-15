@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GhostInTheMachine.Controllers;
 
-// Vanilla's forming and collapsing can't drive one of New Horizons' tornados. It builds them from the Brittle Hollow observatory mock, where _tornadoRoot is the same GameObject that carries the controller, and then puts the configured height on that transform's scale. So vanilla forming lerps the scale to Vector3.one and throws the height away, while vanilla collapsing switches off the object running the update loop and the tornado can never come back. It also drives the transition off a start timestamp, so a formation can only ever run to completion. This drives the whole thing off a single reversible progress value instead, and leaves the vanilla component in place for its bone animation.
+// Reversible forming and collapsing off a single progress value, for NH tornados where the configured height lives on _tornadoRoot's own scale. Vanilla component stays for its bone animation
 public class ArtificialTornadoController : MonoBehaviour
 {
     public float formationDuration = 5f;
@@ -29,20 +29,17 @@ public class ArtificialTornadoController : MonoBehaviour
     {
         this.tornado = tornado;
 
-        // New Horizons puts the configured height on this transform, which is also what vanilla treats as _tornadoRoot, so every scale we apply has to be measured against it rather than against Vector3.one
         formedScale = transform.localScale;
 
-        // Vanilla's FixedUpdate would run its own formation timer alongside ours and undo our scale; we call the parts we still want ourselves
+        // Disable vanilla controller; we call what we need from it instead of letting it tick itself
         tornado.enabled = false;
 
-        // The bones hang off the one child that holds every renderer, so switching it off leaves nothing of a collapsed tornado behind
         effectsRoot = tornado._topBone != null && tornado._topBone.parent != null ? tornado._topBone.parent.gameObject : null;
 
-        // Vanilla reads the cutoff off its own block, but that's only built in an Awake we may not have reached yet
         matPropBlock = new MaterialPropertyBlock();
         propID_CutoffFade = Shader.PropertyToID("_CutoffFade");
 
-        // New Horizons hands _audioSource an observatory audio rail that it instantiated inactive and never switched back on, so every vanilla fade against it throws. The rail it does switch on is the one it parents in here, and pointing at that one also stops the two of them playing over each other
+        // NH mistakenly sets _audioSource to the wrong, inactive AudioRail instead of the one it's supposed to use
         var audioRail = transform.Find("AudioRail");
         audioSource = audioRail != null ? audioRail.GetComponentInChildren<OWAudioSource>(true) : null;
         if (audioSource != null)
@@ -63,8 +60,7 @@ public class ArtificialTornadoController : MonoBehaviour
         ApplyProgress();
     }
 
-    // The tornado can still be streamed out when Init runs, in which case vanilla hasn't hooked any of this up yet.
-    // FixedUpdate can't run before the object is awake, so this is the first moment it's safe to unhook
+    // First safe moment to unhook, since the tornado can still be streamed out during Init
     void Detach()
     {
         detached = true;
@@ -75,7 +71,7 @@ public class ArtificialTornadoController : MonoBehaviour
             tornado._collapseTrigger.OnEntry -= tornado.OnEnterCollapseTrigger;
         }
 
-        // These fire regardless of the component being disabled, and they fade the audio out from under us on their own schedule. Nothing else we kept reads _isSectorOccupied
+        // Sector events fire even while disabled and fade the audio out from under us
         tornado.SetSector(null);
     }
 
@@ -94,7 +90,6 @@ public class ArtificialTornadoController : MonoBehaviour
             ApplyProgress();
         }
 
-        // Both of these depend on an Awake that may not have happened when Init ran, and both are cheap enough to keep nudging until they take
         SetFluidsActive(progress > 0f);
         if (audioSource != null && audioSource.gameObject.activeInHierarchy)
         {
@@ -113,11 +108,10 @@ public class ArtificialTornadoController : MonoBehaviour
 
         transform.localScale = Vector3.Scale(formedScale, new Vector3(t, 1f, t));
 
-        // Only does anything when the tornado snaps its bones to the planet's sphere, which the mock prefab doesn't, but it costs nothing to keep the elevations honest
+        // Only matters if the bones snap to the planet's sphere, which the mock prefab doesn't, but keeps the elevations honest
         tornado._midElevation = Mathf.Lerp(tornado._topElevation, tornado._midStartElevation, t);
         tornado._bottomElevation = Mathf.Lerp(tornado._topElevation, tornado._bottomStartElevation, t);
 
-        // Vanilla fades these three at different rates while forming, but collapses them all at the body's rate. Running the formation curves in both directions instead keeps a reversed transition retracing its own steps
         SetCutoffFade(tornado._topBlendRenderers, 1f - t / tornado._topFadeTime);
         SetCutoffFade(tornado._bodyRenderers, (1f - t) / tornado._bodyFadeTime);
         SetCutoffFade(tornado._bottomBlendRenderers, (1f - t) / tornado._bottomFadeTime);
@@ -147,7 +141,7 @@ public class ArtificialTornadoController : MonoBehaviour
         var applied = false;
         foreach (var fluid in tornado._fluids)
         {
-            // The down tornado's bottom fluid ships switched off and without the trigger volume SetVolumeActivation needs, so it would throw if we treated it like the center one. A volume in a sector that hasn't streamed in yet looks the same, hence only recording the state once something actually took it
+            // The down tornado's bottom fluid has no trigger volume
             if (fluid == null || fluid.GetOWTriggerVolume() == null) continue;
             fluid.SetVolumeActivation(active);
             applied = true;

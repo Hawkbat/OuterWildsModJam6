@@ -9,8 +9,7 @@ public class VanillaMaterialFixer : MonoBehaviour
 {
     const string DEFAULT_SOURCE_ROOT = "StatueIsland_Body";
 
-    // Whatever the prefab is borrowing its materials from. Only needs setting if a prefab ends up
-    // somewhere other than Statue Island, since the materials have to be loaded to be worth copying
+    // Only loads materials available under the specified object
     [SerializeField] string sourceRootPath = DEFAULT_SOURCE_ROOT;
 
     bool applied;
@@ -22,8 +21,7 @@ public class VanillaMaterialFixer : MonoBehaviour
 
     protected void Start()
     {
-        // Awake can land before the object we're borrowing from is reachable, depending on when the prefab
-        // was spawned, so have a second go once the scene has settled before giving up on it
+        // Try again in case the first attempt failed due to unloaded objects
         if (!FixMaterials())
         {
             GhostInTheMachine.Instance.ModHelper.Console.WriteLine($"{nameof(VanillaMaterialFixer)} on {name} couldn't find '{SourceRootPath}' to take materials from", MessageType.Warning);
@@ -67,8 +65,6 @@ public class VanillaMaterialFixer : MonoBehaviour
             }
             if (changed)
             {
-                // Assigning sharedMaterials rather than materials, so every renderer keeps pointing at the
-                // one vanilla instance and streaming treats them just like the structures they came from
                 renderer.sharedMaterials = materials;
             }
         }

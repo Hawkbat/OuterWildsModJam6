@@ -6,10 +6,8 @@ namespace GhostInTheMachine.Managers;
 
 public class DoorManager : ManagerBase<DoorManager>
 {
-    // The door prefab is pivoted on the floor and opens along its local X, with the two faces sitting at x = -1.43 and x = 1.43, so the volume has to reach past both of them to win the interact raycast
     static readonly Vector3 INTERACTION_OFFSET = new(0f, 2f, 0f);
 
-    // A gateway is around ten metres wide and thin along its local Z, with the orb rail up above head height, so the volume sits low in the doorway where the player is rather than up on the controls
     static readonly Vector3 GATEWAY_INTERACTION_OFFSET = new(0f, 3f, 0f);
 
     const float INTERACTION_RADIUS = 1.75f;
