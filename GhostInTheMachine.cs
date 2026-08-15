@@ -74,6 +74,9 @@ public class GhostInTheMachine : ModBehaviour
     public override void Configure(IModConfig config)
     {
         debugModeEnabled = config.GetSettingsValue<bool>("debugMode");
-        if (debugModeEnabled) DebugManager.Initialize();
+        if (debugModeEnabled && LoadManager.GetCurrentScene() == OWScene.SolarSystem)
+        {
+            DebugManager.Initialize();
+        }
     }
 }
