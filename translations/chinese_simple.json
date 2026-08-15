@@ -210,9 +210,9 @@
   "UIDictionary": {
     "GITM_GHOST": "未知",
     "NomaiStaffItem": "挪麦手杖",
-    "NomaiStaffItem_PlaceWall": "生成岩壁",
-    "NomaiStaffItem_RemoveWall": "移除岩壁",
-    "NomaiMaskItem": "原型面具",
+    "NomaiStaffItem_PlaceWall": "生成石板",
+    "NomaiStaffItem_RemoveWall": "移除石板",
+    "NomaiMaskItem": "原型挪麦面具",
     "NomaiOrbItem": "挪麦珠子",
     "ActivateStatuePrompt": "激活雕像",
     "DeactivateStatuePrompt": "关闭雕像",
@@ -234,7 +234,7 @@
     "TerribleFateGameOver": "雕像关闭后，你对命运的掌控也随之消散。\n宇宙将永远停滞于此，不生，不灭。",
     "GoodEndingGameOver": "Ghost in the Machine\n机器中的幽灵",
     "GITM_ERNESTO_GAME_OVER": "厄内斯托用石头把你打死了。\n他早就警告过你了。",
-    "GITM_ADDON_POPUP": "《机器中的幽灵》为独立剧情模组，游玩前请先关闭其他剧情模组（如已启用）。",
+    "GITM_ADDON_POPUP": "《Ghost in the Machine/机器中的幽灵》为独立剧情模组，游玩前请先关闭其他剧情模组（如已启用）。",
     "debugMode": "调试模式",
     "debugModeTooltip": "启用模组专属调试工具",
     "MaskUnresponsiveNotification": "系统重启电力不足"
