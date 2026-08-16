@@ -10,9 +10,11 @@ public class TornadoManager : ManagerBase<TornadoManager>
     const string STORAGE_ROOM_BEAM_PATH = "StatueIsland_Body/Sector_StatueIsland/GITM_STORAGE_BEAM";
 
     const string ORB_VISUALS_PATH = "BrittleHollow_Body/Sector_BH/Sector_SouthHemisphere/Sector_SouthPole/Sector_Observatory/Interactables_Observatory/HologramProjector/Prefab_NOM_OrbTrack_Vertical/Prefab_NOM_InterfaceOrb/Props_NOM_Orb";
+    const string ORB_LIGHT_PATH = "BrittleHollow_Body/Sector_BH/Sector_SouthHemisphere/Sector_SouthPole/Sector_Observatory/Interactables_Observatory/HologramProjector/Prefab_NOM_OrbTrack_Vertical/Prefab_NOM_InterfaceOrb/PointLight_NOM_Orb";
 
     const float ORB_VISUALS_SCALE = 0.6f;
     const float ORB_COLLIDER_RADIUS = 0.5f;
+    const float ORB_LIGHT_INTENSITY = 1f;
 
     const string ORB_PARENT_PATH = "StatueIsland_Body";
     static readonly Vector3 ORB_POSITION = new(-9.728863f, 34.0171f, 86.11772f);
@@ -85,6 +87,11 @@ public class TornadoManager : ManagerBase<TornadoManager>
         visuals.transform.SetParent(prefab.transform, false);
         visuals.transform.localPosition = Vector3.zero;
         visuals.transform.localScale = Vector3.one * ORB_VISUALS_SCALE;
+
+        var light = GhostInTheMachine.CloneVanillaProp(ORB_LIGHT_PATH);
+        light.transform.SetParent(prefab.transform, false);
+        light.transform.localPosition = Vector3.zero;
+        light.GetComponent<Light>().intensity = ORB_LIGHT_INTENSITY;
 
         var collider = prefab.AddComponent<SphereCollider>();
         collider.isTrigger = true;
