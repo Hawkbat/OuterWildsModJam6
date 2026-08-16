@@ -10,6 +10,8 @@ public class StatueManager : ManagerBase<StatueManager>
     const string PLAYER_STATUE_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiHeadStatue";
     const string PLAYER_STATUE_AUDIO_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiStatue_Audio";
 
+    static readonly Quaternion HEAD_MODEL_YAW = Quaternion.Euler(0f, 270f, 0f);
+
     GameObject headPrefab;
 
     protected override void Awake()
@@ -24,7 +26,9 @@ public class StatueManager : ManagerBase<StatueManager>
 
         var headProp = head.transform.Find("Props_NOM_StatueHead");
         headProp.transform.localPosition = Vector3.zero;
-        headProp.transform.localEulerAngles = Vector3.zero;
+        // Fix issue caused by statue facing +X instead of +Z
+        headProp.transform.localRotation = HEAD_MODEL_YAW;
+        head.transform.localRotation = Quaternion.Inverse(HEAD_MODEL_YAW);
 
         var audio = GhostInTheMachine.CloneVanillaProp(PLAYER_STATUE_AUDIO_PATH);
         audio.transform.SetParent(headPrefab.transform, false);

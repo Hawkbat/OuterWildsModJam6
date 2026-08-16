@@ -17,14 +17,15 @@
         "assetBundle": "assetbundles/gitm_insm",
         "path": "Assets/Z-GhostInTheMachine Prefabs/Ramie Skeleton.prefab",
         "deactivationCondition": "GITM_STATUE_ATP",
+        "isRelativeToParent": true,
         "position": {
-          "x": 8.6,
-          "y": -26.5,
-          "z": 5
+          "x": -23.5,
+          "y": -5,
+          "z": 15
         },
         "rotation": {
-          "x": 0,
-          "y": 180,
+          "x": 270,
+          "y": 305,
           "z": 0
         }
       }
@@ -49,7 +50,7 @@
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_ATP.xml",
-        "radius": 3,
+        "radius": 2,
         "parentPath": "Sector/GITM_VISION_ATP",
         "isRelativeToParent": true,
         "position": {

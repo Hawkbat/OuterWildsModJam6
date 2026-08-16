@@ -44,7 +44,7 @@ namespace GhostInTheMachine.Controllers
                     StopTurning();
                 }
             }
-            if (eyeGlowAmount <= 0f && !isTurning)
+            if (!isTurning && (eyesGlowing || eyeGlowAmount <= 0f))
             {
                 enabled = false;
             }
@@ -111,6 +111,7 @@ namespace GhostInTheMachine.Controllers
         public void StartTurning(Vector3 targetWorldPos)
         {
             isTurning = true;
+            enabled = true;
             turnTransformAnimator.TurnTowardPosition(targetWorldPos, STATUE_TURN_DURATION, true);
             turnTimer = new Timer(STATUE_TURN_DURATION);
             turnAudioSource.SetLocalVolume(0f);
