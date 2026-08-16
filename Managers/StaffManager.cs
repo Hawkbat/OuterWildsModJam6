@@ -30,6 +30,7 @@ public class StaffManager : ManagerBase<StaffManager>
     static readonly CustomStaffPlacement[] CUSTOM_STAFFS = [
         new("StatueIsland_Body/Sector_StatueIsland/Tornado Lab", new(35.45065f, 17.36366f, -47.93872f), new(0f, 330f, 0f)),
         new("StatueIsland_Body/Sector_StatueIsland", new(-8.466702f, 33.74698f, 84.35114f), new(355f, 204f, 351f)),
+        new("GiantsDeep_Body/Sector_GD", new(-35.05562f, -72.41138f, -46.42143f), new(333.6703f, 53.55551f, 80.81622f)),
         new("CaveTwin_Body/Sector_CaveTwin", new(-99f, -109f, -24f), new(345f, 180f, 221f)),
         new("CaveTwin_Body/Sector_CaveTwin", new(14.67846f, -106.6276f, 47.13413f), new(19f,204f, 184f)),
         new("TimberHearth_Body/Sector_TH", new(11.85f, -44.5f, 185f), new(3f, 94f, 103f), Constants.PersistentConditions.MASK_INSTALLED),
