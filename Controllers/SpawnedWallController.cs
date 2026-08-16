@@ -36,6 +36,10 @@ public class SpawnedWallController : MonoBehaviour
         progress = Mathf.MoveTowards(progress, goal, Time.deltaTime / SCALING_DURATION);
         var t = Mathf.Clamp01(1f - Mathf.Pow(1f - progress, 2f));
         SetScale(Mathf.Lerp(SCALE_MIN, SCALE_MAX, t));
+        if ((growing || shrinking) && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
         if (growing && progress >= 1f)
         {
             SetScale(SCALE_MAX);
@@ -60,8 +64,6 @@ public class SpawnedWallController : MonoBehaviour
         shrinking = false;
         enabled = true;
         audioSource.Play();
-        audioSource.Stop();
-        audioSource.Play();
     }
 
     public void Shrink()
@@ -69,7 +71,6 @@ public class SpawnedWallController : MonoBehaviour
         growing = false;
         shrinking = true;
         enabled = true;
-        audioSource.Stop();
         audioSource.Play();
     }
 
