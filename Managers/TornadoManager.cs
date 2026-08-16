@@ -49,6 +49,10 @@ public class TornadoManager : ManagerBase<TornadoManager>
         tractorBeam._fluid._reverseSpeed = -64f;
         tractorBeam.SetActivation(false, true);
 
+        var storageBeam = GameObject.Find(STORAGE_ROOM_BEAM_PATH).GetComponent<TractorBeamController>();
+        // Prevents the confusing horizontal force at the ends of the beam
+        storageBeam._fluid._exitLength = 0f;
+
         orbPrefab = CreateOrbPrefab();
 
         GlobalMessenger<string, bool>.AddListener("DialogueConditionChanged", OnDialogueConditionChanged);
