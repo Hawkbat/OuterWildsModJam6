@@ -1,4 +1,5 @@
 ﻿using GhostInTheMachine.Controllers;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -115,7 +116,10 @@ public class DebugManager : ManagerBase<DebugManager>
             GUILayout.Space(20);
             if (GUILayout.Button("Default Spawn")) WarpToSpawnPoint("Spawn_TH");
             if (GUILayout.Button("Spawn at Statue Island")) WarpToSpawnPoint("Spawn_StatueIsland_Beach");
+            if (GUILayout.Button("Spawn in GD Core")) WarpToSpawnPoint("Spawn_Core");
+            if (GUILayout.Button("Spawn at Black Hole Forge")) WarpToSpawnPoint("SPAWN_BlackholeForge");
             if (GUILayout.Button("Spawn inside ATP")) WarpToSpawnPoint("Spawn_TimeLoopDevice");
+            if (GUILayout.Button("Spawn at Sun Station")) WarpToSpawnPoint(SpawnLocation.SunStation);
             if (GUILayout.Button("Spawn at Vessel")) WarpToSpawnPoint("Spawn_Vessel");
             if (GUILayout.Button("Spawn at Solanum"))
             {
@@ -139,14 +143,18 @@ public class DebugManager : ManagerBase<DebugManager>
 
     }
 
-    void WarpToSpawnPoint(string spawnPointName)
+    void WarpToSpawnPoint(SpawnLocation location) => WarpToSpawnPoint(sp => sp._spawnLocation == location);
+
+    void WarpToSpawnPoint(string spawnPointName) => WarpToSpawnPoint(sp => sp.name == spawnPointName);
+
+    void WarpToSpawnPoint(Func<SpawnPoint, bool> predicate)
     {
         var spawner = Locator.GetPlayerBody().GetComponent<PlayerSpawner>();
-        var spawnPoint = spawner._spawnList.FirstOrDefault(s => s.name == spawnPointName);
+        var spawnPoint = spawner._spawnList.FirstOrDefault(predicate);
         if (!spawnPoint)
         {
             var spawnPoints = GameObject.FindObjectsOfType<SpawnPoint>();
-            spawnPoint = spawnPoints.First(s => s.name == spawnPointName);
+            spawnPoint = spawnPoints.First(predicate);
         }
         if (spawnPoint is EyeSpawnPoint eyeSpawn)
         {
