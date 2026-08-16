@@ -216,6 +216,8 @@
     "NomaiOrbItem": "挪麦珠子",
     "ActivateStatuePrompt": "激活雕像",
     "DeactivateStatuePrompt": "关闭雕像",
+    // Machine-translated placeholder
+    "NeedStaffStatuePrompt": "缺少所需工具",
     "OpenDoorPrompt": "开门",
     "CloseDoorPrompt": "关门",
     "ActivateBeamPrompt": "启动牵引光束",

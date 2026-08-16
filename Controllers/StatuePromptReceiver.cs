@@ -4,6 +4,7 @@ namespace GhostInTheMachine.Controllers;
 public class StatuePromptReceiver : InteractReceiver
 {
     StatueGhostController statue;
+    bool promptHasCommand = true;
 
     public override void Awake()
     {
@@ -56,12 +57,18 @@ public class StatuePromptReceiver : InteractReceiver
 
     public override void UpdatePromptVisibility()
     {
-        _screenPrompt.SetVisibility(_focused && OWInput.IsInputMode(InputMode.Character) && CanInteract());
+        if (CanInteract() != promptHasCommand)
+        {
+            UpdatePrompt();
+        }
+        base.UpdatePromptVisibility();
     }
 
     void UpdatePrompt()
     {
-        var promptText = GhostInTheMachine.NewHorizons.GetTranslationForUI(statue.IsActivated ? "DeactivateStatuePrompt" : "ActivateStatuePrompt");
+        promptHasCommand = CanInteract();
+        _usingPromptWithCommand = promptHasCommand;
+        var promptText = GhostInTheMachine.NewHorizons.GetTranslationForUI(!promptHasCommand ? "NeedStaffStatuePrompt" : statue.IsActivated ? "DeactivateStatuePrompt" : "ActivateStatuePrompt");
         ChangePrompt(promptText);
     }
 }

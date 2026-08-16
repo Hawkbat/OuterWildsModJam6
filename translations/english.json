@@ -216,6 +216,7 @@
 		"NomaiOrbItem": "Large Nomai Orb",
 		"ActivateStatuePrompt": "Activate Statue",
 		"DeactivateStatuePrompt": "Deactivate Statue",
+		"NeedStaffStatuePrompt": "Missing Required Tool",
 		"OpenDoorPrompt": "Open Door",
 		"CloseDoorPrompt": "Close Door",
 		"ActivateBeamPrompt": "Activate Tractor Beam",
