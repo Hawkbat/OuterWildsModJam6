@@ -12,10 +12,18 @@
     "GITM_CHOICE_HELLO_B_REVEAL": "你在哪里？",
     "GITM_GHOST_HELLO_FOLLOWUP": "我不知道，帮帮我",
     "GITM_GHOST_HELLO_FOLLOWUP_REVEAL": "我不知道，我的记忆全乱了！我想……我是个挪麦人。但我能读懂你的话。你能帮帮我吗？我觉得我被困在某个地方了。",
+    // Machine-translated placeholder
+    "GITM_CHOICE_LOOP": "时间循环",
+    // Machine-translated placeholder
+    "GITM_CHOICE_LOOP_REVEAL": "让我从我的角度，说说这段时间到底发生了什么。<color=lightblue>木炉星</color>上有一座雕像，和我、还有我飞船的日志配对着，正因为如此，循环重置之后我们俩才还记得住东西。其余的雕像我一直在用手杖关掉，而每关掉一座，等循环重置时，我能用的时间好像就会多一些。",
+    // Machine-translated placeholder
+    "GITM_GHOST_LOOP": "成功了！",
+    // Machine-translated placeholder
+    "GITM_GHOST_LOOP_REVEAL": "等等。成功了？<color=orange>灰烬双星计划</color>真的成功了？！虽然不是所有人预想的那样，但雕像确实在配对，记忆确实在循环，这说明理论从一开始就是成立的！……抱歉，我集中一下注意力。是的，请继续把它们关掉！雕像和这项<color=orange>计划</color>有关，所以我们应该去和<color=orange>计划</color>有关的地方找找，看还有没有别的雕像。",
     "GITM_CHOICE_PLACES": "地点",
     "GITM_CHOICE_PLACES_REVEAL": "光凭这些我还没法定位。你还记得被困之前在哪里吗？有没有什么重要的地点或者地标？",
     "GITM_GHOST_CLASSROOM_HINT": "教室",
-    "GITM_GHOST_CLASSROOM_HINT_REVEAL": "我记得我好像在一所学校里。在碎空星的某个地方。如果你找到那间教室，说不定能帮我想起更多事。",
+    "GITM_GHOST_CLASSROOM_HINT_REVEAL": "我记得我好像在一所学校里。在<color=lightblue>碎空星</color>的某个地方。如果你找到那间教室，说不定能帮我想起更多事。",
     "GITM_FIND_CLASSROOM": "手杖的用法",
     "GITM_FIND_CLASSROOM_RUMOR_NAME": "???",
     "GITM_MEMORY_CLASSROOM_REVEAL": "我以前是个学生！我的老师叫菲利克斯，他很喜欢我的课堂展示，哪怕我偶尔会记错一些小细节。后来我毕业了，但我不记得毕业之后去了哪里。",
@@ -30,7 +38,7 @@
     "GITM_CHOICE_STATUES_REVEAL": "我遇到的每座雕像旁边都会出现奇怪的虚影。我试试把我看到的分享给你。有没有你觉得相关的内容？",
     "GITM_FIND_MASKS": "面具",
     "GITM_FIND_MASKS_RUMOR_NAME": "???",
-    "GITM_FIND_MASKS_REVEAL": "灰烬双星计划里的这台电脑，有一份详细的清单，记录了哪些记忆雕像还在传输信号、分别位于何处，这下我们的搜索就不用瞎猜了。我注意到有一处基座上没装面具，却依然亮着灯。真奇怪。",
+    "GITM_FIND_MASKS_REVEAL": "<color=orange>灰烬双星计划</color>里的这台电脑，有一份详细的清单，记录了哪些记忆雕像还在传输信号、分别位于何处，这下我们的搜索就不用瞎猜了。我注意到有一处基座上没装面具，却依然亮着灯。真奇怪。",
     "GITM_VISION_GABBRO": "加布罗的记忆",
     "GITM_VISION_GABBRO_RUMOR_NAME": "???",
     "GITM_VISION_GABBRO_LISTED_NAME": "深巨星雕像",

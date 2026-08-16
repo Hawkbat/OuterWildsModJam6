@@ -73,6 +73,34 @@
     </ExploreFact>
   </Entry>
   <Entry>
+    <ID>GITM_CHOICE_LOOP</ID>
+    <Name>GITM_CHOICE_LOOP</Name>
+    <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_CHOICE_LOOP_RUMOR</ID>
+      <SourceID>GITM_GHOST_HELLO_FOLLOWUP</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_CHOICE_LOOP_REVEAL</ID>
+      <Text>GITM_CHOICE_LOOP_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
+    <ID>GITM_GHOST_LOOP</ID>
+    <Name>GITM_GHOST_LOOP</Name>
+    <Curiosity>GITM_GHOST_CURIOSITY</Curiosity>
+    <RumorFact>
+      <ID>GITM_GHOST_LOOP_RUMOR</ID>
+      <SourceID>GITM_CHOICE_LOOP</SourceID>
+      <Text>NONE</Text>
+    </RumorFact>
+    <ExploreFact>
+      <ID>GITM_GHOST_LOOP_REVEAL</ID>
+      <Text>GITM_GHOST_LOOP_REVEAL</Text>
+    </ExploreFact>
+  </Entry>
+  <Entry>
     <ID>GITM_CHOICE_PLACES</ID>
     <Name>GITM_CHOICE_PLACES</Name>
     <Curiosity>GITM_CHOICE_CURIOSITY</Curiosity>

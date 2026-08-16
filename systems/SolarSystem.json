@@ -106,6 +106,14 @@
     { "id": "GITM_CHOICE_CURIOSITY", "color": { "r": 255, "g": 255, "b": 255, "a": 255 }, "highlightColor": { "r": 255, "g": 255, "b": 255, "a": 223 } }
   ],
   "entryPositions": [
+    { "id": "GITM_CHOICE_LOOP", "position": {
+        "x": 957,
+        "y": -1837
+      } },
+    { "id": "GITM_GHOST_LOOP", "position": {
+        "x": 1061,
+        "y": -2041
+      } },
     { "id": "GITM_PLAYER_STEP_0", "position": { "x": 300, "y": 1300 } },
     { "id": "GITM_PLAYER_STEP_1", "position": { "x": 450, "y": 1300 } },
     { "id": "GITM_PLAYER_STEP_2", "position": { "x": 600, "y": 1300 } },
@@ -121,12 +129,12 @@
     { "id": "GITM_GHOST_HELLO_FOLLOWUP", "position": { "x": 1000, "y": -1600 } },
 
     { "id": "GITM_CHOICE_STATUES", "position": {
-        "x": 616,
-        "y": -1774
+        "x": 574,
+        "y": -1778
       } },
     { "id": "GITM_FIND_MASKS", "position": {
-        "x": 837,
-        "y": -1890
+        "x": 797,
+        "y": -1841
       } },
     { "id": "GITM_VISION_GABBRO", "position": {
         "x": 549,
@@ -158,24 +166,24 @@
       } },
 
     { "id": "GITM_CHOICE_PLACES", "position": {
-        "x": 1217,
-        "y": -1751
+        "x": 1242,
+        "y": -1911
       } },
     { "id": "GITM_FIND_HOME", "position": {
-        "x": 1045,
-        "y": -1978
+        "x": 1425,
+        "y": -2156
       } },
     { "id": "GITM_GHOST_CLASSROOM_HINT", "position": {
-        "x": 1246,
-        "y": -1991
+        "x": 1212,
+        "y": -2301
       } },
     { "id": "GITM_FIND_CLASSROOM", "position": {
-        "x": 1418,
-        "y": -2162
+        "x": 1404,
+        "y": -2464
       } },
     { "id": "GITM_GHOST_CLIMB_HINT", "position": {
-        "x": 1254,
-        "y": -2390
+        "x": 1222,
+        "y": -2649
       } },
 
     { "id": "GITM_CHOICE_MORE", "position": {
