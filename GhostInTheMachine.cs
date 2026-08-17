@@ -59,6 +59,7 @@ public class GhostInTheMachine : ModBehaviour
             TornadoManager.Initialize();
             TractorBeamManager.Initialize();
             SolanumManager.Initialize();
+            ProbeTrackingManager.Initialize();
 
             if (debugModeEnabled) DebugManager.Initialize();
 

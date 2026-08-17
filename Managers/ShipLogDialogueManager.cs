@@ -12,6 +12,8 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
     const string VISION_PREFIX = "GITM_VISION_";
     const string FIND_PREFIX = "GITM_FIND_";
 
+    const string WORLD_RUMOR_SUFFIX = "_RUMOR";
+
     static Sprite ghostDefaultSprite;
     static Sprite playerDefaultSprite;
 
@@ -49,6 +51,9 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         !fact.GetEntryID().StartsWith(VISION_PREFIX) &&
         !Constants.ShipLogFacts.GATED_RUMORS.Contains(fact.GetID());
 
+    bool CanRevealExploreOnRead(string entryID) =>
+        !entryID.StartsWith(VISION_PREFIX) || detectiveMode._manager.IsFactRevealed(entryID + WORLD_RUMOR_SUFFIX);
+
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
@@ -64,7 +69,12 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         var entryID = entry.GetID();
         var alreadyRevealed = new HashSet<string>(detectiveMode._manager._factDict.Values.Where(f => f.IsRevealed()).Select(f => f.GetID()));
 
-        var followupFacts = detectiveMode._manager._factDict.Values.Where(f => !f.IsRevealed() && ((f.IsRumor() && f.GetSourceID() == entryID && CanRevealOnRead(f)) || (!f.IsRumor() && f.GetEntryID() == entryID && !entryID.EndsWith("_CURIOSITY")))).ToList();
+        var canRevealExplore = CanRevealExploreOnRead(entryID);
+        var followupFacts = detectiveMode._manager._factDict.Values
+            .Where(f => !f.IsRevealed() && (
+                (f.IsRumor() && f.GetSourceID() == entryID && CanRevealOnRead(f))
+                || (!f.IsRumor() && f.GetEntryID() == entryID && !entryID.EndsWith("_CURIOSITY") && canRevealExplore)))
+            .ToList();
         foreach (var fact in followupFacts)
         {
             detectiveMode._manager.RevealFact(fact.GetID());

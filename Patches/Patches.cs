@@ -339,6 +339,17 @@ public static class PlayerCameraEffectControllerPatches
     }
 }
 
+[HarmonyPatch(typeof(OrbitalCannonHologramProjector))]
+public static class OrbitalCannonHologramProjectorPatches
+{
+    [HarmonyPrefix, HarmonyPatch("OnSlotActivated")]
+    public static bool OnSlotActivated(OrbitalCannonHologramProjector __instance, NomaiInterfaceSlot slot)
+    {
+        // Skip the original if our code handled it
+        return !ProbeTrackingManager.Instance.HandleSlotActivated(__instance, __instance.GetSlotIndex(slot));
+    }
+}
+
 [HarmonyPatch(typeof(TranslatorWord))]
 public static class TranslatorWordPatches
 {
@@ -349,21 +360,28 @@ public static class TranslatorWordPatches
         __instance.TranslatedText = translatedText.Replace("\\\\n", "\n");
         if (__instance.TranslatedText.Contains("<NbTimeloops>"))
         {
-            int num = (TimeLoop.GetLoopCount() + 53) % 1000;
-            int num2 = (int)Mathf.Floor((TimeLoop.GetLoopCount() + 318053) / 1000) % 1000;
-            int num3 = (int)Mathf.Floor((TimeLoop.GetLoopCount() + 9318053) / 1000000);
             string text;
-            if (TextTranslation.Get().GetLanguage() == TextTranslation.Language.ENGLISH || TextTranslation.Get().GetLanguage() == TextTranslation.Language.JAPANESE || TextTranslation.Get().GetLanguage() == TextTranslation.Language.CHINESE_SIMPLE)
+            if (ProbeTrackingManager.IsModuleOffline)
             {
-                text = string.Concat([num3, ",", num2.ToString("D3"), ",", num.ToString("D3")]);
-            }
-            else if (TextTranslation.Get().GetLanguage() == TextTranslation.Language.GERMAN || TextTranslation.Get().GetLanguage() == TextTranslation.Language.ITALIAN || TextTranslation.Get().GetLanguage() == TextTranslation.Language.PORTUGUESE_BR)
-            {
-                text = string.Concat([num3, ".", num2.ToString("D3"), ".", num.ToString("D3")]);
+                text = "1";
             }
             else
             {
-                text = string.Concat([num3, " ", num2.ToString("D3"), " ", num.ToString("D3")]);
+                int num = (TimeLoop.GetLoopCount() + 53) % 1000;
+                int num2 = (int)Mathf.Floor((TimeLoop.GetLoopCount() + 318053) / 1000) % 1000;
+                int num3 = (int)Mathf.Floor((TimeLoop.GetLoopCount() + 9318053) / 1000000);
+                if (TextTranslation.Get().GetLanguage() == TextTranslation.Language.ENGLISH || TextTranslation.Get().GetLanguage() == TextTranslation.Language.JAPANESE || TextTranslation.Get().GetLanguage() == TextTranslation.Language.CHINESE_SIMPLE)
+                {
+                    text = string.Concat([num3, ",", num2.ToString("D3"), ",", num.ToString("D3")]);
+                }
+                else if (TextTranslation.Get().GetLanguage() == TextTranslation.Language.GERMAN || TextTranslation.Get().GetLanguage() == TextTranslation.Language.ITALIAN || TextTranslation.Get().GetLanguage() == TextTranslation.Language.PORTUGUESE_BR)
+                {
+                    text = string.Concat([num3, ".", num2.ToString("D3"), ".", num.ToString("D3")]);
+                }
+                else
+                {
+                    text = string.Concat([num3, " ", num2.ToString("D3"), " ", num.ToString("D3")]);
+                }
             }
             __instance.TranslatedText = __instance.TranslatedText.Replace("<NbTimeloops>", text);
         }
