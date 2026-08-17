@@ -63,10 +63,10 @@ public class SpawnManager : ManagerBase<SpawnManager>
         new(
             [STATUE_SS_LOWER, STATUE_SS_UPPER],
             [
-                new(6.64f,
+                new(5.32f,
                     new("TowerTwin_Body", new(0.8f, 3.8f, -150f), new(63f, 90f, 90f)) { fuel = 64f, oxygen = 310f, health = 73f },
                     new("CaveTwin_Body", new(37.856f, -129.298f, -97.273f), new(28.68671f, 27.24732f, 207.8393f))),
-                new(5.32f,
+                new(4.07f,
                     new("TowerTwin_Body", new(-2.4f, 171.8f, 3.5f), new(0f, 95f, 0f)) { fuel = 85f, oxygen = 400f, health = 91f },
                     new("CaveTwin_Body", new(37.856f, -129.298f, -97.273f), new(28.68671f, 27.24732f, 207.8393f))),
             ]
