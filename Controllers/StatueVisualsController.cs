@@ -62,17 +62,24 @@ namespace GhostInTheMachine.Controllers
             }
         }
 
-        public void SetEyesGlowing(bool glowing)
+        public void SetEyesGlowing(bool glowing, bool immediate = false)
         {
             if (glowing)
             {
                 eyesGlowing = true;
                 SetEyeGlow(1f);
             }
-            else if (!glowing)
+            else
             {
                 eyesGlowing = false;
-                enabled = true;
+                if (immediate)
+                {
+                    SetEyeGlow(0f);
+                }
+                else
+                {
+                    enabled = true;
+                }
             }
         }
 

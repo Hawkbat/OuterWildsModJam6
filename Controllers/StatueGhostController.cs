@@ -22,7 +22,7 @@ public class StatueGhostController : MonoBehaviour
         visuals.SetEyeGlowColor(new Color(1.5f, 0f, 0.25f, 1f));
         if (PlayerData.PersistentConditionExists(persistentCondition) && PlayerData.GetPersistentCondition(persistentCondition))
         {
-            Deactivate();
+            Deactivate(true);
         }
         else
         {
@@ -48,12 +48,12 @@ public class StatueGhostController : MonoBehaviour
         //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamActivate);
     }
 
-    public void Deactivate()
+    public void Deactivate(bool initial = false)
     {
         isActivated = false;
         PlayerData.SetPersistentCondition(persistentCondition, true);
         visuals.SetEyesOpen(false);
-        visuals.SetEyesGlowing(false);
+        visuals.SetEyesGlowing(false, initial);
         //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamDeactivate);
     }
 }

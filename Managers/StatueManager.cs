@@ -9,6 +9,7 @@ public class StatueManager : ManagerBase<StatueManager>
 {
     const string PLAYER_STATUE_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiHeadStatue";
     const string PLAYER_STATUE_AUDIO_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/NomaiStatue_Audio";
+    const string PLAYER_STATUE_UPLINK_PATH = "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/NomaiStatueExhibit/MemoryUplinkTrigger";
 
     static readonly Quaternion HEAD_MODEL_YAW = Quaternion.Euler(0f, 270f, 0f);
 
@@ -41,6 +42,13 @@ public class StatueManager : ManagerBase<StatueManager>
         ConfigureStatueVisuals(headPrefab, head, audio);
 
         headPrefab.SetActive(false);
+
+        // Clean up the statue uplink trigger if it still exists (we skip the vanilla first loop anyway)
+        var uplinkTrigger = GameObject.Find(PLAYER_STATUE_UPLINK_PATH);
+        if (uplinkTrigger != null)
+        {
+            uplinkTrigger.SetActive(false);
+        }
 
         // Also wire up vanilla player statue
         var playerStatue = GameObject.Find(PLAYER_STATUE_PATH);
