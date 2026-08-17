@@ -1,7 +1,6 @@
+using GhostInTheMachine.Controllers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using UnityEngine;
 using static GhostInTheMachine.Constants.PersistentConditions;
 
@@ -73,16 +72,11 @@ public class ProbeTrackingManager : ManagerBase<ProbeTrackingManager>
         return true;
     }
 
-    // Implement the offline text the same way New Horizons does
     void RegisterOfflineText()
     {
-        var table = TextTranslation.Get().m_table.theTable;
-        foreach (var (_, offlineText) in OFFLINE_DISPLAYS)
+        foreach (var display in displays)
         {
-            foreach (var key in offlineText)
-            {
-                table[key] = GhostInTheMachine.NewHorizons.GetTranslationForDialogue(key);
-            }
+            display.RegisterTranslations();
         }
     }
 
@@ -107,45 +101,27 @@ public class ProbeTrackingManager : ManagerBase<ProbeTrackingManager>
     class Display
     {
         readonly NomaiText text;
-        readonly XmlNode onlineRoot;
-        readonly XmlNode offlineRoot;
+        readonly NomaiTextSwapper textSwapper;
         readonly List<NomaiText.NomaiTextConditionData> onlineConditions;
 
         public Display(NomaiText text, string[] offlineKeys)
         {
             this.text = text;
-            onlineRoot = ParseNomaiObject(OWUtilities.RemoveByteOrderMark(text._nomaiTextAsset));
-            offlineRoot = ParseNomaiObject(BuildOfflineXml(offlineKeys));
+            textSwapper = new NomaiTextSwapper(text, offlineKeys);
             onlineConditions = [.. text._listDBConditions];
         }
 
+        public void RegisterTranslations() => textSwapper.RegisterTranslations();
+
         public void SetOffline(bool offline)
         {
-            text.SetNewXmlData(offline ? offlineRoot : onlineRoot);
+            textSwapper.SetReplaced(offline);
             // Prevent vanilla fact reveals if offline
             text._listDBConditions.Clear();
             if (!offline)
             {
                 text._listDBConditions.AddRange(onlineConditions);
             }
-        }
-
-        static string BuildOfflineXml(string[] offlineKeys)
-        {
-            var builder = new StringBuilder("<NomaiObject>");
-            for (var i = 0; i < offlineKeys.Length; i++)
-            {
-                builder.Append($"<TextBlock><ID>{i + 1}</ID><Text>{offlineKeys[i]}</Text></TextBlock>");
-            }
-            builder.Append("</NomaiObject>");
-            return builder.ToString();
-        }
-
-        static XmlNode ParseNomaiObject(string xml)
-        {
-            var document = new XmlDocument();
-            document.LoadXml(xml);
-            return document.SelectSingleNode("NomaiObject");
         }
     }
 }

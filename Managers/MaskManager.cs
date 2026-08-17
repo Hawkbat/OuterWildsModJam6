@@ -6,8 +6,12 @@ namespace GhostInTheMachine.Managers;
 
 public class MaskManager : ManagerBase<MaskManager>
 {
+    const string INTERACTIBLES_PATH = "TimeLoopRing_Body/Interactibles_TimeLoopRing_Hidden";
+    const string MASK_COMPUTER_NAME = "GITM_MASK_COMPUTER";
+    const string VANILLA_COMPUTER_NAME = "Prefab_NOM_Computer";
+
     static AudioClip finaleAudioClip;
-    
+
     OWAudioSource finaleAudioSrc;
 
 
@@ -15,7 +19,18 @@ public class MaskManager : ManagerBase<MaskManager>
     {
         base.Awake();
 
-        GameObject.Find("TimeLoopRing_Body/Interactibles_TimeLoopRing_Hidden/GITM_MASK_COMPUTER").AddComponent<MaskComputerController>();
+        var interactibles = GameObject.Find(INTERACTIBLES_PATH).transform;
+        interactibles.Find(MASK_COMPUTER_NAME).gameObject.AddComponent<MaskComputerController>();
+
+        // Crawling this instead of using Find directly because there are two computers with the same name/path in vanilla, but only one is the mask computer we want
+        foreach (Transform child in interactibles)
+        {
+            if (child.name == VANILLA_COMPUTER_NAME && child.GetComponent<NomaiComputerSlotInterface>() == null)
+            {
+                child.gameObject.SetActive(false);
+                break;
+            }
+        }
 
         if (!finaleAudioClip)
         {

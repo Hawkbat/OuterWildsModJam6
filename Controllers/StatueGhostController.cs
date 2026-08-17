@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using static GhostInTheMachine.Constants.PersistentConditions;
 
 namespace GhostInTheMachine.Controllers;
 
 public class StatueGhostController : MonoBehaviour
 {
+    static readonly Color DEFAULT_EYE_GLOW_COLOR = new(0.529f, 0.576f, 1.5f, 1f);
+    static readonly Color ERROR_EYE_GLOW_COLOR = new(1.5f, 0f, 0.25f, 1f);
+
     public string persistentCondition;
     public bool canTurn;
 
@@ -15,11 +19,18 @@ public class StatueGhostController : MonoBehaviour
     protected void Awake()
     {
         visuals = GetComponent<StatueVisualsController>();
+
+        GlobalMessenger<string, bool>.AddListener("NHPersistentConditionChanged", OnNHPersistentConditionChanged);
+    }
+
+    protected void OnDestroy()
+    {
+        GlobalMessenger<string, bool>.RemoveListener("NHPersistentConditionChanged", OnNHPersistentConditionChanged);
     }
 
     protected void Start()
     {
-        visuals.SetEyeGlowColor(new Color(1.5f, 0f, 0.25f, 1f));
+        UpdateEyeGlowColor();
         if (PlayerData.PersistentConditionExists(persistentCondition) && PlayerData.GetPersistentCondition(persistentCondition))
         {
             Deactivate(true);
@@ -44,8 +55,6 @@ public class StatueGhostController : MonoBehaviour
         {
             visuals.StartTurning(Locator.GetPlayerTransform().position);
         }
-        // This breaks turning audio, do something else if we need to
-        //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamActivate);
     }
 
     public void Deactivate(bool initial = false)
@@ -54,6 +63,17 @@ public class StatueGhostController : MonoBehaviour
         PlayerData.SetPersistentCondition(persistentCondition, true);
         visuals.SetEyesOpen(false);
         visuals.SetEyesGlowing(false, initial);
-        //visuals.turnAudioSource.PlayOneShot(AudioType.NomaiTractorBeamDeactivate);
+    }
+
+    void OnNHPersistentConditionChanged(string condition, bool state)
+    {
+        if (condition != MASK_INSTALLED) return;
+
+        UpdateEyeGlowColor();
+    }
+
+    void UpdateEyeGlowColor()
+    {
+        visuals.SetEyeGlowColor(PlayerData.GetPersistentCondition(MASK_INSTALLED) ? DEFAULT_EYE_GLOW_COLOR : ERROR_EYE_GLOW_COLOR);
     }
 }

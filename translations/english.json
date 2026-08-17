@@ -115,6 +115,8 @@
 		"GITM_MASK_COMPUTER_1": "<TimeMinutes> MINUTES, <TimeSeconds> SECONDS AGO: Received data from previous cycles. <color=red>ERROR! System overloaded. Cycle duration was shorter than expected.</color>",
 		"GITM_MASK_COMPUTER_2": "MASKS RECEIVING DATA FROM:\n<ActiveStatueList><color=red>ERROR! System overloaded. Data streams may overlap each other unexpectedly.</color>",
 		"GITM_MASK_COMPUTER_3": "<TimeMinutesRemaining> MINUTES UNTIL END-OF-CYCLE TRANSMISSION",
+		"GITM_MASK_COMPUTER_FIXED_1": "<TimeMinutes> MINUTES, <TimeSeconds> SECONDS AGO: Received data from previous cycles.",
+		"GITM_MASK_COMPUTER_FIXED_2": "MASKS RECEIVING DATA FROM:\n<ActiveStatueList>",
 		"GITM_OPC_LAUNCHES_1": "Retrieving previous launch data from <color=lightblue>Ash Twin</color>.",
 		"GITM_OPC_LAUNCHES_2": "ERROR: No response from <color=lightblue>Ash Twin</color>. Unable to retrieve launch history.",
 		"GITM_OPC_LAUNCHES_3": "Assuming current cycle is the first. Total number of probes launched: 1",

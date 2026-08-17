@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
+using static GhostInTheMachine.Constants.PersistentConditions;
 
 namespace GhostInTheMachine.Controllers;
 
 public class MaskComputerController : MonoBehaviour
 {
+    // The vanilla computer text but with our dynamic statue list instead
+    static readonly string[] REPAIRED_TEXT = ["GITM_MASK_COMPUTER_FIXED_1", "GITM_MASK_COMPUTER_FIXED_2", "GITM_MASK_COMPUTER_3"];
+
     static readonly Color errorColor = new(1.5f, 0f, 0f, 1f);
 
     NomaiComputer computer;
     NomaiComputerRing[] rings;
+    NomaiTextSwapper textSwapper;
     Color initialEmissionColor;
     bool init;
     bool isError;
@@ -16,6 +21,10 @@ public class MaskComputerController : MonoBehaviour
     {
         computer = GetComponent<NomaiComputer>();
         rings = GetComponentsInChildren<NomaiComputerRing>(true);
+        textSwapper = new NomaiTextSwapper(computer, REPAIRED_TEXT);
+
+        textSwapper.RegisterTranslations();
+        TextTranslation.Get().OnLanguageChanged += textSwapper.RegisterTranslations;
 
         GlobalMessenger<string, bool>.AddListener("NHPersistentConditionChanged", OnNHPersistentConditionChanged);
     }
@@ -23,22 +32,30 @@ public class MaskComputerController : MonoBehaviour
     protected void OnDestroy()
     {
         GlobalMessenger<string, bool>.RemoveListener("NHPersistentConditionChanged", OnNHPersistentConditionChanged);
+        if (TextTranslation.Get() != null)
+        {
+            TextTranslation.Get().OnLanguageChanged -= textSwapper.RegisterTranslations;
+        }
     }
 
     protected void Start()
     {
-        isError = !PlayerData.GetPersistentCondition(Constants.PersistentConditions.MASK_INSTALLED);
-        UpdateRingColors();
+        isError = !PlayerData.GetPersistentCondition(MASK_INSTALLED);
+        UpdateComputer();
     }
 
     void OnNHPersistentConditionChanged(string condition, bool state)
     {
-        if (string.IsNullOrEmpty(condition)) return;
-        if (condition == Constants.PersistentConditions.MASK_INSTALLED)
-        {
-            isError = !state;
-            UpdateRingColors();
-        }
+        if (condition != MASK_INSTALLED) return;
+
+        isError = !state;
+        UpdateComputer();
+    }
+
+    void UpdateComputer()
+    {
+        textSwapper.SetReplaced(!isError);
+        UpdateRingColors();
     }
 
     void UpdateRingColors()

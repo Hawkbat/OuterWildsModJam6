@@ -1,8 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
-  "removeChildren": [
-    "Interactibles_TimeLoopRing_Hidden/Prefab_NOM_Computer"
-  ],
   "Props": {
     "details": [
       {

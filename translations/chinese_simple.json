@@ -121,6 +121,9 @@
     "GITM_MASK_COMPUTER_1": "<TimeMinutes> 分钟 <TimeSeconds> 秒前：接收到上一循环的数据。<color=red>错误！系统过载。循环时长短于预期。</color>",
     "GITM_MASK_COMPUTER_2": "正在接收数据的面具：\n<ActiveStatueList><color=red>错误！系统过载。数据流可能意外重叠。</color>",
     "GITM_MASK_COMPUTER_3": "距离循环结束传输还有 <TimeMinutesRemaining> 分钟",
+    // Copied from the base game's own Chinese translation of TT_TimeLoop_MaskActivationStatus
+    "GITM_MASK_COMPUTER_FIXED_1": "<TimeMinutes>分钟<TimeSeconds>秒之前：接收到来自之前循环的数据。",
+    "GITM_MASK_COMPUTER_FIXED_2": "面具正在接收以下方面的数据：\n<ActiveStatueList>",
     // Machine-translated placeholder
     "GITM_OPC_LAUNCHES_1": "正在从<color=lightblue>灰烬双星</color>获取过往发射数据。",
     // Machine-translated placeholder

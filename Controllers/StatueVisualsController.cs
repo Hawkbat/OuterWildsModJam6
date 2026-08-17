@@ -8,7 +8,6 @@ namespace GhostInTheMachine.Controllers
         const float EYE_ANIMATION_DURATION = 1f;
         const float EYE_GLOW_FADE_DURATION = 1f;
         const float STATUE_TURN_DURATION = 4f;
-        static readonly Color DEFAULT_EYE_GLOW_COLOR = new(0.529f, 0.576f, 1.5f, 1f);
 
         public TransformAnimator[] lowerLidAnimators;
         public TransformAnimator[] upperLidAnimators;
@@ -25,7 +24,6 @@ namespace GhostInTheMachine.Controllers
 
         protected void Awake()
         {
-            eyeGlowColor = DEFAULT_EYE_GLOW_COLOR;
             enabled = false;
         }
 
