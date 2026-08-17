@@ -1,0 +1,23 @@
+<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+  <NameField>Gabbro</NameField>
+  <DialogueNode>
+    <Name>GabbroMenu</Name>
+    <DialogueOptionsList>
+      <DialogueOption>
+        <CancelledPersistentCondition>GITM_STATUE_GABBRO</CancelledPersistentCondition>
+        <Text>GITM_GABBRO_LOOP_OPTION</Text>
+        <DialogueTarget>GITM_GabbroLoop</DialogueTarget>
+      </DialogueOption>
+    </DialogueOptionsList>
+  </DialogueNode>
+  <DialogueNode>
+    <Name>GITM_GabbroLoop</Name>
+    <Dialogue>
+      <Page>GITM_GABBRO_LOOP_1</Page>
+      <Page>GITM_GABBRO_LOOP_2</Page>
+      <Page>GITM_GABBRO_LOOP_3</Page>
+      <Page>GITM_GABBRO_LOOP_4</Page>
+    </Dialogue>
+    <DialogueTarget>GabbroMenu</DialogueTarget>
+  </DialogueNode>
+</DialogueTree>

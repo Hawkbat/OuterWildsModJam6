@@ -105,7 +105,8 @@
     "GITM_PLAYER_STEP_2": "沙漏双星",
     "GITM_PLAYER_STEP_2_REVEAL": "我到沙漏双星了！不过我的飞船刚好被沙柱卷走了，所以我打算先探索余烬双星，之后再想办法回飞船。",
     "GITM_PLAYER_STEP_3": "惊天大秘密？",
-    "GITM_PLAYER_STEP_3_REVEAL": "哇！沙层退去的时候，我走进了灰烬双星上的一座塔，发现自己置身于一台巨大的挪麦装置里！我不知道它是干什么的，但我用捡到的手杖戳它的时候，它会发出奇怪的声响。",
+    // Machine-translated placeholder
+    "GITM_PLAYER_STEP_3_REVEAL": "哇！沙层退去的时候，我走进了灰烬双星上的一座塔，发现自己置身于一台巨大的挪麦装置里！我不知道它是干什么的，但我戳它的时候，它会发出奇怪的声响。",
     "GITM_PLAYER_STEP_4": "又一次跃迁",
     "GITM_PLAYER_STEP_4_REVEAL": "我试着走进另一座塔，结果它把我跃迁传送到了别的地方！看照片的话，这里应该是碎空星。我的飞船不知怎么也到了这儿，但我不敢跳下去够它。毕竟我又不是不死之身。",
     "GITM_PLAYER_STEP_5": "卡住了",
@@ -113,7 +114,8 @@
     "GITM_PLAYER_STEP_6": "再次跃迁",
     "GITM_PLAYER_STEP_6_REVEAL": "我到深巨星了！我试着把我的小侦察兵放在平台上看会发生什么，结果它自己被跃迁走了，没带上我，现在我也回不去了。看来我的飞船是彻底没了。对不起，斯雷特。说不定我之后能找到加布罗，搭个便车。",
     "GITM_PLAYER_STEP_7": "雕像",
-    "GITM_PLAYER_STEP_7_REVEAL": "这座岛上还有更多奇怪的挪麦雕像！这些看起来还凶巴巴的。我有点手痒，又想拿手杖戳戳它们了……"
+    // Machine-translated placeholder
+    "GITM_PLAYER_STEP_7_REVEAL": "这座岛上还有更多奇怪的挪麦雕像！这些看起来还凶巴巴的。这边地上扔着一根挪麦手杖，我特别想知道，要是拿它戳一下雕像，会发生什么……"
   },
   "DialogueDictionary": {
     "GITM_MASK_COMPUTER_1": "<TimeMinutes> 分钟 <TimeSeconds> 秒前：接收到上一循环的数据。<color=red>错误！系统过载。循环时长短于预期。</color>",
@@ -192,6 +194,16 @@
     "GITM_MEMORY_HOME_4": "悬崖上面的储藏室是锁着的，但我打赌能用手杖引出光束，把自己托上去。我要看看他们在里面藏了什么好东西！",
     "GITM_MEMORY_LAMI_NAME": "挪麦女孩",
     "GITM_SOLANUM_THE_NOMAI_2": "这副面具似乎是更早的原型机，所以我不清楚它的功能和正式版有什么区别。",
+    // Machine-translated placeholder
+    "GITM_GABBRO_LOOP_OPTION": "你有没有发现循环变短了？",
+    // Machine-translated placeholder
+    "GITM_GABBRO_LOOP_1": "太好了，不是只有我这样。是啊，最近每次都被提前掐断。我连第二段还没唱完，灯就灭了。",
+    // Machine-translated placeholder
+    "GITM_GABBRO_LOOP_2": "还有件事。每次循环重置，都有别人的记忆从边边角角渗进来。我觉得是挪麦人的。而且非常古老。",
+    // Machine-translated placeholder
+    "GITM_GABBRO_LOOP_3": "大部分是个孩子。还有一堆关于太阳站的争吵。我本来想着，只要慢慢呼吸调整一下，它自己就过去了。结果没有。不过说真的，那个呼吸法效果很好。稳稳的9分。",
+    // Machine-translated placeholder
+    "GITM_GABBRO_LOOP_4": "看你这表情，是要去做点什么了。很好。我留在这儿把吊床压住，万一它是承重结构呢。",
     "GITM_ERNESTO_NAME": "厄内斯托",
     "GITM_ERNESTO_FIRST_1": "嘿，是我，会说话的幽灵安康鱼厄内斯托。",
     "GITM_ERNESTO_FIRST_2": "对了，你刚把你的雕像关了。你知道这事吧？",

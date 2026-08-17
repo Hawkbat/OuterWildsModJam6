@@ -101,7 +101,7 @@
 		"GITM_PLAYER_STEP_2": "The Twins",
 		"GITM_PLAYER_STEP_2_REVEAL": "I made it to the Hourglass Twins! My ship just got caught in the sand column, though, so I guess I'll just explore Ember Twin for now and figure out how to get back to the ship later.",
 		"GITM_PLAYER_STEP_3": "Big Secret?",
-		"GITM_PLAYER_STEP_3_REVEAL": "Woah! I stepped into one of the towers on Ash Twin while the sand passed by and found myself inside some kind of big Nomai contraption! I'm not sure what it does, but it makes funny noises when I poke it with this staff I found.",
+		"GITM_PLAYER_STEP_3_REVEAL": "Woah! I stepped into one of the towers on Ash Twin while the sand passed by and found myself inside some kind of big Nomai contraption! I'm not sure what it does, but it makes funny noises when I poke at it.",
 		"GITM_PLAYER_STEP_4": "Another Warp",
 		"GITM_PLAYER_STEP_4_REVEAL": "I tried walking into a different tower, and it warped me somewhere else! I think this is Brittle Hollow, based on the pictures I've seen. My ship ended up here somehow too, but I'm afraid to jump down to reach it. I'm not immortal, after all.",
 		"GITM_PLAYER_STEP_5": "Stuck",
@@ -109,7 +109,7 @@
 		"GITM_PLAYER_STEP_6": "Warped Again",
 		"GITM_PLAYER_STEP_6_REVEAL": "I made it to Giant's Deep! I tried putting my little scout on the platform to see what would happen, but it got warped away without me, and now I can't go back. Guess my ship is gone for good, then. Sorry, Slate. Maybe I can find Gabbro and ask for a ride later.",
 		"GITM_PLAYER_STEP_7": "Statues",
-		"GITM_PLAYER_STEP_7_REVEAL": "This island has more weird Nomai statues! These ones look angry, too. I'm tempted to poke them with my staff again..."
+		"GITM_PLAYER_STEP_7_REVEAL": "This island has more weird Nomai statues! These ones look angry, too. There's one of those Nomai walking sticks lying around out here, and I really want to know what happens if I poke a statue with it..."
 	},
 	"DialogueDictionary": {
 		"GITM_MASK_COMPUTER_1": "<TimeMinutes> MINUTES, <TimeSeconds> SECONDS AGO: Received data from previous cycles. <color=red>ERROR! System overloaded. Cycle duration was shorter than expected.</color>",
@@ -119,7 +119,7 @@
 		"GITM_OPC_LAUNCHES_2": "ERROR: No response from <color=lightblue>Ash Twin</color>. Unable to retrieve launch history.",
 		"GITM_OPC_LAUNCHES_3": "Assuming current cycle is the first. Total number of probes launched: 1",
 		"GITM_OPC_COORDINATES_1": "Retrieving stored coordinates from <color=lightblue>Ash Twin</color>.",
-		"GITM_OPC_COORDINATES_2": "ERROR: No response from <color=lightblue>Ash Twin</color>. No coordinates on record for the <color=lightblue>Eye of the universe</color>.",
+		"GITM_OPC_COORDINATES_2": "ERROR: No response from <color=lightblue>Ash Twin</color>. No coordinates on record for the <color=lightblue>Eye of the Universe</color>.",
 		"GITM_TORNADO_MARKER_1": "<color=orange>Cyclone Generator</color>",
 		"GITM_TORNADO_CAIRN_1": "<color=orange>Cyclone Generator</color> (ahead 40m)",
 		"GITM_SOLANUM_IDENTIFY_1": "This mask appears to contain the memories of my friend, Lami! This is quite the surprise.",
@@ -183,6 +183,11 @@
 		"GITM_MEMORY_HOME_4": "That storage room up on the cliff is locked, but I bet I can use my staff to get a beam to lift me up. I want to see what neat things they have stashed away in there!",
 		"GITM_MEMORY_LAMI_NAME": "Nomai Girl",
 		"GITM_SOLANUM_THE_NOMAI_2": "This mask appears to be an earlier prototype, so I do not know how its functionality might differ from theirs.",
+		"GITM_GABBRO_LOOP_OPTION": "Have you noticed the time loop is acting funny?",
+		"GITM_GABBRO_LOOP_1": "Oh good, it's not just me. Sometimes it feels like just a minute or two, sometimes much longer.",
+		"GITM_GABBRO_LOOP_2": "I don't remember everything glowing so red at first, either. That's new.",
+		"GITM_GABBRO_LOOP_3": "Also, I probably sound crazy, but have you been hearing voices? I think I've been hearing voices. Spooky.",
+		"GITM_GABBRO_LOOP_4": "You've got that look like you're going to go do something about it. Best of luck. I'll hold down this hammock, just in case it turns out to be load-bearing.",
 		"GITM_ERNESTO_NAME": "Ernesto",
 		"GITM_ERNESTO_FIRST_1": "Hey it's me Ernesto the ghostly talking anglerfish.",
 		"GITM_ERNESTO_FIRST_2": "Also you just turned your statue off. You know that, right?",

@@ -1,7 +1,8 @@
-using GhostInTheMachine.Controllers;
+﻿using GhostInTheMachine.Controllers;
 using GhostInTheMachine.Managers;
 using HarmonyLib;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -165,6 +166,11 @@ public static class ShipLogEntryLinkPatches
 [HarmonyPatch(typeof(GabbroDialogueSwapper))]
 public static class GabbroDialogueSwapperPatches
 {
+    const string DIALOGUE_XML_PATH = "planets/Ghost/dialogue/Gabbro_Loop.xml";
+    const string DIALOGUE_INFO = @"{ ""pathToExistingDialogue"": ""Sector_GD/Sector_GDInterior/Islands_GDInterior/GabbroIsland_Pivot/GabbroIsland_Body/Sector_GabbroIsland/Interactables_GabbroIsland/Traveller_HEA_Gabbro/ConversationZone_Gabbro"" }";
+
+    static string dialogueXml;
+
     [HarmonyPostfix, HarmonyPatch(nameof(GabbroDialogueSwapper.Start))]
     public static void Start(GabbroDialogueSwapper __instance)
     {
@@ -174,6 +180,10 @@ public static class GabbroDialogueSwapperPatches
             __instance._activeConditionDialogue = __instance._conditionalDialogues[0];
             __instance._dialogueTree.SetTextXml(__instance._activeConditionDialogue.dialogueTextAsset);
         }
+
+        // Applying the NH dialogue merge (`pathToExistingDialogue`) *after* the Gabbro Dialogue Swapper loads it's preferred variant
+        dialogueXml ??= File.ReadAllText(Path.Combine(GhostInTheMachine.Instance.ModHelper.Manifest.ModFolderPath, DIALOGUE_XML_PATH));
+        GhostInTheMachine.NewHorizons.CreateDialogueFromXML("GITM_GABBRO_LOOP", dialogueXml, DIALOGUE_INFO, Locator.GetAstroObject(AstroObject.Name.GiantsDeep).gameObject);
     }
 }
 
