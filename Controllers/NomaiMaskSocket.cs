@@ -11,6 +11,12 @@ public class NomaiMaskSocket : OWItemSocket
     {
         base.Awake();
         _acceptableType = ItemType.ConversationStone;
+
+        // Disable socket if the monolith already has a mask installed
+        if (monolith.HasMask())
+        {
+            EnableInteraction(false);
+        }
     }
 
     public override bool AcceptsItem(OWItem item) => !monolith.HasMask() && item is NomaiMaskItem;
