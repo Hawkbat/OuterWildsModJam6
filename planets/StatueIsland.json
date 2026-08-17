@@ -160,21 +160,6 @@
           "y": 270,
           "z": 0
         }
-      },
-      {
-        "rename": "GITM_STORAGE_DOOR_DECOY_SOCKET",
-        "parentPath": "Sector_StatueIsland/StoreroomGuantlet/GITM_STORAGE_DOOR/Structure_NOM_RotatingDoor_Broken_Panels/Structure_NOM_RotatingDoor_Panel_01",
-        "isRelativeToParent": true,
-        "position": {
-          "x": 1.5,
-          "y": 1.7595,
-          "z": -0.025
-        },
-        "itemSocket": {
-          "itemType": "GITM_NOTHING_FITS",
-          "interactRange": 3,
-          "colliderRadius": 0.4
-        }
       }
     ],
     "translatorText": [
