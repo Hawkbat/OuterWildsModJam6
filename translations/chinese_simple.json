@@ -12,24 +12,20 @@
     "GITM_CHOICE_HELLO_B_REVEAL": "你在哪里？",
     "GITM_GHOST_HELLO_FOLLOWUP": "我不知道，帮帮我",
     "GITM_GHOST_HELLO_FOLLOWUP_REVEAL": "我不知道，我的记忆全乱了！我想……我是个挪麦人。但我能读懂你的话。你能帮帮我吗？我觉得我被困在某个地方了。",
-    // Machine-translated placeholder
     "GITM_CHOICE_LOOP": "时间循环",
-    // Machine-translated placeholder
-    "GITM_CHOICE_LOOP_REVEAL": "让我从我的角度，说说这段时间到底发生了什么。<color=lightblue>木炉星</color>上有一座雕像，和我、还有我飞船的日志配对着，正因为如此，循环重置之后我们俩才还记得住东西。其余的雕像我一直在用手杖关掉，而每关掉一座，等循环重置时，我能用的时间好像就会多一些。",
-    // Machine-translated placeholder
-    "GITM_GHOST_LOOP": "成功了！",
-    // Machine-translated placeholder
-    "GITM_GHOST_LOOP_REVEAL": "等等。成功了？<color=orange>灰烬双星计划</color>真的成功了？！虽然不是所有人预想的那样，但雕像确实在配对，记忆确实在循环，这说明理论从一开始就是成立的！……抱歉，我集中一下注意力。是的，请继续把它们关掉！雕像和这项<color=orange>计划</color>有关，所以我们应该去和<color=orange>计划</color>有关的地方找找，看还有没有别的雕像。",
+    "GITM_CHOICE_LOOP_REVEAL": "让我梳理一下这段时间到底发生了什么……<color=lightblue>木炉星</color>上有一座雕像和我、还有我飞船的日志配对着，正因如此循环重置之后我们俩才能保留记忆。其余的雕像我一直在用手杖关掉，而每关掉一座，等循环重置时我能用的时间好像就会多一些。",
+    "GITM_GHOST_LOOP": "它成功了！",
+    "GITM_GHOST_LOOP_REVEAL": "等等。成功了？<color=orange>灰烬双星计划</color>真的成功了？！虽然不像所有人预想的那样，但雕像确实在配对，记忆确实在循环，这说明理论从一开始就真能实现！……抱歉，我集中一下注意力。是的，请继续关闭那些雕像！它们是<color=orange>计划</color>的一部分，所以我们应该去和<color=orange>计划</color>有关的地方找找，看看还有没有别的雕像。",
     "GITM_CHOICE_PLACES": "地点",
     "GITM_CHOICE_PLACES_REVEAL": "光凭这些我还没法定位。你还记得被困之前在哪里吗？有没有什么重要的地点或者地标？",
     "GITM_GHOST_CLASSROOM_HINT": "教室",
     "GITM_GHOST_CLASSROOM_HINT_REVEAL": "我记得我好像在一所学校里。在<color=lightblue>碎空星</color>的某个地方。如果你找到那间教室，说不定能帮我想起更多事。",
     "GITM_FIND_CLASSROOM": "手杖的用法",
     "GITM_FIND_CLASSROOM_RUMOR_NAME": "???",
-    "GITM_MEMORY_CLASSROOM_REVEAL": "我以前是个学生！我的老师叫菲利克斯，他很喜欢我的课堂展示，哪怕我偶尔会记错一些小细节。后来我毕业了，但我不记得毕业之后去了哪里。",
+    "GITM_MEMORY_CLASSROOM_REVEAL": "我以前是个学生！我的老师叫费利克斯，他很喜欢我的课堂展示，哪怕我偶尔会记错一些小细节。后来我毕业了，但我不记得毕业之后去了哪里。",
     "GITM_WALL_TOOL_UNLOCK": "我现在想起怎么使用手杖了！虽然还谈不上精通，但他们确实教过我用预设功能，在现成的岩石上生成石板。说不定你也能做到？对准任意岩石表面按下按钮就行。",
     "GITM_GHOST_CLIMB_HINT": "攀爬",
-    "GITM_GHOST_CLIMB_HINT_REVEAL": "说到手杖的用法，学校就是我们学习使用手杖的地方。我记得有个同学曾经因为用手杖在教学楼墙上造石板落脚点而闯了大祸。菲利克斯教授以为他会摔下去，差点吓出心脏病！从那以后，我们就只能在现成的石板上写字了。",
+    "GITM_GHOST_CLIMB_HINT_REVEAL": "说到手杖的用法，学校就是我们学习使用手杖的地方。我记得有个同学曾经因为用手杖在教学楼墙上造石板落脚点而闯了大祸。费利克斯教授以为他会摔下去，差点吓出心脏病！从那以后，我们就只能在现成的石板上写字了。",
     "GITM_FIND_HOME": "我的家",
     "GITM_FIND_HOME_RUMOR_NAME": "???",
     "GITM_MEMORY_HOME_REVEAL": "听起来我姐姐当时是想管住我，不让我偷偷溜出去闯祸，在岛上到处乱跑。具体的对话记不清了，但我记得自己对雕像工坊的研究特别感兴趣。<color=orange>灰烬双星计划</color>的核心部件就在我脚下研发，我怎么可能不兴奋？",
@@ -105,35 +101,27 @@
     "GITM_PLAYER_STEP_2": "沙漏双星",
     "GITM_PLAYER_STEP_2_REVEAL": "我到沙漏双星了！不过我的飞船刚好被沙柱卷走了，所以我打算先探索余烬双星，之后再想办法回飞船。",
     "GITM_PLAYER_STEP_3": "惊天大秘密？",
-    // Machine-translated placeholder
-    "GITM_PLAYER_STEP_3_REVEAL": "哇！沙层退去的时候，我走进了灰烬双星上的一座塔，发现自己置身于一台巨大的挪麦装置里！我不知道它是干什么的，但我戳它的时候，它会发出奇怪的声响。",
+    "GITM_PLAYER_STEP_3_REVEAL": "哇！当沙柱经过时我走进了灰烬双星上的一座塔，然后发现自己置身于一个巨大的挪麦装置里！我不知道它是干什么的，但我戳它的时候它会发出奇怪的声响。",
     "GITM_PLAYER_STEP_4": "又一次跃迁",
     "GITM_PLAYER_STEP_4_REVEAL": "我试着走进另一座塔，结果它把我跃迁传送到了别的地方！看照片的话，这里应该是碎空星。我的飞船不知怎么也到了这儿，但我不敢跳下去够它。毕竟我又不是不死之身。",
     "GITM_PLAYER_STEP_5": "卡住了",
     "GITM_PLAYER_STEP_5_REVEAL": "我总觉得这里还有别的事可做，但现在我卡在天花板上，一筹莫展。或许我该回去，试试别的地方。",
     "GITM_PLAYER_STEP_6": "再次跃迁",
-    "GITM_PLAYER_STEP_6_REVEAL": "我到深巨星了！我试着把我的小侦察兵放在平台上看会发生什么，结果它自己被跃迁走了，没带上我，现在我也回不去了。看来我的飞船是彻底没了。对不起，斯雷特。说不定我之后能找到加布罗，搭个便车。",
+    "GITM_PLAYER_STEP_6_REVEAL": "我到深巨星了！我试着把我的小侦察兵放在平台上看看会发生什么，结果它自己被跃迁走了，现在我也回不去了。看来我的飞船是彻底没了。对不起，斯雷特。说不定我之后能找到加布罗，搭个便车。",
     "GITM_PLAYER_STEP_7": "雕像",
-    // Machine-translated placeholder
-    "GITM_PLAYER_STEP_7_REVEAL": "这座岛上还有更多奇怪的挪麦雕像！这些看起来还凶巴巴的。这边地上扔着一根挪麦手杖，我特别想知道，要是拿它戳一下雕像，会发生什么……"
+    "GITM_PLAYER_STEP_7_REVEAL": "这座岛上还有更多奇怪的挪麦雕像！这些看起来还凶巴巴的。这边地上扔着一根那种挪麦的手杖，我很想知道要是拿它戳一下雕像会发生什么……"
   },
   "DialogueDictionary": {
     "GITM_MASK_COMPUTER_1": "<TimeMinutes> 分钟 <TimeSeconds> 秒前：接收到上一循环的数据。<color=red>错误！系统过载。循环时长短于预期。</color>",
     "GITM_MASK_COMPUTER_2": "正在接收数据的面具：\n<ActiveStatueList><color=red>错误！系统过载。数据流可能意外重叠。</color>",
     "GITM_MASK_COMPUTER_3": "距离循环结束传输还有 <TimeMinutesRemaining> 分钟",
-    // Copied from the base game's own Chinese translation of TT_TimeLoop_MaskActivationStatus
-    "GITM_MASK_COMPUTER_FIXED_1": "<TimeMinutes>分钟<TimeSeconds>秒之前：接收到来自之前循环的数据。",
-    "GITM_MASK_COMPUTER_FIXED_2": "面具正在接收以下方面的数据：\n<ActiveStatueList>",
-    // Machine-translated placeholder
-    "GITM_OPC_LAUNCHES_1": "正在从<color=lightblue>灰烬双星</color>获取过往发射数据。",
-    // Machine-translated placeholder
+    "GITM_MASK_COMPUTER_FIXED_1": "<TimeMinutes>分钟<TimeSeconds>秒前：接收到来自之前循环的数据。",
+    "GITM_MASK_COMPUTER_FIXED_2": "面具正在接收以下来源的数据：\n<ActiveStatueList>",
+    "GITM_OPC_LAUNCHES_1": "正在从<color=lightblue>灰烬双星</color>获取之前的发射数据。",
     "GITM_OPC_LAUNCHES_2": "错误：<color=lightblue>灰烬双星</color>无响应。无法获取发射历史记录。",
-    // Machine-translated placeholder
     "GITM_OPC_LAUNCHES_3": "假定当前循环为首次循环。已发射探测器总数：1",
-    // Machine-translated placeholder
-    "GITM_OPC_COORDINATES_1": "正在从<color=lightblue>灰烬双星</color>获取存储的坐标。",
-    // Machine-translated placeholder
-    "GITM_OPC_COORDINATES_2": "错误：<color=lightblue>灰烬双星</color>无响应。没有<color=lightblue>宇宙之眼</color>的坐标记录。",
+    "GITM_OPC_COORDINATES_1": "正在从<color=lightblue>灰烬双星</color>获取储存的坐标。",
+    "GITM_OPC_COORDINATES_2": "错误：<color=lightblue>灰烬双星</color>无响应。无<color=lightblue>宇宙之眼</color>的坐标记录。",
     "GITM_TORNADO_MARKER_1": "<color=orange>龙卷风发生器</color>",
     "GITM_TORNADO_CAIRN_1": "<color=orange>龙卷风发生器</color>（前方40米）",
     "GITM_SOLANUM_IDENTIFY_1": "这副面具里封存的，是我朋友瑞米的记忆！真是太意外了。",
@@ -197,16 +185,11 @@
     "GITM_MEMORY_HOME_4": "悬崖上面的储藏室是锁着的，但我打赌能用手杖引出光束，把自己托上去。我要看看他们在里面藏了什么好东西！",
     "GITM_MEMORY_LAMI_NAME": "挪麦女孩",
     "GITM_SOLANUM_THE_NOMAI_2": "这副面具似乎是更早的原型机，所以我不清楚它的功能和正式版有什么区别。",
-    // Machine-translated placeholder
-    "GITM_GABBRO_LOOP_OPTION": "你有没有发现循环变短了？",
-    // Machine-translated placeholder
-    "GITM_GABBRO_LOOP_1": "太好了，不是只有我这样。是啊，最近每次都被提前掐断。我连第二段还没唱完，灯就灭了。",
-    // Machine-translated placeholder
-    "GITM_GABBRO_LOOP_2": "还有件事。每次循环重置，都有别人的记忆从边边角角渗进来。我觉得是挪麦人的。而且非常古老。",
-    // Machine-translated placeholder
-    "GITM_GABBRO_LOOP_3": "大部分是个孩子。还有一堆关于太阳站的争吵。我本来想着，只要慢慢呼吸调整一下，它自己就过去了。结果没有。不过说真的，那个呼吸法效果很好。稳稳的9分。",
-    // Machine-translated placeholder
-    "GITM_GABBRO_LOOP_4": "看你这表情，是要去做点什么了。很好。我留在这儿把吊床压住，万一它是承重结构呢。",
+    "GITM_GABBRO_LOOP_OPTION": "你有没有发现循环的时间变得很奇怪？",
+    "GITM_GABBRO_LOOP_1": "太好了，不是只有我这样。我连第二段都没吹完呢，灯就灭了。有时候它就只有一两分钟，有时候更长一点。",
+    "GITM_GABBRO_LOOP_2": "我也不记得一开始所有东西都泛着红光，以前可不会这样。",
+    "GITM_GABBRO_LOOP_3": "还有件事。我说出来可能听着很离谱，但你有没有听到过声音？我感觉我一直听见一些声音，怪吓人的。好像每次循环重置，都有别人的记忆从边边角角渗进来。我觉得是挪麦人的。大部分是孩子的视角。还有一堆关于太阳站的争吵。我本来想着，只要慢慢呼吸调整一下，它自己就过去了。结果没有。不过说真的，那个呼吸法效果很好。稳稳的9分。",
+    "GITM_GABBRO_LOOP_4": "看你这表情是要去做点什么了。祝你好运。我留在这儿把吊床压住，万一它是承重结构呢。",
     "GITM_ERNESTO_NAME": "厄内斯托",
     "GITM_ERNESTO_FIRST_1": "嘿，是我，会说话的幽灵安康鱼厄内斯托。",
     "GITM_ERNESTO_FIRST_2": "对了，你刚把你的雕像关了。你知道这事吧？",
@@ -249,7 +232,6 @@
     "NomaiOrbItem": "挪麦珠子",
     "ActivateStatuePrompt": "激活雕像",
     "DeactivateStatuePrompt": "关闭雕像",
-    // Machine-translated placeholder
     "NeedStaffStatuePrompt": "缺少所需工具",
     "OpenDoorPrompt": "开门",
     "CloseDoorPrompt": "关门",
