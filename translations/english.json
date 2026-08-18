@@ -1,4 +1,4 @@
-{
+﻿{
 	"$schema": "https://raw.githubusercontent.com/outer-wilds-new-horizons/new-horizons/main/NewHorizons/Schemas/translation_schema.json",
 	"ShipLogDictionary": {
 		"NONE": "",
@@ -255,5 +255,51 @@
 		"debugMode": "Debug Mode",
 		"debugModeTooltip": "Enable mod-specific debugging tools",
 		"MaskUnresponsiveNotification": "INSUFFICIENT POWER FOR SYSTEM REBOOT"
+	},
+	"AchievementTranslations": {
+		"GITM_AN_ORB_TOO_LARGE": {
+			"Name": "An Orb Too Large",
+			"Description": "Carry the large Nomai orb all the way to the broken storeroom door."
+		},
+		"GITM_FRESH_START": {
+			"Name": "Fresh Start",
+			"Description": "Read the Probe Tracking Module's readouts after cutting it off from the Ash Twin Project."
+		},
+		"GITM_CONSTRUCTION_KIT": {
+			"Name": "Construction Kit",
+			"Description": "Have thirty walls standing at the same time."
+		},
+		"GITM_TOURIST": {
+			"Name": "Tourist",
+			"Description": "Visit all eight memory statues in a single loop."
+		},
+		"GITM_GHOST_IN_THE_MACHINE": {
+			"Name": "Ghost in the Machine",
+			"Description": "Set things right."
+		},
+		"GITM_TERRIBLE_FATE": {
+			"Name": "A Terrible Fate",
+			"Description": "Disconnect yourself from the time loop."
+		},
+		"GITM_TERRIBLER_FATE": {
+			"Name": "A Terrible-er Fate",
+			"Description": "Push Ernesto too far."
+		},
+		"GITM_THEY_COOKED": {
+			"Name": "They Cooked",
+			"Description": "Shut down a Sun Station memory statue after reaching it without the warp pad."
+		},
+		"GITM_VERTICALLY_CHALLENGED": {
+			"Name": "Vertically Challenged",
+			"Description": "Reach the storeroom door without touching the tractor beam or placing a single wall."
+		},
+		"GITM_ECO_FRIENDLY": {
+			"Name": "Eco-Friendly",
+			"Description": "Have every memory statue switched off at once."
+		},
+		"GITM_TIME_BUDDY_AMNESIA": {
+			"Name": "Time Buddy Amnesia",
+			"Description": "Talk to Gabbro after cutting them out of the loop."
+		}
 	}
 }

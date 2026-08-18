@@ -10,6 +10,8 @@ This mod assumes you've completed the base game on your current save profile. Us
 
 Ghost in the Machine is intended to be played standalone. Please disable other story mods before playing it, if any are enabled.
 
+Supports [Achievements+](https://outerwildsmods.com/mods/achievements/)! Install it alongside this mod to unlock achievements for finding easter eggs and completing optional challenges. To avoid spoilers, don't open the full achievements list until you've completed the mod.
+
 Ernesto is around here somewhere, but you'll have to make a truly terrible decision to meet him.
 
 ### Credits

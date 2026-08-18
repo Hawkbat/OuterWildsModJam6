@@ -171,6 +171,8 @@ public class StaffManager : ManagerBase<StaffManager>
             spawnTime = Time.time
         });
 
+        AchievementManager.Instance.OnWallSpawned(parentPath, activeWalls.Count);
+
         return controller;
     }
 

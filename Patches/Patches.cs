@@ -167,15 +167,18 @@ public static class ShipLogEntryLinkPatches
 public static class GabbroDialogueSwapperPatches
 {
     const string DIALOGUE_XML_PATH = "planets/Ghost/dialogue/Gabbro_Loop.xml";
-    const string DIALOGUE_INFO = @"{ ""pathToExistingDialogue"": ""Sector_GD/Sector_GDInterior/Islands_GDInterior/GabbroIsland_Pivot/GabbroIsland_Body/Sector_GabbroIsland/Interactables_GabbroIsland/Traveller_HEA_Gabbro/ConversationZone_Gabbro"" }";
+    const string DIALOGUE_INFO = @"{ ""pathToExistingDialogue"": ""GabbroIsland_Body/Sector_GabbroIsland/Interactables_GabbroIsland/Traveller_HEA_Gabbro/ConversationZone_Gabbro"" }";
 
     static string dialogueXml;
+
+    public static bool ForgotTheLoop { get; private set; }
 
     [HarmonyPostfix, HarmonyPatch(nameof(GabbroDialogueSwapper.Start))]
     public static void Start(GabbroDialogueSwapper __instance)
     {
         // If Gabbro's statue is deactivated, they act as if this is always the first loop
-        if (PlayerData.PersistentConditionExists(STATUE_GABBRO) && PlayerData.GetPersistentCondition(STATUE_GABBRO))
+        ForgotTheLoop = PlayerData.PersistentConditionExists(STATUE_GABBRO) && PlayerData.GetPersistentCondition(STATUE_GABBRO);
+        if (ForgotTheLoop)
         {
             __instance._activeConditionDialogue = __instance._conditionalDialogues[0];
             __instance._dialogueTree.SetTextXml(__instance._activeConditionDialogue.dialogueTextAsset);
@@ -357,6 +360,26 @@ public static class OrbitalCannonHologramProjectorPatches
     {
         // Skip the original if our code handled it
         return !ProbeTrackingManager.Instance.HandleSlotActivated(__instance, __instance.GetSlotIndex(slot));
+    }
+}
+
+[HarmonyPatch(typeof(DeathManager))]
+public static class DeathManagerPatches
+{
+    [HarmonyPrefix, HarmonyPatch(nameof(DeathManager.FinishDeathSequence))]
+    public static void FinishDeathSequence()
+    {
+        AchievementManager.Instance.OnDeathSequenceFinished();
+    }
+}
+
+[HarmonyPatch(typeof(NomaiComputer))]
+public static class NomaiComputerPatches
+{
+    [HarmonyPostfix, HarmonyPatch(nameof(NomaiComputer.SetAsTranslated))]
+    public static void SetAsTranslated(NomaiComputer __instance)
+    {
+        AchievementManager.Instance.OnComputerTranslated(__instance);
     }
 }
 

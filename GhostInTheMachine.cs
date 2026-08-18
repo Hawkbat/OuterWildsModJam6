@@ -46,6 +46,12 @@ public class GhostInTheMachine : ModBehaviour
 
         ModHelper.Events.Unity.FireInNUpdates(() =>
         {
+            // Reset the bad ending condition so the player doesn't get repeated game-overs
+            if (PlayerData.GetPersistentCondition(Constants.PersistentConditions.STATUE_PLAYER))
+            {
+                PlayerData.SetPersistentCondition(Constants.PersistentConditions.STATUE_PLAYER, false);
+            }
+
             InvincibilityManager.Initialize();
             FastForwardManager.Initialize();
             ShipLogDialogueManager.Initialize();
@@ -60,10 +66,12 @@ public class GhostInTheMachine : ModBehaviour
             TractorBeamManager.Initialize();
             SolanumManager.Initialize();
             ProbeTrackingManager.Initialize();
+            AchievementManager.Initialize();
 
             if (debugModeEnabled) DebugManager.Initialize();
 
             StatueManager.Instance.PlaceInitialStatues();
+            AchievementManager.Instance.PlaceStatueVolumes();
             StaffManager.Instance.PlaceInitialStaffs();
             DoorManager.Instance.PlaceDoorInteractions();
             TractorBeamManager.Instance.PlaceBeamInteractions();

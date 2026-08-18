@@ -1,3 +1,4 @@
+using GhostInTheMachine.Managers;
 using UnityEngine;
 
 namespace GhostInTheMachine.Controllers;
@@ -24,6 +25,8 @@ public class GhostBeamController : MonoBehaviour
 
     public void Cycle()
     {
+        AchievementManager.Instance.OnBeamCycled(this);
+
         // Cycles between off, forward, reversed
         switch (State)
         {

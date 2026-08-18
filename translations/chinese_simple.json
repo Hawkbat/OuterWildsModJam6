@@ -273,5 +273,52 @@
     "debugMode": "调试模式",
     "debugModeTooltip": "启用模组专属调试工具",
     "MaskUnresponsiveNotification": "系统重启电力不足"
+  },
+  // Machine-translated placeholder
+  "AchievementTranslations": {
+    "GITM_AN_ORB_TOO_LARGE": {
+      "Name": "太大的孤形物",
+      "Description": "把那颗大型洛马孤形物一路搬到损坏的储藏室大门前。"
+    },
+    "GITM_FRESH_START": {
+      "Name": "从头开始",
+      "Description": "在切断探测器跟踪模块与灰烬双星计划的连接后，阅读它的读数。"
+    },
+    "GITM_CONSTRUCTION_KIT": {
+      "Name": "建筑套件",
+      "Description": "同时竖起三十块墙体。"
+    },
+    "GITM_TOURIST": {
+      "Name": "观光客",
+      "Description": "在单次循环内找到全部八座记忆雕像。"
+    },
+    "GITM_GHOST_IN_THE_MACHINE": {
+      "Name": "机器中的幽灵",
+      "Description": "拨乱反正。"
+    },
+    "GITM_TERRIBLE_FATE": {
+      "Name": "可怕的命运",
+      "Description": "切断你自己与时间循环的连接。"
+    },
+    "GITM_TERRIBLER_FATE": {
+      "Name": "更可怕的命运",
+      "Description": "把 Ernesto 逼得太紧。"
+    },
+    "GITM_THEY_COOKED": {
+      "Name": "他们真行",
+      "Description": "不使用传送台抵达太阳站，并关闭那里的记忆雕像。"
+    },
+    "GITM_VERTICALLY_CHALLENGED": {
+      "Name": "垂直障碍",
+      "Description": "不碰牟引光束、也不放置任何墙体，抵达储藏室大门。"
+    },
+    "GITM_ECO_FRIENDLY": {
+      "Name": "环保主义",
+      "Description": "让所有记忆雕像同时处于关闭状态。"
+    },
+    "GITM_TIME_BUDDY_AMNESIA": {
+      "Name": "时间搭子失忆症",
+      "Description": "在把 Gabbro 踢出循环之后与他交谈。"
+    }
   }
 }

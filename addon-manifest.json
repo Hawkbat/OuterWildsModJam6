@@ -30,5 +30,52 @@
       }
     }
   ],
-  "preloadAssetBundles": ["assetbundles/ghostinthemachine", "assetbundles/gitm_insm"]
+  "preloadAssetBundles": ["assetbundles/ghostinthemachine", "assetbundles/gitm_insm"],
+  "achievements": [
+    {
+      "ID": "GITM_GHOST_IN_THE_MACHINE",
+      "secret": false
+    },
+    {
+      "ID": "GITM_TERRIBLE_FATE",
+      "secret": false
+    },
+    {
+      "ID": "GITM_TERRIBLER_FATE",
+      "secret": true,
+      "conditionIDs": [ "GITM_ErnestoRockDeath" ]
+    },
+    {
+      "ID": "GITM_CONSTRUCTION_KIT",
+      "secret": false
+    },
+    {
+      "ID": "GITM_VERTICALLY_CHALLENGED",
+      "secret": false
+    },
+    {
+      "ID": "GITM_AN_ORB_TOO_LARGE",
+      "secret": false
+    },
+    {
+      "ID": "GITM_FRESH_START",
+      "secret": false
+    },
+    {
+      "ID": "GITM_TIME_BUDDY_AMNESIA",
+      "secret": false
+    },
+    {
+      "ID": "GITM_ECO_FRIENDLY",
+      "secret": false
+    },
+    {
+      "ID": "GITM_THEY_COOKED",
+      "secret": false
+    },
+    {
+      "ID": "GITM_TOURIST",
+      "secret": false
+    }
+  ]
 }

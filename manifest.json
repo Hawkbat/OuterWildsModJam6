@@ -4,7 +4,7 @@
   "author": "Hawkbar",
   "name": "Ghost in the Machine",
   "uniqueName": "Hawkbar.GhostInTheMachine",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "owmlVersion": "2.15.1",
   "dependencies": [ "xen.NewHorizons" ],
   "conflicts": [

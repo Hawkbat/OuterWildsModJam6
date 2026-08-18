@@ -72,6 +72,8 @@ public class ProbeTrackingManager : ManagerBase<ProbeTrackingManager>
         return true;
     }
 
+    public bool IsOfflineDisplay(NomaiText text) => displays.Any(display => display.Owns(text));
+
     void RegisterOfflineText()
     {
         foreach (var display in displays)
@@ -112,6 +114,8 @@ public class ProbeTrackingManager : ManagerBase<ProbeTrackingManager>
         }
 
         public void RegisterTranslations() => textSwapper.RegisterTranslations();
+
+        public bool Owns(NomaiText candidate) => candidate == text;
 
         public void SetOffline(bool offline)
         {
