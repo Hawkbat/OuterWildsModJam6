@@ -66,8 +66,11 @@ public class NomaiStaffItem : OWItem
     {
         base.PickUpItem(holdTranform);
         Locator.GetPlayerAudioController()._oneShotExternalSource.PlayOneShot(AudioType.ToolItemWarpCorePickUp);
-        transform.localPosition = new Vector3(0.25f, -1.25f, 0.25f);
-        transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+        if (ModCompatManager.IsPlayerHoldTransform(holdTranform))
+        {
+            transform.localPosition = new Vector3(0.25f, -1.25f, 0.25f);
+            transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+        }
         UpdatePromptVisibility();
         enabled = true;
     }

@@ -30,8 +30,11 @@ public class NomaiMaskItem : NomaiConversationStone
     public override void PickUpItem(Transform holdTranform)
     {
         base.PickUpItem(holdTranform);
-        transform.localPosition = holdOffset;
-        transform.localEulerAngles = holdEulerAngles;
+        if (ModCompatManager.IsPlayerHoldTransform(holdTranform))
+        {
+            transform.localPosition = holdOffset;
+            transform.localEulerAngles = holdEulerAngles;
+        }
         Locator.GetShipLogManager().RevealFact(Constants.ShipLogFacts.MaskAcquired);
     }
 

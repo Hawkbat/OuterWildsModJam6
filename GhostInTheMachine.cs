@@ -52,6 +52,7 @@ public class GhostInTheMachine : ModBehaviour
                 PlayerData.SetPersistentCondition(Constants.PersistentConditions.STATUE_PLAYER, false);
             }
 
+            ModCompatManager.Initialize();
             InvincibilityManager.Initialize();
             FastForwardManager.Initialize();
             ShipLogDialogueManager.Initialize();

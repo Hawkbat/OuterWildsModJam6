@@ -1,4 +1,5 @@
-﻿using OWML.Utils;
+﻿using GhostInTheMachine.Managers;
+using OWML.Utils;
 using UnityEngine;
 
 namespace GhostInTheMachine.Controllers;
@@ -48,8 +49,11 @@ public class NomaiOrbItem : OWItem
     {
         base.PickUpItem(holdTranform);
         Locator.GetPlayerAudioController()._oneShotExternalSource.PlayOneShot(AudioType.NomaiOrbStartDrag);
-        transform.localPosition = holdOffset;
-        transform.localEulerAngles = holdEulerAngles;
+        if (ModCompatManager.IsPlayerHoldTransform(holdTranform))
+        {
+            transform.localPosition = holdOffset;
+            transform.localEulerAngles = holdEulerAngles;
+        }
     }
 
     public override void DropItem(Vector3 position, Vector3 normal, Transform parent, Sector sector, IItemDropTarget customDropTarget)
