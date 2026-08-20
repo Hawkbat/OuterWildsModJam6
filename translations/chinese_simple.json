@@ -256,11 +256,10 @@
     "debugModeTooltip": "启用模组专属调试工具",
     "MaskUnresponsiveNotification": "系统重启电力不足"
   },
-  // Machine-translated placeholder
   "AchievementTranslations": {
     "GITM_AN_ORB_TOO_LARGE": {
-      "Name": "太大的孤形物",
-      "Description": "把那颗大型洛马孤形物一路搬到损坏的储藏室大门前。"
+      "Name": "这球太大了",
+      "Description": "把那颗大挪麦珠子一路搬到损坏的储藏室大门前。"
     },
     "GITM_FRESH_START": {
       "Name": "从头开始",
@@ -268,7 +267,7 @@
     },
     "GITM_CONSTRUCTION_KIT": {
       "Name": "建筑套件",
-      "Description": "同时竖起三十块墙体。"
+      "Description": "同时竖起三十块石板。"
     },
     "GITM_TOURIST": {
       "Name": "观光客",
@@ -279,28 +278,28 @@
       "Description": "拨乱反正。"
     },
     "GITM_TERRIBLE_FATE": {
-      "Name": "可怕的命运",
+      "Name": "你的命运真是悲惨",
       "Description": "切断你自己与时间循环的连接。"
     },
     "GITM_TERRIBLER_FATE": {
-      "Name": "更可怕的命运",
-      "Description": "把 Ernesto 逼得太紧。"
+      "Name": "你的命运还能更惨",
+      "Description": "把厄内斯托逼得太紧。"
     },
     "GITM_THEY_COOKED": {
-      "Name": "他们真行",
-      "Description": "不使用传送台抵达太阳站，并关闭那里的记忆雕像。"
+      "Name": "完儿球了",
+      "Description": "不使用跃迁平台抵达并关闭太阳站的记忆雕像。"
     },
     "GITM_VERTICALLY_CHALLENGED": {
-      "Name": "垂直障碍",
-      "Description": "不碰牟引光束、也不放置任何墙体，抵达储藏室大门。"
+      "Name": "上下困难",
+      "Description": "不碰牵引光束、也不放置任何石板抵达储藏室大门。"
     },
     "GITM_ECO_FRIENDLY": {
       "Name": "环保主义",
       "Description": "让所有记忆雕像同时处于关闭状态。"
     },
     "GITM_TIME_BUDDY_AMNESIA": {
-      "Name": "时间搭子失忆症",
-      "Description": "在把 Gabbro 踢出循环之后与他交谈。"
+      "Name": "时间伙伴失忆症",
+      "Description": "将加布罗踢出循环之后与他交谈。"
     }
   }
 }
