@@ -583,3 +583,24 @@ public static class PauseMenuManagerPatches
         return true; // Continue with original method
     }
 }
+
+[HarmonyPatch(typeof(ShipHUDMarker))]
+public static class ShipHUDMarkerPatches
+{
+    [HarmonyPrefix]
+    [HarmonyPatch(nameof(ShipHUDMarker.RefreshOwnVisibility))]
+    public static bool RefreshOwnVisibility(ShipHUDMarker __instance)
+    {
+        // Same as vanilla except we show if both player and ship are inside the quantum moon rather than hiding if either is inside
+        bool flag = Locator.GetEyeStateManager() != null && Locator.GetEyeStateManager().IsInsideTheEye();
+        bool flag2 = __instance._quantumMoon != null && (__instance._quantumMoon.IsPlayerInside() != __instance._quantumMoon.IsShipInside());
+        bool flag3 = Locator.GetRingWorldController() != null && Locator.GetRingWorldController().isPlayerInside;
+        bool flag4 = Locator.GetCloakFieldController() == null || Locator.GetCloakFieldController().isPlayerInsideCloak == Locator.GetCloakFieldController().isShipInsideCloak;
+        __instance._isVisible = !flag && !flag2 && !flag3 && !__instance._translatorEquipped && !__instance._inConversation && !__instance._shipDestroyed && !__instance._playerInShip && PlayerState.HasPlayerEnteredShip() && __instance._isWearingHelmet && flag4;
+        if (__instance._canvasMarker != null)
+        {
+            __instance._canvasMarker.SetVisibility(__instance._isVisible);
+        }
+        return false;
+    }
+}

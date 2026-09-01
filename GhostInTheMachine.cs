@@ -66,6 +66,7 @@ public class GhostInTheMachine : ModBehaviour
             TornadoManager.Initialize();
             TractorBeamManager.Initialize();
             SolanumManager.Initialize();
+            QuantumShipManager.Initialize();
             ProbeTrackingManager.Initialize();
             AchievementManager.Initialize();
 
