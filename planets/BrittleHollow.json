@@ -52,12 +52,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_BH/GITM_MEMORY_CLASSROOM",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Memory_Classroom.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_BH/GITM_MEMORY_CLASSROOM",
         "isRelativeToParent": true,
         "position": {
@@ -80,12 +80,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/GITM_VISION_FORGE",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_Forge.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/GITM_VISION_FORGE",
         "isRelativeToParent": true,
         "position": {

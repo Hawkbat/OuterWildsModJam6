@@ -50,12 +50,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_SunStation/GITM_VISION_SS_UPPER",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_SunStationUpper.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_SunStation/GITM_VISION_SS_UPPER",
         "isRelativeToParent": true,
         "position": {
@@ -78,12 +78,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_SunStation/GITM_VISION_SS_LOWER",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_SunStationLower.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_SunStation/GITM_VISION_SS_LOWER",
         "isRelativeToParent": true,
         "position": {

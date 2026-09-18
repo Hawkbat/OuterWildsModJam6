@@ -42,12 +42,12 @@
         "remoteTrigger": {
           "parentPath": "Sector/GITM_VISION_ATP",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_ATP.xml",
-        "radius": 2,
+        "radius": 1,
         "parentPath": "Sector/GITM_VISION_ATP",
         "isRelativeToParent": true,
         "position": {

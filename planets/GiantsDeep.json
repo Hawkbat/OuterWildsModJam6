@@ -35,12 +35,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_GD/GITM_VISION_PROBE",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_Probe.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_GD/GITM_VISION_PROBE",
         "isRelativeToParent": true,
         "position": {

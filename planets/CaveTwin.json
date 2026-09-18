@@ -34,12 +34,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_CaveTwin/GITM_MEMORY_FOSSIL",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Memory_Fossil.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_CaveTwin/GITM_MEMORY_FOSSIL",
         "isRelativeToParent": true,
         "position": {

@@ -228,12 +228,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_Gabbro.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_StatueIsland/GITM_VISION_GABBRO",
         "isRelativeToParent": true,
         "position": {
@@ -256,12 +256,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
           "isRelativeToParent": true,
-          "radius": 10
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Vision_Workshop.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_StatueIsland/GITM_VISION_WORKSHOP",
         "isRelativeToParent": true,
         "position": {
@@ -284,12 +284,12 @@
         "remoteTrigger": {
           "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
           "isRelativeToParent": true,
-          "radius": 7
+          "radius": 4
         }
       },
       {
         "xmlFile": "planets/Ghost/dialogue/Memory_Home.xml",
-        "radius": 3,
+        "radius": 1,
         "parentPath": "Sector_StatueIsland/GITM_MEMORY_HOME",
         "isRelativeToParent": true,
         "position": {
