@@ -27,3 +27,4 @@ Ernesto is around here somewhere, but you'll have to make a truly terrible decis
 Special Thanks to:
 
 - SanBaiMing: Chinese (Simplified) Translation
+- HanSoloCh: Russian Translation
