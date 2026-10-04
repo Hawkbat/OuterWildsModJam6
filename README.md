@@ -28,3 +28,4 @@ Special Thanks to:
 
 - SanBaiMing: Chinese (Simplified) Translation
 - HanSoloCh: Russian Translation
+- orclecle: Japanese Translation
