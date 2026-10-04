@@ -144,6 +144,15 @@ public static class ShipLogMapModePatches
 [HarmonyPatch(typeof(ShipLogEntry))]
 public static class ShipLogEntryPatches
 {
+    [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntry.CalculateState))]
+    public static void CalculateState(ShipLogEntry __instance, ref ShipLogEntry.State __result)
+    {
+        if (__result != ShipLogEntry.State.Hidden && ShipLogDialogueManager.IsHiddenByIntro(__instance.GetID()))
+        {
+            __result = ShipLogEntry.State.Hidden;
+        }
+    }
+
     [HarmonyPostfix, HarmonyPatch(nameof(ShipLogEntry.GetFactsForDisplay))]
     public static void GetFactsForDisplay(ShipLogEntry __instance, List<ShipLogFact> __result)
     {

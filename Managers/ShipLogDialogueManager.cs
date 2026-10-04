@@ -7,12 +7,20 @@ namespace GhostInTheMachine.Managers;
 
 public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
 {
+    const string MOD_PREFIX = "GITM_";
     const string GHOST_PREFIX = "GITM_GHOST_";
     const string CHOICE_PREFIX = "GITM_CHOICE_";
     const string VISION_PREFIX = "GITM_VISION_";
     const string FIND_PREFIX = "GITM_FIND_";
+    const string PLAYER_PREFIX = "GITM_PLAYER_";
 
     const string WORLD_RUMOR_SUFFIX = "_RUMOR";
+
+    const string INTRO_FACT = "GITM_GHOST_HELLO_FOLLOWUP_REVEAL";
+    const string INTRO_CHOICE_PREFIX = "GITM_CHOICE_HELLO_";
+    const string INTRO_GHOST_PREFIX = "GITM_GHOST_HELLO_";
+    const string CURIOSITY_ENTRY = "GITM_GHOST_CURIOSITY";
+
 
     static Sprite ghostDefaultSprite;
     static Sprite playerDefaultSprite;
@@ -54,6 +62,17 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
     bool CanRevealExploreOnRead(string entryID) =>
         !entryID.StartsWith(VISION_PREFIX) || detectiveMode._manager.IsFactRevealed(entryID + WORLD_RUMOR_SUFFIX);
 
+    static bool IsGatedEntry(string entryID) =>
+        entryID.StartsWith(MOD_PREFIX) &&
+        !entryID.StartsWith(PLAYER_PREFIX) &&
+        !entryID.StartsWith(INTRO_CHOICE_PREFIX) &&
+        !entryID.StartsWith(INTRO_GHOST_PREFIX) &&
+        entryID != CURIOSITY_ENTRY;
+
+    static bool IsIntroRead() => PlayerData.GetShipLogFactSave(INTRO_FACT)?.read ?? false;
+
+    public static bool IsHiddenByIntro(string entryID) => IsGatedEntry(entryID) && !IsIntroRead();
+
     public void OnMarkCardAsRead(ShipLogEntryCard card)
     {
         var entry = card.GetEntry();
@@ -83,21 +102,45 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
         // NH runs its conditional checks in LateUpdate after ShipLogUpdated, so anything an act gate unlocks in response only exists next frame
         yield return null;
 
+        entry.MarkAsRead();
+        card.UpdateUnreadIconVisibility();
+
         var revealedFacts = detectiveMode._manager._factDict.Values.Where(f => f.IsRevealed() && !alreadyRevealed.Contains(f.GetID())).ToList();
+        // Rumors revealed by this read can also belong to gated entries being unhidden, so avoid queueing them twice
+        revealedFacts = [.. revealedFacts.Union(UnhideGatedEntries())];
         foreach (var fact in revealedFacts)
         {
             RefreshCardName(fact.GetEntryID());
         }
-
-        // Revealing an explore fact moves the entry from rumored to explored, so mark it read again
-        entry.MarkAsRead();
-        card.UpdateUnreadIconVisibility();
 
         RestartRevealQueue(revealedFacts);
         if (detectiveMode._descriptionField.IsVisible())
         {
             detectiveMode._descriptionField.SetEntry(entry);
         }
+    }
+
+    List<ShipLogFact> UnhideGatedEntries()
+    {
+        var unhiddenFacts = new List<ShipLogFact>();
+        if (!IsIntroRead()) return unhiddenFacts;
+
+        foreach (var gatedEntry in detectiveMode._manager.GetEntryList().Where(e => IsGatedEntry(e.GetID()) && e.GetState() == ShipLogEntry.State.Hidden))
+        {
+            gatedEntry.UpdateState();
+            if (gatedEntry.GetState() == ShipLogEntry.State.Hidden) continue;
+
+            foreach (var fact in gatedEntry.GetRumorFacts().Concat(gatedEntry.GetExploreFacts()).Where(f => f.IsRevealed()))
+            {
+                if (!fact.IsNewlyRevealed())
+                {
+                    fact._save.newlyRevealed = true;
+                    PlayerData.AddNewlyRevealedFactID(fact.GetID());
+                }
+                unhiddenFacts.Add(fact);
+            }
+        }
+        return [.. unhiddenFacts.OrderBy(f => f.GetRevealOrder())];
     }
 
     public void OnInitCard(ShipLogEntryCard card)
@@ -113,7 +156,7 @@ public class ShipLogDialogueManager : ManagerBase<ShipLogDialogueManager>
             card._name.color = new Color(0.75f, 0.75f, 1f);
             card._photo.sprite = ghostDefaultSprite;
         }
-        else if (entry.GetID().StartsWith("GITM_PLAYER_") || entry.GetID().StartsWith(CHOICE_PREFIX))
+        else if (entry.GetID().StartsWith(PLAYER_PREFIX) || entry.GetID().StartsWith(CHOICE_PREFIX))
         {
             if (entry.GetSprite() == null || entry.GetSprite().name == "DEFAULT_PHOTO")
             {
