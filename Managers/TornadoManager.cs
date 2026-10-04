@@ -1,4 +1,5 @@
 using GhostInTheMachine.Controllers;
+using System.Linq;
 using UnityEngine;
 
 namespace GhostInTheMachine.Managers;
@@ -42,6 +43,20 @@ public class TornadoManager : ManagerBase<TornadoManager>
         tornado = tornadoController.gameObject.AddComponent<ArtificialTornadoController>();
         tornado.Init(tornadoController);
         tornado.SetActivatedImmediate(DialogueConditionManager.SharedInstance.GetConditionState(Constants.DialogueConditions.TornadoActivated));
+
+        // Riding our tornado under the current is the intended route like vanilla's downward tornados, so it shouldn't earn Deep Impact
+        var deepImpact = Object.FindObjectOfType<Achievement_DeepImpact>();
+        if (deepImpact != null)
+        {
+            foreach (var fluid in tornadoController._fluids)
+            {
+                var trigger = fluid != null ? fluid.GetOWTriggerVolume() : null;
+                if (trigger != null)
+                {
+                    trigger.OnEntry += deepImpact.OnEnterTornadoDown;
+                }
+            }
+        }
 
         var tractorBeam = GameObject.Find(TORNADO_LAUNCHER_PATH).GetComponent<TractorBeamController>();
         
