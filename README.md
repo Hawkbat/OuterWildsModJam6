@@ -4,7 +4,7 @@
 
 You've met with a terrible fate, haven't you?
 
-Submission for the 14-day [Time Loop Mod Jam](https://outerwildsmods.com/jam/aug-2026/)!
+First-place winning submission of the 14-day [Time Loop Mod Jam](https://outerwildsmods.com/jam/aug-2026/)!
 
 This mod assumes you've completed the base game on your current save profile. Users playing on a fresh profile may find exploration more difficult than intended.
 
